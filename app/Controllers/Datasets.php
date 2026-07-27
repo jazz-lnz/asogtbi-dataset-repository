@@ -18,9 +18,20 @@ class Datasets extends BaseController
     {
         $datasetModel = new DatasetModel();
         $search = trim((string) ($this->request->getGet('q') ?? ''));
-        $dataType = trim((string) ($this->request->getGet('data_type') ?? ''));
-        $category = trim((string) ($this->request->getGet('category') ?? ''));
-        $dateUploaded = trim((string) ($this->request->getGet('date_uploaded') ?? ''));
+        $dataTypeRaw = trim((string) ($this->request->getGet('data_type') ?? ''));
+        $selectedDataTypes = $dataTypeRaw !== ''
+            ? array_values(array_filter(array_map('trim', explode(',', $dataTypeRaw)), static fn(string $v): bool => $v !== ''))
+            : [];
+
+        $categoryRaw = trim((string) ($this->request->getGet('category') ?? ''));
+        $selectedCategories = $categoryRaw !== ''
+            ? array_values(array_filter(array_map('trim', explode(',', $categoryRaw)), static fn(string $v): bool => $v !== ''))
+            : [];
+
+        $dateUploadedRaw = trim((string) ($this->request->getGet('date_uploaded') ?? ''));
+        $selectedDateUploaded = $dateUploadedRaw !== ''
+            ? array_values(array_filter(array_map('trim', explode(',', $dateUploadedRaw)), static fn(string $v): bool => $v !== ''))
+            : [];
 
         $query = $datasetModel
             ->select('datasets.*, users.name AS author_name, users.email AS author_email')
@@ -39,15 +50,15 @@ class Datasets extends BaseController
                 ->groupEnd();
         }
 
-        if ($dataType !== '') {
-            $query->where('datasets.data_type', $dataType);
+        if (! empty($selectedDataTypes)) {
+            $query->whereIn('datasets.data_type', $selectedDataTypes);
         }
 
-        if ($category !== '') {
-            $query->where('datasets.category', $category);
+        if (! empty($selectedCategories)) {
+            $query->whereIn('datasets.category', $selectedCategories);
         }
 
-        $dateCutoff = $this->dateFilterCutoff($dateUploaded);
+        $dateCutoff = $this->dateCutoffFromSelected($selectedDateUploaded);
         if ($dateCutoff !== null) {
             $query->where('datasets.created_at >=', $dateCutoff);
         }
@@ -85,9 +96,9 @@ class Datasets extends BaseController
                 'total' => $totalDatasets,
             ],
             'search' => $search,
-            'selectedDataType' => $dataType,
-            'selectedCategory' => $category,
-            'selectedDateUploaded' => $dateUploaded,
+            'selectedDataTypes' => $selectedDataTypes,
+            'selectedCategories' => $selectedCategories,
+            'selectedDateUploaded' => $selectedDateUploaded,
             'categories' => $categories ?: [],
             'dateOptions' => $this->dateFilterOptions(),
             'statusLabels' => DatasetModel::statusLabels(),
@@ -604,15 +615,31 @@ class Datasets extends BaseController
             ->groupEnd();
     }
 
-    private function dateFilterCutoff(string $dateUploaded): ?string
+    /**
+     * @param string[] $selectedDates
+     */
+    private function dateCutoffFromSelected(array $selectedDates): ?string
     {
-        return match ($dateUploaded) {
-            'today' => date('Y-m-d 00:00:00'),
-            'week' => date('Y-m-d 00:00:00', strtotime('-7 days')),
-            'month' => date('Y-m-d 00:00:00', strtotime('-1 month')),
-            'year' => date('Y-m-d 00:00:00', strtotime('-1 year')),
-            default => null,
-        };
+        if (empty($selectedDates)) {
+            return null;
+        }
+
+        // Use the earliest (most restrictive) date cutoff when multiple are selected
+        $cutoffs = [];
+        foreach ($selectedDates as $date) {
+            $cutoff = match ($date) {
+                'today' => date('Y-m-d 00:00:00'),
+                'week' => date('Y-m-d 00:00:00', strtotime('-7 days')),
+                'month' => date('Y-m-d 00:00:00', strtotime('-1 month')),
+                'year' => date('Y-m-d 00:00:00', strtotime('-1 year')),
+                default => null,
+            };
+            if ($cutoff !== null) {
+                $cutoffs[] = $cutoff;
+            }
+        }
+
+        return empty($cutoffs) ? null : min($cutoffs);
     }
 
     /**

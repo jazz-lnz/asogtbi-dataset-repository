@@ -1,7 +1,7 @@
 ﻿/* Integrated governance portal */
 .portal-body { margin: 0; overflow: hidden; background: #f3efe6; color: var(--navy, #03558c); font-family: "DM Sans", sans-serif; }
-.portal-frame { height: calc(100vh / var(--site-scale)); display: grid; grid-template-columns: 248px minmax(0, 1fr); overflow: hidden; }
-.portal-sidebar { height: calc(100vh / var(--site-scale)); overflow-y: auto; padding: 22px 18px; display: flex; flex-direction: column; background: var(--navy); color: #fff; box-sizing: border-box; }
+.portal-frame { height: 100vh; display: grid; grid-template-columns: 248px minmax(0, 1fr); overflow: hidden; }
+.portal-sidebar { height: 100vh; overflow-y: auto; padding: 22px 18px; display: flex; flex-direction: column; background: var(--navy); color: #fff; box-sizing: border-box; }
 .portal-main,
 .review-decision-panel,
 .portal-tabs--scroll,
@@ -110,7 +110,7 @@
 .portal-account-menu strong { font-size: .88rem; }
 .portal-account-menu a { display: flex; align-items: center; gap: 8px; border-radius: 8px; color: #d9e3ea; padding: 8px 9px; font-size: .84rem; font-weight: 700; text-decoration: none; }
 .portal-account-menu a:hover, .portal-account-menu a:focus-visible { background: rgba(255,255,255,.08); color: #fff; }
-.portal-main { position: relative; min-width: 0; max-width: 100%; height: calc(100vh / var(--site-scale)); overflow-x: hidden; overflow-y: auto; padding: 0 clamp(22px, 3vw, 44px) clamp(22px, 3vw, 44px); box-sizing: border-box; }
+.portal-main { position: relative; min-width: 0; max-width: 100%; height: 100vh; overflow-x: hidden; overflow-y: auto; padding: 0 clamp(22px, 3vw, 44px) clamp(22px, 3vw, 44px); box-sizing: border-box; }
 .portal-topbar {
     position: sticky;
     top: 0;
@@ -543,12 +543,16 @@
 
 .portal-pagination { display: flex; justify-content: center; margin-top: 16px; }
 .portal-pagination ul { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; padding: 0; list-style: none; }
-.portal-pagination a { display: grid; place-items: center; min-width: 32px; height: 32px; border: 1px solid #d2c7b5; border-radius: 8px; background: #fff; color: var(--navy); padding: 0 8px; font-size: .72rem; font-weight: 900; }
+.portal-pagination a { display: grid; place-items: center; min-width: 32px; height: 32px; border: 1px solid #d2c7b5; border-radius: 8px; background: #fff; color: var(--navy); padding: 0 8px; font-size: .78rem; font-weight: 900; }
 .portal-pagination .active a { border-color: #f8af21; background: #f8af21; }
+.portal-pagination .page-link--nav { min-width: 88px; gap: 3px; border-color: rgba(248, 175, 33, .55); background: rgba(248, 175, 33, .12); color: var(--navy); font-weight: 800; }
+.portal-pagination .page-link--nav .material-symbols-rounded { font-size: 18px; line-height: 1; }
+.portal-pagination a.page-link--nav:hover { background: var(--gold); border-color: var(--gold); color: #6d4d16; }
+.portal-pagination .page-item--nav.disabled .page-link--nav { color: #687786; border-color: #e4dccf; background: #f3efe6; cursor: not-allowed; pointer-events: none; }
 
 .admin-inspection-header { align-items: center; }
 .workflow-stepper { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 14px; overflow: hidden; border: 1px solid #d8cebd; border-radius: 13px; background: #fffefa; }
-.workflow-stepper div { position: relative; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; border-right: 1px solid #e4dccf; color: #89939d; font-size: .72rem; }
+.workflow-stepper div { position: relative; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; border-right: 1px solid #e4dccf; color: #6d7278; font-size: .72rem; }
 .workflow-stepper div:last-child { border-right: 0; }
 .workflow-stepper div.is-complete { background: #eaf8f5; color: #075c57; }
 .workflow-stepper .material-symbols-rounded { font-size: 17px; }
@@ -581,6 +585,1256 @@
 .publication-gate-form { display: grid; gap: 10px; max-width: 620px; margin-top: 14px; }
 .portal-main .publication-gate-form select { margin: 0; }
 .publication-gate-form .button { width: max-content; }
+
+/* ─── Dark mode ──────────────────────────────────────────────────────── */
+
+:root[data-theme="dark"] .portal-body {
+    background: #0a1c2e;
+    color: rgba(255, 255, 255, .85);
+}
+
+/* Portal stat grid dark mode */
+:root[data-theme="dark"] .portal-stat-grid > div {
+    background: rgba(255, 255, 255, .04);
+    border-color: rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .portal-stat-grid strong {
+    color: #fff;
+}
+:root[data-theme="dark"] .portal-stat-grid small {
+    color: rgba(255, 255, 255, .55);
+}
+
+/* Portal callout dark mode */
+:root[data-theme="dark"] .portal-callout {
+    background: rgba(255, 255, 255, .03);
+}
+
+/* Portal stack dark mode */
+:root[data-theme="dark"] .portal-stack > div {
+    border-color: rgba(255, 255, 255, .08);
+}
+
+/* Portal section dark mode */
+:root[data-theme="dark"] .portal-section {
+    color: rgba(255, 255, 255, .85);
+}
+:root[data-theme="dark"] .portal-section h2 {
+    color: #fff;
+n}
+:root[data-theme="dark"] .portal-section p {
+    color: rgba(255, 255, 255, .65);
+}
+
+/* Portal record row dark mode */
+:root[data-theme="dark"] .portal-record-row {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+:root[data-theme="dark"] .portal-record-row h3 {
+    color: #fff;
+}
+:root[data-theme="dark"] .portal-record-row p {
+    color: rgba(255, 255, 255, .6);
+}
+
+/* Portal table td dark border */
+:root[data-theme="dark"] .portal-table td {
+    border-bottom-color: rgba(255, 255, 255, .06);
+    color: rgba(255, 255, 255, .78);
+}
+
+/* Detail list dark mode */
+:root[data-theme="dark"] .detail-list div {
+    border-bottom-color: rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .detail-list dt {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .detail-list dd {
+    color: rgba(255, 255, 255, .85);
+}
+
+/* Access status dark mode */
+:root[data-theme="dark"] .access-status.is-active {
+    color: #5de0c8;
+    background: rgba(0, 200, 170, .1);
+}
+:root[data-theme="dark"] .access-status.is-inactive {
+    color: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .access-current {
+    color: var(--gold);
+    background: rgba(248, 175, 33, .1);
+}
+
+/* User access row select dark mode */
+:root[data-theme="dark"] .user-access-row select {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .85);
+}
+
+/* Portal detail mini dark mode */
+:root[data-theme="dark"] .portal-detail-mini {
+    background: rgba(255, 255, 255, .03);
+    border-color: rgba(255, 255, 255, .08);
+}
+
+/* Inline admin form dark mode */
+:root[data-theme="dark"] .inline-admin-form {
+    background: rgba(255, 255, 255, .04);
+    border-color: rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .inline-admin-form label {
+    color: rgba(255, 255, 255, .7);
+}
+
+/* Review history dark mode */
+:root[data-theme="dark"] .review-history {
+    border-top-color: rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .review-history summary {
+    color: rgba(255, 255, 255, .85);
+}
+
+/* Text button dark mode */
+:root[data-theme="dark"] .text-button {
+    color: var(--gold);
+}
+:root[data-theme="dark"] .text-button--danger {
+    color: #ff6b6b;
+}
+
+/* Portal search dark mode */
+:root[data-theme="dark"] .portal-search input {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .85);
+}
+
+/* Table wrap dark mode */
+:root[data-theme="dark"] .table-wrap {
+    background: rgba(255, 255, 255, .03);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .3);
+}
+
+/* Portal pagination dark mode */
+:root[data-theme="dark"] .portal-pagination a {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .7);
+}
+:root[data-theme="dark"] .portal-pagination a:hover {
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+}
+:root[data-theme="dark"] .portal-pagination .active a {
+    border-color: var(--gold);
+    background: rgba(248, 175, 33, .2);
+    color: var(--gold);
+}
+:root[data-theme="dark"] .portal-pagination .page-link--nav {
+    border-color: rgba(248, 175, 33, .45);
+    background: rgba(248, 175, 33, .1);
+    color: rgba(255, 255, 255, .78);
+}
+:root[data-theme="dark"] .portal-pagination a.page-link--nav:hover {
+    background: rgba(248, 175, 33, .25);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+:root[data-theme="dark"] .portal-pagination .page-item--nav.disabled .page-link--nav {
+    color: rgba(255, 255, 255, .35);
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .04);
+}
+
+/* Workflow stepper dark mode */
+:root[data-theme="dark"] .workflow-stepper {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .workflow-stepper div {
+    border-right-color: rgba(255, 255, 255, .06);
+    color: rgba(255, 255, 255, .45);
+}
+:root[data-theme="dark"] .workflow-stepper div.is-complete {
+    background: rgba(0, 200, 170, .08);
+    color: #5de0c8;
+}
+
+/* Inspection anchor nav dark mode */
+:root[data-theme="dark"] .inspection-anchor-nav {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(10, 28, 46, .96);
+}
+:root[data-theme="dark"] .inspection-anchor-nav a {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .inspection-anchor-nav a:hover {
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+}
+
+/* Inspection summary dark mode */
+:root[data-theme="dark"] .inspection-summary-grid h2 {
+    color: #fff;
+}
+:root[data-theme="dark"] .inspection-summary-grid > div > p:not(.tag) {
+    color: rgba(255, 255, 255, .65);
+}
+
+/* Current action card dark mode */
+:root[data-theme="dark"] .current-action-card {
+    border-color: rgba(248, 175, 33, .25);
+    background: rgba(248, 175, 33, .06);
+n}
+:root[data-theme="dark"] .current-action-card h3 {
+    color: #fff;
+}
+:root[data-theme="dark"] .current-action-card p:last-child {
+    color: rgba(255, 255, 255, .55);
+}
+
+/* Version card list dark mode */
+:root[data-theme="dark"] .version-card-list article,
+:root[data-theme="dark"] .audit-activity-list article {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .version-card-list p,
+:root[data-theme="dark"] .audit-activity-list p {
+    color: rgba(255, 255, 255, .75);
+}
+:root[data-theme="dark"] .version-card-list small,
+:root[data-theme="dark"] .audit-activity-list small {
+    color: rgba(255, 255, 255, .55);
+}
+
+/* Review history timeline dark mode */
+:root[data-theme="dark"] .review-history-timeline article:not(:last-child)::before {
+    background: rgba(255, 255, 255, .12);
+}
+:root[data-theme="dark"] .review-history-timeline strong {
+    color: rgba(255, 255, 255, .85);
+}
+:root[data-theme="dark"] .review-history-timeline p {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .review-history-timeline blockquote {
+    background: rgba(248, 175, 33, .08);
+    color: rgba(255, 255, 255, .65);
+}
+
+/* Approval summary grid dark mode */
+:root[data-theme="dark"] .approval-summary-grid article {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .approval-summary-grid article.is-approved {
+    border-color: rgba(0, 200, 170, .2);
+    background: rgba(0, 200, 170, .06);
+}
+:root[data-theme="dark"] .approval-summary-grid p {
+    color: rgba(255, 255, 255, .55);
+}
+
+/* Publication gate form dark mode */
+:root[data-theme="dark"] .publication-gate-form label {
+    color: rgba(255, 255, 255, .65);
+}
+
+/* Auth recovery panel dark mode */
+:root[data-theme="dark"] .auth-recovery-panel .auth-path-heading h2 {
+    color: #fff;
+}
+:root[data-theme="dark"] .auth-recovery-panel .auth-path-heading .muted {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .auth-recovery-note {
+    border-color: rgba(248, 175, 33, .25);
+    background: rgba(248, 175, 33, .06);
+}
+:root[data-theme="dark"] .auth-recovery-note strong {
+    color: #fff;
+}
+:root[data-theme="dark"] .auth-recovery-note a {
+    color: var(--gold);
+}
+
+/* Auth invalid state dark mode */
+:root[data-theme="dark"] .auth-invalid-state {
+    border-top-color: rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .auth-invalid-state p {
+    color: rgba(255, 255, 255, .6);
+}
+
+/* Access directory shell dark mode */
+:root[data-theme="dark"] .access-directory-shell {
+    background: rgba(255, 255, 255, .03);
+}
+
+/* Access credential panel dark mode */
+:root[data-theme="dark"] .access-credential-panel {
+    background: rgba(255, 255, 255, .04);
+    border-color: rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .access-credential-summary-copy strong {
+    color: #fff;
+}
+:root[data-theme="dark"] .access-credential-summary-copy small {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .access-credential-content {
+    border-top-color: rgba(255, 255, 255, .08);
+n}
+:root[data-theme="dark"] .access-credential-panel h2 {
+    color: #fff;
+}
+
+/* Credential create form dark mode */
+:root[data-theme="dark"] .credential-create-form label,
+:root[data-theme="dark"] .credential-role-fieldset {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .credential-create-form input,
+:root[data-theme="dark"] .credential-create-form select {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .85);
+}
+:root[data-theme="dark"] .credential-role-fieldset {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .credential-role-fieldset legend {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .credential-role-fieldset label {
+    color: rgba(255, 255, 255, .75);
+}
+
+/* Access directory toolbar dark mode */
+:root[data-theme="dark"] .access-directory-toolbar {
+    border-bottom-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .access-directory-metrics span {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .65);
+}
+:root[data-theme="dark"] .access-directory-metrics strong {
+    color: #fff;
+n}
+
+/* Access directory list dark mode */
+:root[data-theme="dark"] .access-directory-list {
+    background: rgba(255, 255, 255, .02);
+}
+:root[data-theme="dark"] .user-access-directory-row {
+    border-color: rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .02);
+}
+:root[data-theme="dark"] .user-access-directory-row:hover {
+    border-color: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, .04);
+}
+
+/* Access editor dark mode */
+:root[data-theme="dark"] .access-editor summary {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .75);
+}
+:root[data-theme="dark"] .access-editor summary:hover,
+:root[data-theme="dark"] .access-editor summary:focus-visible {
+    border-color: var(--gold);
+    background: rgba(248, 175, 33, .08);
+    color: #fff;
+}
+:root[data-theme="dark"] .access-editor-panel {
+    border-color: rgba(255, 255, 255, .1);
+    background: #0c1f32;
+    box-shadow: 0 24px 60px -32px rgba(0, 0, 0, .6);
+}
+
+/* Access user card dark mode */
+:root[data-theme="dark"] .user-access-card {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .access-avatar {
+    border-color: rgba(248, 175, 33, .3);
+    background: rgba(248, 175, 33, .08);
+    color: var(--gold);
+}
+:root[data-theme="dark"] .access-user-title h2 {
+    color: #fff;
+}
+:root[data-theme="dark"] .access-role-preview span {
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .65);
+}
+
+/* Access role grid dark mode */
+:root[data-theme="dark"] .access-role-grid legend {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .access-role-option {
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .access-role-option:has(input:checked) {
+    border-color: rgba(248, 175, 33, .4);
+    background: rgba(248, 175, 33, .06);
+}
+:root[data-theme="dark"] .access-role-option strong {
+    color: #fff;
+}
+:root[data-theme="dark"] .access-role-option small {
+    color: rgba(255, 255, 255, .55);
+}
+
+/* Review decision panel dark mode */
+:root[data-theme="dark"] .review-decision-panel {
+    background: rgba(255, 255, 255, .02);
+}
+:root[data-theme="dark"] .review-panel-heading h2 {
+    color: #fff;
+}
+:root[data-theme="dark"] .review-panel-heading > strong {
+    color: var(--sky);
+}
+
+/* Structured checklist dark mode */
+:root[data-theme="dark"] .structured-check-item {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .structured-check-item legend {
+    color: rgba(255, 255, 255, .85);
+}
+
+/* Review saved state dark mode */
+:root[data-theme="dark"] .review-saved-state {
+    border-color: rgba(67, 167, 219, .3);
+    background: rgba(67, 167, 219, .08);
+    color: var(--sky);
+}
+
+/* Evidence disclosure dark mode */
+:root[data-theme="dark"] .evidence-disclosure summary {
+    background: rgba(255, 255, 255, .02);
+}
+:root[data-theme="dark"] .evidence-disclosure summary small {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .evidence-disclosure summary strong {
+    color: #fff;
+}
+:root[data-theme="dark"] .evidence-disclosure > div {
+    border-top-color: rgba(255, 255, 255, .08);
+}
+:root[data-theme="dark"] .evidence-disclosure > div > article {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+/* Evidence facts dark mode */
+:root[data-theme="dark"] .evidence-facts div {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+:root[data-theme="dark"] .evidence-facts dt {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .evidence-facts dd {
+    color: rgba(255, 255, 255, .85);
+n}
+
+/* Evidence notice dark mode */
+:root[data-theme="dark"] .evidence-notice {
+    background: rgba(67, 167, 219, .08);
+    color: rgba(255, 255, 255, .75);
+}
+
+/* Prior approval card dark mode */
+:root[data-theme="dark"] .prior-approval-card {
+    border-color: rgba(0, 200, 170, .2);
+    background: rgba(0, 200, 170, .06);
+    color: rgba(255, 255, 255, .75);
+}
+
+/* Governance action menu dark mode */
+:root[data-theme="dark"] .governance-action-menu > form {
+    border-color: rgba(255, 255, 255, .1);
+    background: #0c1f32;
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .6);
+}
+:root[data-theme="dark"] .governance-action-menu h3 {
+    color: #fff;
+}
+:root[data-theme="dark"] .governance-action-menu p {
+    color: rgba(255, 255, 255, .55);
+}
+:root[data-theme="dark"] .governance-action-menu label,
+:root[data-theme="dark"] .publication-gate-form > label {
+    color: rgba(255, 255, 255, .65);
+}
+
+/* Status badges dark mode */
+:root[data-theme="dark"] .status-pending_ethics_review,
+:root[data-theme="dark"] .status-pending_technical_review {
+    color: #ffd966;
+    background: rgba(255, 217, 102, .1);
+}
+:root[data-theme="dark"] .status-ethics_revision_requested,
+:root[data-theme="dark"] .status-technical_revision_requested {
+    color: #ffb366;
+    background: rgba(255, 179, 102, .1);
+}
+:root[data-theme="dark"] .status-awaiting_publication {
+    color: #5de0c8;
+    background: rgba(0, 200, 170, .1);
+}
+
+:root[data-theme="dark"] .portal-sidebar {
+    background: #041626;
+}
+
+:root[data-theme="dark"] .portal-heading {
+    border-bottom-color: rgba(255, 255, 255, .08);
+    background: #0a1c2e;
+}
+
+:root[data-theme="dark"] .portal-heading h1 {
+    color: rgba(255, 255, 255, .88);
+}
+
+:root[data-theme="dark"] .portal-heading p:last-child {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .portal-main::-webkit-scrollbar-thumb,
+:root[data-theme="dark"] .review-decision-panel::-webkit-scrollbar-thumb,
+:root[data-theme="dark"] .portal-tabs--scroll::-webkit-scrollbar-thumb,
+:root[data-theme="dark"] .inspection-anchor-nav::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(67, 167, 219, .7), rgba(3, 85, 140, .8)) padding-box;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+
+:root[data-theme="dark"] .portal-main::-webkit-scrollbar-thumb:hover,
+:root[data-theme="dark"] .review-decision-panel::-webkit-scrollbar-thumb:hover,
+:root[data-theme="dark"] .portal-tabs--scroll::-webkit-scrollbar-thumb:hover,
+:root[data-theme="dark"] .inspection-anchor-nav::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #fbc34f, #f8af21) padding-box;
+}
+
+:root[data-theme="dark"] .review-metric-card,
+:root[data-theme="dark"] .governance-metric-card {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+    box-shadow: 0 16px 34px -30px rgba(0, 0, 0, .5);
+}
+
+:root[data-theme="dark"] .review-metric-card.is-attention,
+:root[data-theme="dark"] .governance-metric-card.is-attention {
+    border-color: rgba(248, 175, 33, .48);
+    background: rgba(248, 175, 33, .06);
+}
+
+:root[data-theme="dark"] .review-metric-card small,
+:root[data-theme="dark"] .governance-metric-card p {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .portal-tabs {
+    border-bottom-color: rgba(255, 255, 255, .1);
+}
+
+:root[data-theme="dark"] .portal-tabs a {
+    color: rgba(255, 255, 255, .5);
+}
+
+:root[data-theme="dark"] .portal-tabs a:hover,
+:root[data-theme="dark"] .portal-tabs a:focus-visible {
+    color: rgba(255, 255, 255, .82);
+}
+
+:root[data-theme="dark"] .portal-tabs a.is-active {
+    color: rgba(255, 255, 255, .88);
+}
+
+:root[data-theme="dark"] .portal-tabs a span {
+    background: rgba(255, 255, 255, .08);
+    color: rgba(255, 255, 255, .7);
+}
+
+:root[data-theme="dark"] .portal-tabs a.is-active span {
+    background: rgba(248, 175, 33, .2);
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .review-filter-form label,
+:root[data-theme="dark"] .admin-moderation-filters label {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .portal-main .review-filter-form input,
+:root[data-theme="dark"] .portal-main .review-filter-form select,
+:root[data-theme="dark"] .portal-main .admin-moderation-filters input,
+:root[data-theme="dark"] .portal-main .admin-moderation-filters select {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .review-filter-search .material-symbols-rounded {
+    color: rgba(255, 255, 255, .42);
+}
+
+:root[data-theme="dark"] .review-queue-card,
+:root[data-theme="dark"] .moderation-board-card {
+    border-color: rgba(255, 255, 255, .08);
+}
+
+:root[data-theme="dark"] .review-queue-cover,
+:root[data-theme="dark"] .moderation-cover {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+
+:root[data-theme="dark"] .review-queue-copy > p,
+:root[data-theme="dark"] .moderation-main > p {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .review-queue-meta span,
+:root[data-theme="dark"] .moderation-meta span {
+    color: rgba(255, 255, 255, .5);
+}
+
+:root[data-theme="dark"] .review-progress-line {
+    background: rgba(255, 255, 255, .08);
+}
+
+:root[data-theme="dark"] .review-queue-action {
+    border-left-color: rgba(255, 255, 255, .08);
+}
+
+:root[data-theme="dark"] .review-queue-action > span {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .review-age-chip,
+:root[data-theme="dark"] .review-draft-chip {
+    color: rgba(255, 255, 255, .7);
+    background: rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .review-draft-chip {
+    background: rgba(67, 167, 219, .12);
+    color: var(--sky);
+}
+
+:root[data-theme="dark"] .governance-empty-state > .material-symbols-rounded {
+    color: rgba(248, 175, 33, .5);
+}
+
+:root[data-theme="dark"] .governance-empty-state p {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .governance-empty-inline {
+    color: rgba(255, 255, 255, .5);
+}
+
+:root[data-theme="dark"] .review-workspace h1,
+:root[data-theme="dark"] .review-workspace-header h1 {
+    color: rgba(255, 255, 255, .88);
+}
+
+:root[data-theme="dark"] .review-back-link {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .review-back-link:hover {
+    color: var(--sky);
+}
+
+:root[data-theme="dark"] .review-header-meta {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .review-saved-state {
+    border-color: rgba(67, 167, 219, .25);
+    background: rgba(67, 167, 219, .08);
+    color: var(--sky);
+}
+
+:root[data-theme="dark"] .review-guidance {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .check-result-option span {
+    border-color: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, .03);
+    color: rgba(255, 255, 255, .62);
+}
+
+:root[data-theme="dark"] .check-result-option:has(input:checked) span {
+    border-color: var(--sky);
+    background: rgba(67, 167, 219, .1);
+    color: var(--sky);
+    box-shadow: 0 0 0 2px rgba(67, 167, 219, .1);
+}
+
+:root[data-theme="dark"] .check-result-option:has(input[value="issue"]:checked) span {
+    border-color: #d6921c;
+    background: rgba(214, 146, 28, .12);
+    color: #e8c66a;
+}
+
+:root[data-theme="dark"] .check-finding {
+    color: #e8c66a;
+}
+
+:root[data-theme="dark"] .review-comments-field {
+    color: rgba(255, 255, 255, .82);
+}
+
+:root[data-theme="dark"] .review-comments-field small {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .portal-main .review-comments-field textarea,
+:root[data-theme="dark"] .portal-main textarea,
+:root[data-theme="dark"] .portal-main select {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .decision-blockers {
+    background: rgba(214, 146, 28, .1);
+    color: #e8c66a;
+}
+
+:root[data-theme="dark"] .completed-decision-card > .material-symbols-rounded {
+    background: rgba(0, 200, 170, .1);
+    color: #5de0c8;
+}
+
+:root[data-theme="dark"] .completed-decision-card p:not(.tag) {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .completed-decision-card small,
+:root[data-theme="dark"] .completed-checklist article > span {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .completed-checklist article {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .03);
+}
+
+:root[data-theme="dark"] .completed-checklist article p {
+    color: #e8c66a;
+}
+
+:root[data-theme="dark"] .governance-dialog {
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(4, 22, 36, .97);
+    box-shadow: 0 30px 80px -35px rgba(0, 0, 0, .7);
+}
+
+:root[data-theme="dark"] .governance-dialog p {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .governance-dialog dl div {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .attention-list article {
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .attention-list p {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .moderation-latest-note {
+    background: rgba(248, 175, 33, .08) !important;
+    color: rgba(255, 255, 255, .55) !important;
+}
+
+:root[data-theme="dark"] .moderation-actions {
+    border-left-color: rgba(255, 255, 255, .08);
+}
+
+:root[data-theme="dark"] .governance-action-menu > form {
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(4, 22, 36, .97);
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .6);
+}
+
+:root[data-theme="dark"] .governance-action-menu p,
+:root[data-theme="dark"] .governance-action-menu label,
+:root[data-theme="dark"] .publication-gate-form > label,
+:root[data-theme="dark"] .archive-reason-form label,
+:root[data-theme="dark"] .detail-list dt {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .publication-confirm {
+    color: rgba(255, 255, 255, .55) !important;
+}
+
+:root[data-theme="dark"] .governance-more-actions > summary {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .portal-pagination a {
+    border-color: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, .03);
+    color: rgba(255, 255, 255, .78);
+}
+
+:root[data-theme="dark"] .portal-pagination .active a {
+    border-color: var(--gold);
+    background: var(--gold);
+    color: var(--navy-ink);
+}
+
+:root[data-theme="dark"] .portal-pagination .page-link--nav {
+    border-color: rgba(248, 175, 33, .45);
+    background: rgba(248, 175, 33, .1);
+    color: rgba(255, 255, 255, .78);
+}
+:root[data-theme="dark"] .portal-pagination a.page-link--nav:hover {
+    background: rgba(248, 175, 33, .25);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+:root[data-theme="dark"] .portal-pagination .page-item--nav.disabled .page-link--nav {
+    color: rgba(255, 255, 255, .35);
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .04);
+}
+
+}
+
+:root[data-theme="dark"] .workflow-stepper {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .workflow-stepper div {
+    border-right-color: rgba(255, 255, 255, .06);
+    color: rgba(255, 255, 255, .4);
+}
+
+:root[data-theme="dark"] .workflow-stepper div.is-complete {
+    background: rgba(0, 200, 170, .08);
+    color: #5de0c8;
+}
+
+:root[data-theme="dark"] .inspection-anchor-nav {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(4, 22, 36, .92);
+}
+
+:root[data-theme="dark"] .inspection-anchor-nav a {
+    color: rgba(255, 255, 255, .5);
+}
+
+:root[data-theme="dark"] .inspection-anchor-nav a:hover {
+    background: rgba(255, 255, 255, .06);
+    color: rgba(255, 255, 255, .82);
+}
+
+:root[data-theme="dark"] .inspection-summary-grid > div > p:not(.tag) {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .current-action-card {
+    border-color: rgba(248, 175, 33, .4);
+    background: rgba(248, 175, 33, .06);
+}
+
+:root[data-theme="dark"] .current-action-card p:last-child {
+    color: #c4a856;
+}
+
+:root[data-theme="dark"] .version-card-list article,
+:root[data-theme="dark"] .audit-activity-list article {
+    border-color: rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .version-card-list small,
+:root[data-theme="dark"] .audit-activity-list small {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .review-history-timeline article:not(:last-child)::before {
+    background: rgba(255, 255, 255, .1);
+}
+
+:root[data-theme="dark"] .timeline-dot {
+    border-color: rgba(4, 22, 36, .97);
+    background: var(--sky);
+    box-shadow: 0 0 0 1px rgba(67, 167, 219, .4);
+}
+
+:root[data-theme="dark"] .review-history-timeline p {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .review-history-timeline blockquote {
+    background: rgba(248, 175, 33, .06);
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .approval-summary-grid article {
+    border-color: rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .approval-summary-grid article.is-approved {
+    border-color: rgba(0, 200, 170, .2);
+    background: rgba(0, 200, 170, .06);
+}
+
+:root[data-theme="dark"] .approval-summary-grid p {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .detail-list div {
+    border-bottom-color: rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .detail-list dd {
+    color: rgba(255, 255, 255, .78);
+}
+
+:root[data-theme="dark"] .structured-check-item {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .structured-check-item legend {
+    color: rgba(255, 255, 255, .82);
+}
+
+:root[data-theme="dark"] .evidence-overview-card p {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .evidence-chip-row span {
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .03);
+    color: rgba(255, 255, 255, .65);
+}
+
+:root[data-theme="dark"] .evidence-facts div {
+    border-color: rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .evidence-facts dt {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .evidence-facts dd {
+    color: rgba(255, 255, 255, .78);
+}
+
+:root[data-theme="dark"] .evidence-notice {
+    background: rgba(67, 167, 219, .08);
+    color: rgba(255, 255, 255, .6);
+}
+
+:root[data-theme="dark"] .prior-approval-card {
+    border-color: rgba(0, 200, 170, .2);
+    background: rgba(0, 200, 170, .06);
+    color: #5de0c8;
+}
+
+:root[data-theme="dark"] .evidence-disclosure summary small {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .evidence-disclosure > div {
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .evidence-disclosure > div > article {
+    border-bottom-color: rgba(255, 255, 255, .04);
+}
+
+:root[data-theme="dark"] .evidence-disclosure article small {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .review-decision-panel {
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .review-panel-heading h2 {
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .review-panel-heading > strong {
+    color: var(--sky);
+}
+
+:root[data-theme="dark"] .audit-log-shell {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .02);
+    box-shadow: 0 20px 48px -34px rgba(0, 0, 0, .5);
+}
+
+:root[data-theme="dark"] .audit-log-toolbar {
+    border-bottom-color: rgba(255, 255, 255, .06);
+    background: linear-gradient(135deg, rgba(255, 255, 255, .03) 0%, rgba(255, 255, 255, .01) 100%);
+}
+
+:root[data-theme="dark"] .audit-log-toolbar strong {
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .audit-log-toolbar small {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .portal-table th,
+:root[data-theme="dark"] .portal-table td {
+    border-bottom-color: rgba(255, 255, 255, .06);
+    color: rgba(255, 255, 255, .78);
+}
+
+:root[data-theme="dark"] .table-wrap {
+    background: rgba(255, 255, 255, .02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .3);
+}
+
+:root[data-theme="dark"] .inline-admin-form {
+    background: rgba(255, 255, 255, .03);
+}
+
+:root[data-theme="dark"] .portal-record-row {
+    border-bottom-color: rgba(255, 255, 255, .04);
+}
+
+:root[data-theme="dark"] .review-history {
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .portal-search input {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .text-button {
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .text-button--danger {
+    color: #e87872;
+}
+
+:root[data-theme="dark"] .access-directory-shell {
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .access-credential-panel {
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .access-credential-summary-copy strong {
+    color: rgba(255, 255, 255, .82);
+}
+
+:root[data-theme="dark"] .access-credential-summary-copy small {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .access-credential-chevron {
+    color: rgba(255, 255, 255, .7);
+}
+
+:root[data-theme="dark"] .access-credential-content {
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .credential-create-form label,
+:root[data-theme="dark"] .credential-role-fieldset,
+:root[data-theme="dark"] .credential-role-fieldset legend {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .credential-create-form input,
+:root[data-theme="dark"] .credential-create-form select {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .credential-role-fieldset {
+    border-color: rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .credential-role-fieldset label {
+    color: rgba(255, 255, 255, .78);
+}
+
+:root[data-theme="dark"] .credential-create-actions {
+    border-top-color: rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .access-directory-toolbar {
+    border-bottom-color: rgba(255, 255, 255, .06);
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .access-directory-metrics span {
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, .03);
+    color: rgba(255, 255, 255, .62);
+}
+
+:root[data-theme="dark"] .access-directory-metrics strong {
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .portal-main .access-directory-filters input,
+:root[data-theme="dark"] .portal-main .access-directory-filters select {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .user-access-directory-row {
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .user-access-directory-row:hover {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .04);
+}
+
+:root[data-theme="dark"] .access-editor summary {
+    border-color: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, .03);
+    color: rgba(255, 255, 255, .78);
+}
+
+:root[data-theme="dark"] .access-editor summary:hover,
+:root[data-theme="dark"] .access-editor summary:focus-visible {
+    border-color: rgba(248, 175, 33, .55);
+    background: rgba(248, 175, 33, .08);
+}
+
+:root[data-theme="dark"] .access-editor-panel {
+    border-color: rgba(255, 255, 255, .1);
+    background: rgba(4, 22, 36, .97);
+    box-shadow: 0 24px 60px -32px rgba(0, 0, 0, .6);
+}
+
+:root[data-theme="dark"] .access-avatar {
+    border-color: rgba(248, 175, 33, .35);
+    background: rgba(248, 175, 33, .08);
+    color: rgba(255, 255, 255, .85);
+}
+
+:root[data-theme="dark"] .access-status.is-active {
+    color: #5de0c8;
+    background: rgba(0, 200, 170, .1);
+}
+
+:root[data-theme="dark"] .access-status.is-inactive {
+    color: rgba(255, 255, 255, .5);
+    background: rgba(255, 255, 255, .05);
+}
+
+:root[data-theme="dark"] .access-current {
+    color: var(--gold);
+    background: rgba(248, 175, 33, .12);
+}
+
+:root[data-theme="dark"] .access-role-preview span {
+    border-color: rgba(255, 255, 255, .1);
+    color: rgba(255, 255, 255, .65);
+    background: rgba(255, 255, 255, .03);
+}
+
+:root[data-theme="dark"] .access-role-grid legend {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .access-role-option {
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .02);
+}
+
+:root[data-theme="dark"] .access-role-option:has(input:checked) {
+    border-color: rgba(248, 175, 33, .45);
+    background: rgba(248, 175, 33, .06);
+}
+
+:root[data-theme="dark"] .access-role-option strong {
+    color: rgba(255, 255, 255, .82);
+}
+
+:root[data-theme="dark"] .access-role-option small {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .portal-live-toast {
+    border-color: rgba(248, 175, 33, .45);
+    background: rgba(248, 175, 33, .08);
+    color: rgba(255, 255, 255, .85);
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .6);
+}
+
+:root[data-theme="dark"] .portal-live-toast span {
+    color: rgba(255, 255, 255, .55);
+}
+
+:root[data-theme="dark"] .notification-menu--portal .notification-trigger {
+    border-color: rgba(255, 255, 255, .14);
+    background: rgba(255, 255, 255, .04);
+    color: rgba(255, 255, 255, .78);
+}
+
+:root[data-theme="dark"] .notification-menu--portal .notification-badge {
+    border-color: #0a1c2e;
+}
+
+:root[data-theme="dark"] .status-pending_ethics_review,
+:root[data-theme="dark"] .status-pending_technical_review {
+    color: var(--gold);
+    background: rgba(248, 175, 33, .15);
+}
+
+:root[data-theme="dark"] .status-ethics_revision_requested,
+:root[data-theme="dark"] .status-technical_revision_requested {
+    color: #e8a64a;
+    background: rgba(232, 166, 74, .12);
+}
+
+:root[data-theme="dark"] .status-awaiting_publication {
+    color: #5de0c8;
+    background: rgba(0, 200, 170, .12);
+}
 
 @media (max-width: 1180px) {
     .review-filter-form, .admin-moderation-filters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -627,4 +1881,3 @@
     .inspection-anchor-nav { margin-left: -8px; margin-right: -8px; border-radius: 0; }
     .publication-gate-form .button { width: 100%; }
 }
-

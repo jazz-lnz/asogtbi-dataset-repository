@@ -57,7 +57,7 @@
             <?php endforeach; ?>
         </div>
         <?php if (isset($pager) && $pager->getPageCount('dashboard') > 1): ?>
-            <nav class="portal-pagination" aria-label="Contributor record pagination"><?= $pager->links('dashboard') ?></nav>
+            <nav class="portal-pagination" aria-label="Contributor record pagination"><?= $pager->links('dashboard', 'dashboard_full') ?></nav>
         <?php endif; ?>
     <?php endif; ?>
 </section>

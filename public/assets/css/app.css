@@ -7,8 +7,11 @@
 @import url("./app/foundation.css");
 @import url("./app/public-ui.css");
 @import url("./app/contributor-library.css");
+@import url("./app/contributor-pagination.css");
 @import url("./app/upload.css");
 @import url("./app/auth.css");
 @import url("./app/portal.css");
 @import url("./app/catalog.css");
 @import url("./app/home.css");
+@import url("./app/public-discovery.css");
+@import url("./app/about.css");

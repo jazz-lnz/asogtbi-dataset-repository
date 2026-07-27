@@ -1,257 +1,141 @@
 <?= $this->extend('layouts/main') ?>
-
 <?= $this->section('content') ?>
-<section class="landing-hero">
-    <div class="shell hero-content">
-        <p class="collab">CSPC <span class="star-gold">✦</span> ASOG TBI</p>
-        <h1>Institutional</h1>
-        <h1 class="sub"><em>Dataset Repository</em></h1>
-        <p>Discover, cite, download, and contribute institutional datasets for thesis, capstone, research, AI/ML, analytics, and startup development.</p>
 
-        <form class="hero-search" method="get" action="<?= site_url('datasets') ?>" data-home-search-form>
+<section class="home-hero-section">
+    <div class="home-hero-grid" aria-hidden="true"></div>
+
+    <div class="home-hero-content">
+        <img class="home-hero-logo" src="<?= base_url('assets/img/asog-data-repo-logo.png') ?>" alt="ASOG TBI Dataset Repository logo">
+        <div class="home-hero-kicker">Institutional</div>
+        <h1>Dataset Repository</h1>
+        <p class="home-hero-lead">A centralized platform for discovering, citing, and downloading institutional research datasets from CSPC and ASOG TBI.</p>
+
+        <form class="home-hero-search" method="get" action="<?= site_url('datasets') ?>">
             <label class="sr-only" for="home-search">Search datasets</label>
-            <input type="search" id="home-search" name="q" placeholder="Search dataset" data-home-search-input>
-            <button type="submit" aria-label="Search" disabled data-home-search-submit>
-                <span class="material-symbols-rounded" aria-hidden="true">search</span>
-            </button>
+            <input id="home-search" type="search" name="q" placeholder="Search datasets by title, tag, or category…">
+            <button type="submit" aria-label="Search datasets"><span class="material-symbols-rounded" aria-hidden="true">search</span></button>
         </form>
+
+        <div class="home-hero-features">
+            <div><span class="material-symbols-rounded" aria-hidden="true">school</span><strong>Academic Origins</strong><small>Sourced from research, theses, and capstone projects.</small></div>
+            <div><span class="material-symbols-rounded" aria-hidden="true">fact_check</span><strong>Fully Documented</strong><small>Complete metadata for clear, reusable research.</small></div>
+            <div><span class="material-symbols-rounded" aria-hidden="true">verified_user</span><strong>Ethically Reviewed</strong><small>Reviewed for quality, privacy, and responsible access.</small></div>
+        </div>
+
+        <a class="home-hero-scroll" href="#repo-snapshot">Browse Datasets <span class="material-symbols-rounded" aria-hidden="true">keyboard_arrow_down</span></a>
     </div>
 </section>
 
-<section class="content-section white">
+<section id="browse-preview" class="home-featured">
     <div class="shell">
-        
-        <!-- 1. THE FLOATING CARD (Overlaps the Hero) -->
-        <div class="floating-feature-card">
-            <div class="floating-feature-grid">
-                <div class="floating-feature-item">
-                    <span class="floating-feature-icon"><span class="material-symbols-rounded" aria-hidden="true">school</span></span>
-                    <h3>Academic Origins</h3>
-                    <p>Sourced from completed research, theses, and capstone projects.</p>
+        <!-- Platform Snapshot with heading + dividers -->
+        <div id="repo-snapshot" class="home-snapshot-section">
+            <div class="home-snapshot-head">
+                <p class="home-snapshot-kicker">Platform Overview</p>
+                <h2>Repository at a Glance</h2>
+            </div>
+            <div class="snapshot-stats">
+                <div class="snapshot-stat">
+                    <span class="snapshot-number"><?= esc((string) ($publishedCount ?? 0)) ?></span>
+                    <span class="snapshot-label">Public datasets</span>
                 </div>
-                <div class="floating-feature-item">
-                    <span class="floating-feature-icon"><span class="material-symbols-rounded" aria-hidden="true">fact_check</span></span>
-                    <h3>Fully Documented</h3>
-                    <p>Backed by complete metadata and expert validation certificates.</p>
+                <div class="snapshot-divider" aria-hidden="true"></div>
+                <div class="snapshot-stat">
+                    <span class="snapshot-number">5</span>
+                    <span class="snapshot-label">Canonical data types</span>
                 </div>
-                <div class="floating-feature-item">
-                    <span class="floating-feature-icon"><span class="material-symbols-rounded" aria-hidden="true">verified_user</span></span>
-                    <h3>Ethically Reviewed</h3>
-                    <p>Cleared by the Research Ethics Board and ASOG TBI before upload.</p>
+                <div class="snapshot-divider" aria-hidden="true"></div>
+                <div class="snapshot-stat">
+                    <span class="snapshot-number">ZIP</span>
+                    <span class="snapshot-label">Protected dataset uploads</span>
                 </div>
             </div>
         </div>
 
-        <!-- 2. THE NEW MAIN HEADER -->
-        <div class="second-page-header">
-            <h2>A foundation of research integrity</h2>
-            <p>Every dataset in our repository undergoes a strict multi-stage review process to ensure privacy, quality, and academic validity.</p>
-        </div>
+        <!-- Sparkle dots (12 total) -->
+        <i class="home-sparkle" aria-hidden="true" style="top:14%;left:6%;--dur:2.2s;--delay:0s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:34%;left:14%;--dur:1.8s;--delay:0.6s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:62%;left:4%;--dur:2.6s;--delay:1.1s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:80%;left:18%;--dur:2.0s;--delay:0.3s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:8%;left:82%;--dur:1.9s;--delay:0.9s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:28%;left:91%;--dur:2.3s;--delay:0.15s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:55%;left:88%;--dur:2.7s;--delay:0.7s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:76%;left:78%;--dur:2.1s;--delay:1.3s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:20%;left:48%;--dur:3.0s;--delay:0.5s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:70%;left:55%;--dur:1.7s;--delay:1.0s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:44%;left:30%;--dur:2.4s;--delay:0.2s"></i>
+        <i class="home-sparkle" aria-hidden="true" style="top:50%;left:70%;--dur:2.0s;--delay:1.5s"></i>
 
-        <!-- 3. HARMONIZED DASHBOARD (Stats & Features) -->
-        <div class="repo-overview-grid">
-            
-            <!-- Left Side: Stats -->
-            <div class="repo-overview-copy">
-                <h3 class="dashboard-subtitle">Platform Snapshot</h3>
-                <div class="repo-stat-stack">
-                    <div class="repo-stat-row">
-                        <span class="repo-stat-number"><?= esc((string) ($publishedCount ?? 0)) ?></span>
-                        <span class="repo-stat-label">Public datasets</span>
-                    </div>
-                    <div class="repo-stat-row">
-                        <span class="repo-stat-number">5</span>
-                        <span class="repo-stat-label">Canonical data types</span>
-                    </div>
-                    <div class="repo-stat-row">
-                        <span class="repo-stat-number">ZIP</span>
-                        <span class="repo-stat-label">Protected dataset uploads</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Side: Carousel -->
-            <div class="repo-carousel-wrap">
-                <div class="repo-carousel-head">
-                    <h3 class="dashboard-subtitle">Core Features</h3>
-                    <div class="repo-carousel-nav">
-                        <button type="button" class="repo-carousel-btn" data-carousel-prev aria-label="Previous feature">‹</button>
-                        <button type="button" class="repo-carousel-btn" data-carousel-next aria-label="Next feature">›</button>
-                    </div>
-                </div>
-                <div class="repo-carousel-track" id="repo-carousel-track">
-                    <article class="repo-carousel-card">
-                        <span class="repo-card-index">01</span>
-                        <h3>Published Dataset Catalog</h3>
-                        <p>Browse public Published datasets with searchable metadata, categories, data types, file formats, and upload dates.</p>
-                    </article>
-                    <article class="repo-carousel-card">
-                        <span class="repo-card-index">02</span>
-                        <h3>Contributor Uploads</h3>
-                        <p>Submit ZIP datasets with research, source, access, category, tags, and anonymization metadata.</p>
-                    </article>
-                    <article class="repo-carousel-card">
-                        <span class="repo-card-index">03</span>
-                        <h3>Fast Search and Filtering</h3>
-                        <p>Find datasets by title, description, tags, category, data type, file format, and date uploaded.</p>
-                    </article>
-                    <article class="repo-carousel-card">
-                        <span class="repo-card-index">04</span>
-                        <h3>My Datasets</h3>
-                        <p>Track your own Pending Review, Revision Requested, Published, Rejected, or Archived dataset records.</p>
-                    </article>
-                    <article class="repo-carousel-card">
-                        <span class="repo-card-index">05</span>
-                        <h3>Citation and BibTeX</h3>
-                        <p>Generate plain-text citations and BibTeX entries automatically for repository datasets.</p>
-                    </article>
-                    <article class="repo-carousel-card">
-                        <span class="repo-card-index">06</span>
-                        <h3>Recommendations</h3>
-                        <p>See similar Published datasets using simple metadata similarity across category, tags, data type, disclosed formats, and description.</p>
-                    </article>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<section class="content-section home-insights-section">
-    <div class="shell">
         <div class="home-dataset-head">
-            <p class="dashboard-subtitle">Public Dataset Activity</p>
-            <h2>Explore what is new and what researchers revisit most.</h2>
+            <p style="color:var(--gold-dark);font-size:10px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;margin:0 0 6px">Repository</p>
+            <h2>Featured Datasets</h2>
             <p>Recent releases and view-ranked records share one clean space, keeping the home screen focused on catalog discovery.</p>
         </div>
 
-        <div class="home-dataset-grid">
-            <article class="home-dataset-panel">
-                <div class="home-list-head">
-                    <div>
-                        <p>Recent Public Datasets</p>
-                        <h3>Fresh from the catalog</h3>
+        <!-- Side-by-side columns: Recent | Popular -->
+        <?php if (empty($featuredDatasets) && empty($popularDatasets)): ?>
+            <div class="home-empty-line">
+                <strong>No published datasets yet</strong>
+                <p>Run migrations and seeders, or submit the first public dataset for review.</p>
+            </div>
+        <?php else: ?>
+            <div class="featured-columns">
+                <!-- Recent Uploads column -->
+                <div class="fc-col">
+                    <div class="fc-col-head">
+                        <p class="fc-col-kicker">Recent Uploads</p>
+                        <h3 class="fc-col-title">Latest additions</h3>
                     </div>
+                    <?php if (! empty($featuredDatasets)): ?>
+                        <div class="fc-col-list">
+                            <?php foreach ($featuredDatasets as $dataset): ?>
+                                <?= view('components/compact_card', ['dataset' => $dataset, 'variant' => 'recent']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <div class="home-empty-line">
+                            <strong>No recent datasets</strong>
+                            <p>Check back soon for new uploads.</p>
+                        </div>
+                    <?php endif; ?>
                 </div>
-                <?php if (empty($featuredDatasets)): ?>
-                    <div class="home-empty-line">
-                        <strong>No published datasets yet</strong>
-                        <p>Run migrations and seeders, or submit the first public dataset for review.</p>
-                    </div>
-                <?php else: ?>
-                    <div class="home-dataset-list">
-                        <?php foreach ($featuredDatasets as $dataset): ?>
-                            <a class="home-dataset-row" href="<?= site_url('datasets/' . $dataset['id']) ?>">
-                                <span class="home-row-kicker"><?= esc($dataset['data_type'] ?: 'Dataset') ?> / <?= esc($dataset['category'] ?: 'Uncategorized') ?></span>
-                                <strong><?= esc($dataset['title']) ?></strong>
-                                <small><?= esc($dataset['author_name'] ?? 'Repository contributor') ?></small>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </article>
 
-            <article class="home-dataset-panel">
-                <div class="home-list-head">
-                    <div>
-                        <p>Popular Datasets</p>
-                        <h3>Most viewed records</h3>
+                <!-- Most Viewed column -->
+                <div class="fc-col">
+                    <div class="fc-col-head">
+                        <p class="fc-col-kicker">Most Viewed</p>
+                        <h3 class="fc-col-title">Popular datasets</h3>
                     </div>
+                    <?php if (! empty($popularDatasets)): ?>
+                        <div class="fc-col-list">
+                            <?php foreach ($popularDatasets as $dataset): ?>
+                                <?= view('components/compact_card', ['dataset' => $dataset, 'variant' => 'popular']) ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php else: ?>
+                        <p style="color:var(--public-muted);font-size:13px;margin:0;">No view data available yet.</p>
+                    <?php endif; ?>
                 </div>
-                <?php if (empty($popularDatasets)): ?>
-                    <div class="home-empty-line">
-                        <strong>No view activity yet</strong>
-                        <p>Dataset views will appear here once public records are opened.</p>
-                    </div>
-                <?php else: ?>
-                    <div class="home-dataset-list">
-                        <?php foreach ($popularDatasets as $dataset): ?>
-                            <a class="home-dataset-row" href="<?= site_url('datasets/' . $dataset['id']) ?>">
-                                <span class="home-row-kicker"><?= esc((string) ((int) ($dataset['view_count'] ?? 0))) ?> <?= ((int) ($dataset['view_count'] ?? 0)) === 1 ? 'view' : 'views' ?> / <?= esc($dataset['data_type'] ?: 'Dataset') ?></span>
-                                <strong><?= esc($dataset['title']) ?></strong>
-                                <small><?= esc($dataset['category'] ?: 'Uncategorized') ?></small>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </article>
-        </div>
+            </div>
+        <?php endif; ?>
 
-    </div>
-</section>
-
-<section class="content-section white">
-    <div class="shell">
-        <div class="section-intro">
-            <h2 class="section-heading">Institutional Partners</h2>
-            <p>Supporting research, innovation, and technology business incubation in the CSPC and ASOG TBI ecosystem.</p>
-        </div>
-        <div class="partner-row">
-            <a class="partner-logo" href="https://region5.dost.gov.ph/" target="_blank" rel="noopener noreferrer" aria-label="Visit DOST Region 5">
-                <img src="<?= base_url('assets/img/dost-region5.png') ?>" alt="DOST Region 5" loading="lazy">
-            </a>
-            <a class="partner-logo" href="https://www.sei.dost.gov.ph/" target="_blank" rel="noopener noreferrer" aria-label="Visit DOST SEI">
-                <img src="<?= base_url('assets/img/pcieerd.png') ?>" alt="DOST SEI" loading="lazy">
-            </a>
-            <a class="partner-logo" href="https://cspc.edu.ph/" target="_blank" rel="noopener noreferrer" aria-label="Visit CSPC">
-                <img src="<?= base_url('assets/img/cspc.png') ?>" alt="CSPC" loading="lazy">
-            </a>
-            <a class="partner-logo" href="https://asogtbi.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit ASOG TBI">
-                <img src="<?= base_url('assets/img/ASOG-TBI-stacked-v2.png') ?>" alt="ASOG TBI" loading="lazy">
-            </a>
-            <a class="partner-logo partner-logo--ccs" href="https://ccs.cspc.edu.ph/" target="_blank" rel="noopener noreferrer" aria-label="Visit CSPC College of Computer Studies">
-                <img src="<?= base_url('assets/img/ccs-landscape-w-text.png') ?>" alt="CSPC College of Computer Studies" loading="lazy">
-            </a>
+        <div class="home-featured-cta">
+            <a class="button" href="<?= site_url('datasets') ?>" aria-label="Explore the full dataset catalog"><span class="material-symbols-rounded" aria-hidden="true">grid_view</span> Explore the full catalog</a>
         </div>
     </div>
 </section>
 
-<section class="content-section">
-    <div class="shell cta-band">
-        <h2>Ready to explore ASOG TBI datasets?</h2>
-        <p>Start with the Published catalog or log in to submit a new dataset package for review.</p>
-        <div class="hero-actions">
-            <a class="button" href="<?= site_url('datasets') ?>">Browse Datasets</a>
-            <a class="button gold" href="<?= site_url(session()->get('user_id') ? 'upload' : 'login') ?>">Submit Dataset</a>
+<section class="home-cta-section">
+    <div class="home-hero-grid" aria-hidden="true"></div>
+    <div>
+        <div class="home-kicker">Contribute</div>
+        <h2>Have a dataset to contribute?</h2>
+        <p>Share your thesis, capstone, or research data with the CSPC and ASOG TBI research community.</p>
+        <div class="actions">
+            <a class="button" href="<?= site_url(session()->get('user_id') ? 'upload' : 'login') ?>" aria-label="Submit a new dataset for review"><span class="material-symbols-rounded" aria-hidden="true">upload</span> Submit a Dataset</a>
+            <a class="button secondary" href="<?= site_url('about/platform') ?>" aria-label="Learn how the repository works"><span class="material-symbols-rounded" aria-hidden="true">info</span> Learn How It Works</a>
         </div>
     </div>
 </section>
-
-<!-- Carousel Navigation Script -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const searchForm = document.querySelector('[data-home-search-form]');
-    const searchInput = document.querySelector('[data-home-search-input]');
-    const searchSubmit = document.querySelector('[data-home-search-submit]');
-
-    if (searchForm && searchInput && searchSubmit) {
-        const syncSearchState = () => {
-            searchSubmit.disabled = searchInput.value.trim() === '';
-        };
-
-        searchInput.addEventListener('input', syncSearchState);
-        searchForm.addEventListener('submit', (event) => {
-            if (searchInput.value.trim() === '') event.preventDefault();
-        });
-        syncSearchState();
-    }
-
-    const track = document.getElementById('repo-carousel-track');
-    const prevBtn = document.querySelector('[data-carousel-prev]');
-    const nextBtn = document.querySelector('[data-carousel-next]');
-
-    if (!track || !prevBtn || !nextBtn) return;
-
-    const scrollAmount = 300; 
-
-    prevBtn.addEventListener('click', () => {
-        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
-
-    nextBtn.addEventListener('click', () => {
-        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
-});
-</script>
 
 <?= $this->endSection() ?>

@@ -997,32 +997,207 @@ a.result-card:hover {
     width: min(720px, 100%);
 }
 
-.citation-card h2 {
-    margin-bottom: 28px;
+/* ─── Logout Confirmation Modal ───────────────────────────────────────── */
+
+.logout-confirm-modal[hidden] {
+    display: none;
 }
 
-.citation-format + .citation-format {
-    margin-top: 24px;
+.logout-confirm-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    display: grid;
+    place-items: center;
+    padding: 18px;
 }
 
-.citation-format-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 10px;
+.logout-confirm-modal:not([hidden]) {
+    animation: previewFadeIn .2s ease both;
 }
 
-.citation-format h3 {
-    margin: 0;
+.logout-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 13, 24, .6);
+    backdrop-filter: blur(7px) saturate(.78);
+    -webkit-backdrop-filter: blur(7px) saturate(.78);
+}
+
+.logout-modal-card {
+    position: relative;
+    z-index: 1;
+    width: min(400px, 100%);
+    border: 2px solid rgba(248, 175, 33, .62);
+    border-radius: 17px;
+    background: #fffefa;
+    box-shadow: 0 30px 90px -34px rgba(2, 13, 24, .82), inset 0 0 0 1px rgba(3, 85, 140, .18);
+    padding: clamp(24px, 4vw, 36px);
+    text-align: center;
+}
+
+.logout-modal-card:focus {
+    outline: 3px solid rgba(248, 175, 33, .28);
+    outline-offset: 4px;
+}
+
+.logout-modal-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff3cf, #f8af21);
     color: var(--navy);
+}
+
+.logout-modal-icon .material-symbols-rounded {
+    font-size: 28px;
+}
+
+.logout-modal-card h2 {
+    margin: 0 0 8px;
+    color: var(--navy);
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.1;
+}
+
+.logout-modal-card > p {
+    margin: 0 0 24px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.logout-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.logout-modal-actions .button {
+    min-width: 120px;
+    min-height: 42px;
+}
+
+.logout-confirm-btn {
+    background: #c43a31;
+    border-color: #c43a31;
+    color: #fff;
+}
+
+.logout-confirm-btn:hover {
+    background: #a32e27;
+    border-color: #a32e27;
+}
+
+:root[data-theme="dark"] .logout-modal-card {
+    background: var(--surface-page);
+    border-color: rgba(248, 175, 33, .4);
+    box-shadow: 0 30px 90px -34px rgba(0, 0, 0, .82), inset 0 0 0 1px rgba(255, 255, 255, .06);
+}
+
+:root[data-theme="dark"] .logout-modal-card h2 {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .logout-modal-card > p {
+    color: var(--public-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .logout-confirm-modal:not([hidden]) {
+        animation: none;
+    }
+}
+
+.citation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.citation-header h2 {
+    margin: 0;
+}
+
+.citation-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.citation-copy-btn .material-symbols-rounded {
     font-size: 18px;
 }
 
-.copy-citation {
-    padding: 8px 14px;
-    font-size: 12px;
+.citation-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--line);
+}
+
+.citation-tab {
+    flex: 0 0 auto;
+    padding: 10px 20px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    background: transparent;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color .18s ease, border-color .18s ease;
+}
+
+.citation-tab:hover {
+    color: var(--navy);
+}
+
+.citation-tab:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: -2px;
+    border-radius: 4px 4px 0 0;
+}
+
+.citation-tab.is-active {
+    color: var(--navy);
+    border-bottom-color: var(--gold);
+}
+
+.citation-panels {
+    min-height: 80px;
+}
+
+.citation-panel {
+    animation: citationFadeIn .2s ease;
+}
+
+@keyframes citationFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .citation-panel {
+        animation: none;
+    }
+}
+
+.citation-panel[hidden] {
+    display: none;
 }
 
 .citation-output {
@@ -1040,7 +1215,28 @@ a.result-card:hover {
 }
 
 .citation-output--bibtex {
-    border-color: #0f3f62;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* Citation format visual differentiation */
+.citation-output--apa {
+    border-left: 3px solid #03558c;
+    background: linear-gradient(90deg, rgba(3, 85, 140, .04) 0%, var(--off) 100%);
+}
+
+.citation-output--mla {
+    border-left: 3px solid #075c57;
+    background: linear-gradient(90deg, rgba(7, 92, 87, .04) 0%, var(--off) 100%);
+}
+
+.citation-output--acm {
+    border-left: 3px solid #f8af21;
+    background: linear-gradient(90deg, rgba(248, 175, 33, .06) 0%, var(--off) 100%);
+}
+
+.citation-output--bibtex {
+    border-left: 3px solid #4a1d96;
+    background: linear-gradient(90deg, rgba(74, 29, 150, .04) 0%, var(--off) 100%);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
@@ -1097,10 +1293,24 @@ a.result-card:hover {
     padding: clamp(28px, 4vw, 46px) 0;
 }
 
+/* Responsive table/image overflow protection inside detail shell */
+.dataset-detail-shell img {
+    max-width: 100%;
+    height: auto;
+}
+
+.dataset-detail-shell table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .dataset-detail-main {
     display: grid;
     gap: 18px;
     min-width: 0;
+    grid-column: 1;
 }
 
 .dataset-sidebar {
@@ -1108,12 +1318,48 @@ a.result-card:hover {
     top: 92px;
     display: grid;
     gap: 16px;
+    grid-column: 2;
 }
 
 .dataset-hero-card,
 .dataset-accordion {
     padding: 0;
     overflow: hidden;
+}
+
+.dataset-hero-card {
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-lg);
+}
+
+.dataset-sidebar .panel,
+.dataset-accordion {
+    border-radius: var(--radius-lg);
+}
+
+.dataset-back-nav {
+    grid-column: 1 / -1;
+    margin-bottom: 4px;
+}
+
+.dataset-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: color .18s ease;
+}
+
+.dataset-back-link:hover,
+.dataset-back-link:focus-visible {
+    color: var(--navy);
+}
+
+.dataset-back-link .material-symbols-rounded {
+    font-size: 18px;
 }
 
 .dataset-hero-cover {
@@ -1224,9 +1470,9 @@ a.result-card:hover {
 
 .dataset-hero-copy h1 {
     font-family: "DM Sans", sans-serif;
-    font-size: clamp(26px, 3vw, 38px);
+    font-size: clamp(30px, 4vw, 48px);
     font-weight: 800;
-    line-height: 1.08;
+    line-height: 1.1;
 }
 
 .dataset-hero-date {
@@ -1337,6 +1583,294 @@ a.result-card:hover {
     display: grid;
     gap: 18px;
     padding: 18px 22px 22px;
+}
+
+/* ─── Dataset detail dark mode ──────────────────────────────────────────── */
+
+:root[data-theme="dark"] .dataset-hero-cover {
+    background:
+        radial-gradient(circle at 18% 18%, rgba(67, 167, 219, .28), transparent 28%),
+        radial-gradient(circle at 92% 12%, rgba(248, 175, 33, .18), transparent 24%),
+        linear-gradient(135deg, #041624 0%, #06314f 45%, #03558b 100%);
+}
+
+/* ─── Dataset detail dark mode ──────────────────────────────────────────── */
+
+:root[data-theme="dark"] .dataset-detail-shell::before {
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .status-pill {
+    background: rgba(255,255,255,.08);
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,.2);
+}
+
+:root[data-theme="dark"] .dataset-hero-card,
+:root[data-theme="dark"] .dataset-accordion,
+:root[data-theme="dark"] .dataset-sidebar > .panel {
+    background: var(--public-surface);
+    border-color: var(--line);
+}
+
+:root[data-theme="dark"] .dataset-hero-card {
+    border-left-color: var(--gold);
+}
+
+:root[data-theme="dark"] .dataset-hero-body {
+    background: transparent;
+}
+
+:root[data-theme="dark"] .dataset-hero-description {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-hero-toggle {
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .dataset-accordion summary,
+:root[data-theme="dark"] .dataset-accordion > .dataset-accordion-summary {
+    border-bottom-color: rgba(248, 175, 33, .25);
+}
+
+:root[data-theme="dark"] .dataset-accordion-summary small {
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .dataset-accordion-summary strong {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-info-grid dt,
+:root[data-theme="dark"] .dataset-chip-label,
+:root[data-theme="dark"] .dataset-files-head,
+:root[data-theme="dark"] .dataset-stats-grid dt {
+    color: var(--public-muted);
+}
+
+:root[data-theme="dark"] .dataset-info-grid > div {
+    border-bottom-color: var(--line);
+}
+
+:root[data-theme="dark"] .dataset-info-grid dd {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-info-grid a {
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .dataset-chip {
+    background: rgba(255,255,255,.06);
+    border-color: var(--line-strong);
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-chip--accent {
+    background: rgba(248,175,33,.12);
+    border-color: rgba(248,175,33,.35);
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .dataset-files-head {
+    border-bottom-color: var(--line);
+}
+
+:root[data-theme="dark"] .dataset-file-name {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-file-note,
+:root[data-theme="dark"] .dataset-file-size {
+    color: var(--public-muted);
+}
+
+:root[data-theme="dark"] .dataset-sidebar h2 {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-stats-grid {
+    border-color: var(--line);
+}
+
+:root[data-theme="dark"] .dataset-stats-grid > div {
+    border-right-color: var(--line);
+    border-bottom-color: var(--line);
+}
+
+:root[data-theme="dark"] .dataset-stats-grid dd {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-rec-row {
+    border-top-color: var(--line);
+}
+
+:root[data-theme="dark"] .dataset-rec-copy h3 {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-rec-copy a:hover {
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .dataset-rec-score {
+    color: var(--public-muted);
+}
+
+:root[data-theme="dark"] .dataset-preview-trigger {
+    border-color: var(--line-strong);
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-preview-trigger:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .dataset-sidebar-edit {
+    border-color: var(--line-strong);
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .dataset-sidebar-edit:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .access-pill {
+    background: rgba(255,255,255,.06);
+    border-color: var(--line-strong);
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .access-restricted,
+:root[data-theme="dark"] .access-private {
+    background: rgba(248,175,33,.12);
+    border-color: rgba(248,175,33,.35);
+}
+
+:root[data-theme="dark"] .preview-card {
+    background: var(--surface-page);
+    border-color: rgba(248,175,33,.4);
+    box-shadow: 0 30px 90px -34px rgba(0,0,0,.82), inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+:root[data-theme="dark"] .preview-card h2 {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .preview-description {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .preview-close {
+    background: rgba(255,255,255,.08);
+    border-color: var(--line-strong);
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .preview-close:hover {
+    background: rgba(248,175,33,.15);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .preview-fact-sheet {
+    background: rgba(255,255,255,.04);
+    border-color: var(--line);
+}
+
+:root[data-theme="dark"] .preview-fact-sheet dt {
+    color: var(--public-muted);
+}
+
+:root[data-theme="dark"] .preview-fact-sheet dd {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .preview-fact-sheet div {
+    border-bottom-color: rgba(248,175,33,.25);
+}
+
+:root[data-theme="dark"] .preview-title-row {
+    border-bottom-color: rgba(248,175,33,.4);
+}
+
+:root[data-theme="dark"] .citation-format h3 {
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .citation-output {
+    background: rgba(255,255,255,.04);
+    border-color: var(--line);
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .citation-output--bibtex {
+    border-color: rgba(248,175,33,.35);
+}
+
+:root[data-theme="dark"] .citation-format--apa .citation-output {
+    border-left-color: #4a9fd4;
+    background: linear-gradient(90deg, rgba(74, 159, 212, .08) 0%, rgba(255,255,255,.04) 100%);
+}
+
+:root[data-theme="dark"] .citation-format--apa .citation-format-head h3 {
+    color: #4a9fd4;
+}
+
+:root[data-theme="dark"] .citation-format--mla .citation-output {
+    border-left-color: #3db8a9;
+    background: linear-gradient(90deg, rgba(61, 184, 169, .08) 0%, rgba(255,255,255,.04) 100%);
+}
+
+:root[data-theme="dark"] .citation-format--mla .citation-format-head h3 {
+    color: #3db8a9;
+}
+
+:root[data-theme="dark"] .citation-format--acm .citation-output {
+    border-left-color: #f8af21;
+    background: linear-gradient(90deg, rgba(248, 175, 33, .1) 0%, rgba(255,255,255,.04) 100%);
+}
+
+:root[data-theme="dark"] .citation-format--acm .citation-format-head h3 {
+    color: #f8af21;
+}
+
+:root[data-theme="dark"] .citation-format--bibtex .citation-output {
+    border-left-color: #9b72cf;
+    background: linear-gradient(90deg, rgba(155, 114, 207, .08) 0%, rgba(255,255,255,.04) 100%);
+}
+
+:root[data-theme="dark"] .citation-format--bibtex .citation-format-head h3 {
+    color: #9b72cf;
+}
+
+:root[data-theme="dark"] .row-pill.tech-type {
+    background: rgba(248,175,33,.15);
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .row-pill.tech-outline {
+    border-color: var(--line-strong);
+    color: var(--text-page);
+}
+
+:root[data-theme="dark"] .row-pill.tech-format {
+    background: rgba(255,255,255,.06);
+    color: var(--text-page);
+}
+
+@media (max-width: 600px) {
+    .detail-page-band > .shell > div {
+        flex-direction: column;
+    }
+
+    .detail-page-band .access-pill {
+        margin-top: 0;
+    }
 }
 
 .dataset-info-grid {

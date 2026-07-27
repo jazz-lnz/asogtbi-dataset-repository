@@ -82,17 +82,14 @@
                 <form class="contributor-library-search" method="get" action="<?= site_url('dashboard') ?>">
                     <input type="hidden" name="view" value="<?= esc($selectedView ?? 'all') ?>">
                     <label><span class="sr-only">Search your datasets</span><span class="material-symbols-rounded" aria-hidden="true">search</span><input type="search" name="q" value="<?= esc($search ?? '') ?>" placeholder="Search title, category, or tags"></label>
-                    <select name="access" aria-label="Filter by access type">
-                        <option value="">All access types</option>
-                        <?php foreach (($accessOptions ?? []) as $value => $label): ?><option value="<?= esc($value) ?>" <?= ($selectedAccess ?? '') === $value ? 'selected' : '' ?>><?= esc($label) ?></option><?php endforeach; ?>
-                    </select>
                     <button class="button" type="submit">Filter</button>
+                    <a class="button secondary contributor-clear-filters" href="<?= site_url('dashboard') ?>">Clear all</a>
                 </form>
             </div>
 
             <nav class="contributor-status-tabs" aria-label="Dataset workflow filters">
                 <?php foreach ($viewLabels as $value => $label): ?>
-                    <a class="<?= ($selectedView ?? 'all') === $value ? 'is-active' : '' ?>" href="<?= site_url('dashboard') ?>?view=<?= esc($value) ?>">
+                    <a class="<?= ($selectedView ?? 'all') === $value ? 'is-active' : '' ?>" href="<?= site_url('dashboard') ?>?view=<?= esc($value) ?><?= ($search ?? '') !== '' ? '&q=' . urlencode($search) : '' ?><?= ($selectedAccess ?? '') !== '' ? '&access=' . urlencode($selectedAccess) : '' ?>">
                         <?= esc($label) ?><span><?= esc((string) ($statusCounts[$value] ?? 0)) ?></span>
                     </a>
                 <?php endforeach; ?>
@@ -193,7 +190,7 @@
             </div>
 
             <?php if (isset($pager) && $pager->getPageCount('dashboard') > 1): ?>
-                <nav class="contributor-pagination" aria-label="My datasets pagination"><?= $pager->links('dashboard') ?></nav>
+                <nav class="contributor-pagination" aria-label="My datasets pagination"><?= $pager->links('dashboard', 'dashboard_full') ?></nav>
             <?php endif; ?>
         <?php endif; ?>
     <?php endif; ?>

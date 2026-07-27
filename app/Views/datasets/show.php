@@ -6,8 +6,12 @@
         'title' => $dataset['title'],
         'author' => $dataset['author_name'] ?? '',
         'year' => ! empty($dataset['created_at']) ? date('Y', strtotime($dataset['created_at'])) : date('Y'),
+        'doi' => $dataset['doi'] ?? '',
+        'url' => $dataset['source_link'] ?? '',
     ];
-    $plainTextCitation = dataset_citation($citationDataset);
+    $apaCitation = dataset_apa_citation($citationDataset);
+    $mlaCitation = dataset_mla_citation($citationDataset);
+    $acmCitation = dataset_acm_citation($citationDataset);
     $bibtexCitation = dataset_bibtex($citationDataset);
 
     $description = trim((string) ($dataset['description'] ?? ''));
@@ -27,17 +31,25 @@
             'data_type' => trim((string) ($recommended['data_type'] ?? 'Dataset')) ?: 'Dataset',
             'file_format' => trim((string) ($recommended['file_format'] ?? 'ZIP')) ?: 'ZIP',
             'content_formats' => trim((string) ($recommended['content_formats'] ?? '')) ?: 'Contents not disclosed',
+            'source_type' => trim((string) ($recommended['source_type'] ?? '')) ?: 'Not set',
             'author_name' => trim((string) ($recommended['author_name'] ?? 'Unknown contributor')) ?: 'Unknown contributor',
             'research_title' => trim((string) ($recommended['research_title'] ?? '')) ?: 'Not set',
+            'project_head' => trim((string) ($recommended['project_head'] ?? '')) ?: 'Not listed',
             'members' => trim((string) ($recommended['members'] ?? '')) ?: 'Not listed',
             'created_at' => ! empty($recommended['created_at']) ? date('F d, Y', strtotime((string) $recommended['created_at'])) : 'Not recorded',
             'score' => (int) ($recommended['score'] ?? 0),
-            'tags' => array_values(array_filter(array_map('trim', explode(',', (string) ($recommended['tags'] ?? ''))))),
+            'tags' => (string) ($recommended['tags'] ?? ''),
         ];
     }
 ?>
 
 <section class="shell dataset-detail-shell">
+    <nav class="dataset-back-nav" aria-label="Breadcrumb">
+        <a class="dataset-back-link" href="<?= site_url('datasets') ?>">
+            <span class="material-symbols-rounded" aria-hidden="true">arrow_back</span>
+            Back to Catalog
+        </a>
+    </nav>
     <div class="dataset-detail-main">
         <article class="panel dataset-hero-card <?= $hasExpandableDescription ? 'is-collapsed' : 'is-static' ?>">
             <div class="dataset-hero-cover">
@@ -259,35 +271,11 @@
                                 <button class="button secondary dataset-preview-trigger" type="button" data-preview-target="dataset-preview-<?= esc((string) $recommended['id']) ?>" aria-controls="dataset-preview-<?= esc((string) $recommended['id']) ?>" aria-expanded="false">Preview</button>
                             </article>
 
-                            <div class="preview-modal" id="dataset-preview-<?= esc((string) $recommended['id']) ?>" role="dialog" aria-modal="true" aria-labelledby="dataset-preview-title-<?= esc((string) $recommended['id']) ?>" aria-describedby="dataset-preview-summary-<?= esc((string) $recommended['id']) ?>" hidden>
-                                <div class="preview-backdrop" data-preview-close></div>
-                                <article class="preview-card dataset-preview-card" tabindex="-1">
-                                    <button class="preview-close" type="button" data-preview-close aria-label="Close preview">&times;</button>
-                                    <div class="preview-title-row">
-                                        <div>
-                                            <p class="tag">Recommendation Preview</p>
-                                            <h2 id="dataset-preview-title-<?= esc((string) $recommended['id']) ?>" tabindex="-1" data-preview-initial><?= esc($recommended['title']) ?></h2>
-                                        </div>
-                                        <div class="row-badge-line preview-pill-line" aria-label="Dataset labels">
-                                            <span class="row-pill tech-type"><?= esc($recommended['data_type']) ?></span>
-                                            <span class="row-pill tech-outline"><?= esc($recommended['category']) ?></span>
-                                            <span class="row-pill tech-format"><?= esc($recommended['content_formats']) ?></span>
-                                            <span class="row-pill tech-outline"><?= esc($recommended['file_format']) ?> package</span>
-                                        </div>
-                                    </div>
-                                    <p class="preview-description" id="dataset-preview-summary-<?= esc((string) $recommended['id']) ?>"><?= esc($recommended['description'] ?: 'No description provided yet.') ?></p>
-                                    <dl class="preview-fact-sheet">
-                                        <div><dt>Contributor:</dt><dd><?= esc($recommended['author_name']) ?></dd></div>
-                                        <div><dt>Research Title:</dt><dd><?= esc($recommended['research_title']) ?></dd></div>
-                                        <div><dt>Authors:</dt><dd><?= esc($recommended['members']) ?></dd></div>
-                                        <div><dt>Date Uploaded:</dt><dd><?= esc($recommended['created_at']) ?></dd></div>
-                                        <div><dt>Tags:</dt><dd><?= esc($recommended['tags'] === [] ? 'No tags' : implode(', ', array_slice($recommended['tags'], 0, 8))) ?></dd></div>
-                                    </dl>
-                                    <div class="preview-actions">
-                                        <a class="button gold preview-explore-btn" href="<?= site_url('datasets/' . $recommended['id']) ?>" data-preview-primary>Explore</a>
-                                    </div>
-                                </article>
-                            </div>
+                            <?= view('components/dataset_preview', [
+                                'dataset'   => $recommended,
+                                'context'   => 'recommended',
+                                'triggerId' => 'dataset-preview-' . (string) $recommended['id'],
+                            ]) ?>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
@@ -300,24 +288,46 @@
     <div class="preview-backdrop" data-citation-close></div>
     <article class="preview-card citation-card" tabindex="-1">
         <button class="preview-close" type="button" data-citation-close aria-label="Close citations">&times;</button>
-        <p class="tag">Citation</p>
-        <h2 id="citation-modal-title-<?= esc((string) $datasetId) ?>">Cite this dataset</h2>
-
-        <section class="citation-format" aria-labelledby="plain-text-citation-title">
-            <div class="citation-format-head">
-                <h3 id="plain-text-citation-title">Plain text</h3>
-                <button class="button copy-citation" type="button" data-copy-citation="plain-text-citation-<?= esc((string) $datasetId) ?>">Copy Citation</button>
+        <div class="citation-header">
+            <div>
+                <p class="tag">Citation</p>
+                <h2 id="citation-modal-title-<?= esc((string) $datasetId) ?>">Cite this dataset</h2>
             </div>
-            <pre id="plain-text-citation-<?= esc((string) $datasetId) ?>" class="citation-output"><?= esc($plainTextCitation) ?></pre>
-        </section>
+            <button class="button citation-copy-btn" type="button" data-citation-copy-active data-format="apa">
+                <span class="material-symbols-rounded" aria-hidden="true">content_copy</span>
+                <span class="citation-copy-label">Copy</span>
+            </button>
+        </div>
 
-        <section class="citation-format" aria-labelledby="bibtex-citation-title">
-            <div class="citation-format-head">
-                <h3 id="bibtex-citation-title">BibTeX</h3>
-                <button class="button copy-citation" type="button" data-copy-citation="bibtex-citation-<?= esc((string) $datasetId) ?>">Copy BibTeX</button>
+        <nav class="citation-tabs" role="tablist" aria-label="Citation format">
+            <button class="citation-tab is-active" role="tab" id="citation-tab-apa-<?= esc((string) $datasetId) ?>" aria-selected="true" aria-controls="citation-panel-apa-<?= esc((string) $datasetId) ?>" data-citation-tab="apa">
+                APA
+            </button>
+            <button class="citation-tab" role="tab" id="citation-tab-mla-<?= esc((string) $datasetId) ?>" aria-selected="false" aria-controls="citation-panel-mla-<?= esc((string) $datasetId) ?>" data-citation-tab="mla">
+                MLA
+            </button>
+            <button class="citation-tab" role="tab" id="citation-tab-acm-<?= esc((string) $datasetId) ?>" aria-selected="false" aria-controls="citation-panel-acm-<?= esc((string) $datasetId) ?>" data-citation-tab="acm">
+                ACM
+            </button>
+            <button class="citation-tab" role="tab" id="citation-tab-bibtex-<?= esc((string) $datasetId) ?>" aria-selected="false" aria-controls="citation-panel-bibtex-<?= esc((string) $datasetId) ?>" data-citation-tab="bibtex">
+                BibTeX
+            </button>
+        </nav>
+
+        <div class="citation-panels">
+            <div class="citation-panel is-active" role="tabpanel" id="citation-panel-apa-<?= esc((string) $datasetId) ?>" aria-labelledby="citation-tab-apa-<?= esc((string) $datasetId) ?>" data-citation-panel="apa">
+                <pre class="citation-output citation-output--apa"><?= esc($apaCitation) ?></pre>
             </div>
-            <pre id="bibtex-citation-<?= esc((string) $datasetId) ?>" class="citation-output citation-output--bibtex"><?= esc($bibtexCitation) ?></pre>
-        </section>
+            <div class="citation-panel" role="tabpanel" id="citation-panel-mla-<?= esc((string) $datasetId) ?>" aria-labelledby="citation-tab-mla-<?= esc((string) $datasetId) ?>" data-citation-panel="mla" hidden>
+                <pre class="citation-output citation-output--mla"><?= esc($mlaCitation) ?></pre>
+            </div>
+            <div class="citation-panel" role="tabpanel" id="citation-panel-acm-<?= esc((string) $datasetId) ?>" aria-labelledby="citation-tab-acm-<?= esc((string) $datasetId) ?>" data-citation-panel="acm" hidden>
+                <pre class="citation-output citation-output--acm"><?= esc($acmCitation) ?></pre>
+            </div>
+            <div class="citation-panel" role="tabpanel" id="citation-panel-bibtex-<?= esc((string) $datasetId) ?>" aria-labelledby="citation-tab-bibtex-<?= esc((string) $datasetId) ?>" data-citation-panel="bibtex" hidden>
+                <pre class="citation-output citation-output--bibtex"><?= esc($bibtexCitation) ?></pre>
+            </div>
+        </div>
     </article>
 </div>
 
@@ -353,7 +363,9 @@
         });
     });
 
-    const closePreview = (modal) => {
+    const closePreview = (control) => {
+        const modalId = control.dataset.previewClose;
+        const modal = modalId ? document.getElementById(modalId) : control.closest('.preview-modal, .dataset-preview-modal');
         if (!modal) return;
         const trigger = document.querySelector(`[data-preview-target="${modal.id}"]`);
         modal.hidden = true;
@@ -363,7 +375,7 @@
     };
 
     document.querySelectorAll('[data-preview-close]').forEach((control) => {
-        control.addEventListener('click', () => closePreview(control.closest('.preview-modal')));
+        control.addEventListener('click', () => closePreview(control));
     });
 
     document.querySelectorAll('.citation-trigger').forEach((trigger) => {
@@ -392,20 +404,61 @@
         control.addEventListener('click', () => closeCitation(control.closest('.citation-modal')));
     });
 
-    document.querySelectorAll('[data-copy-citation]').forEach((button) => {
-        button.addEventListener('click', async () => {
-            const citation = document.getElementById(button.dataset.copyCitation)?.textContent;
-            if (!citation) return;
+    // Citation tab switching
+    document.querySelectorAll('.citation-tab').forEach((tab) => {
+        tab.addEventListener('click', () => {
+            const modal = tab.closest('.citation-modal');
+            if (!modal) return;
 
-            const originalLabel = button.textContent;
-            try {
-                await navigator.clipboard.writeText(citation.trim());
-                button.textContent = 'Copied';
-            } catch (error) {
-                button.textContent = 'Copy failed';
+            const format = tab.dataset.citationTab;
+
+            // Update tabs
+            modal.querySelectorAll('.citation-tab').forEach((t) => {
+                t.classList.remove('is-active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            tab.classList.add('is-active');
+            tab.setAttribute('aria-selected', 'true');
+
+            // Update panels
+            modal.querySelectorAll('.citation-panel').forEach((p) => {
+                p.classList.remove('is-active');
+                p.hidden = true;
+            });
+            const activePanel = modal.querySelector(`[data-citation-panel="${format}"]`);
+            if (activePanel) {
+                activePanel.classList.add('is-active');
+                activePanel.hidden = false;
             }
 
-            window.setTimeout(() => { button.textContent = originalLabel; }, 1600);
+            // Update copy button format
+            const copyBtn = modal.querySelector('[data-citation-copy-active]');
+            if (copyBtn) {
+                copyBtn.dataset.format = format;
+            }
+        });
+    });
+
+    // Single copy button for active tab
+    document.querySelectorAll('[data-citation-copy-active]').forEach((button) => {
+        button.addEventListener('click', async () => {
+            const modal = button.closest('.citation-modal');
+            if (!modal) return;
+
+            const activePanel = modal.querySelector('.citation-panel.is-active');
+            const citation = activePanel?.querySelector('.citation-output')?.textContent;
+            if (!citation) return;
+
+            const label = button.querySelector('.citation-copy-label');
+            const originalLabel = label?.textContent ?? 'Copy';
+            try {
+                await navigator.clipboard.writeText(citation.trim());
+                if (label) label.textContent = 'Copied!';
+            } catch (error) {
+                if (label) label.textContent = 'Failed';
+            }
+
+            window.setTimeout(() => { if (label) label.textContent = originalLabel; }, 1600);
         });
     });
 

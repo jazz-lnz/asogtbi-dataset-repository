@@ -1,0 +1,49 @@
+/* ─── Contributor pagination with Prev/Next buttons ──────────────────────── */
+
+.contributor-pagination .page-link--nav {
+    min-width: 88px;
+    gap: 3px;
+    border-color: rgba(248, 175, 33, .55);
+    background: rgba(248, 175, 33, .12);
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.contributor-pagination .page-link--nav .material-symbols-rounded {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.contributor-pagination a.page-link--nav:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--gold-dark);
+}
+
+.contributor-pagination .page-item--nav.disabled .page-link--nav {
+    color: rgba(3, 85, 140, .35);
+    border-color: rgba(3, 85, 140, .1);
+    background: rgba(255, 255, 255, .55);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ─── Contributor pagination dark mode ──────────────────────────────────── */
+
+:root[data-theme="dark"] .contributor-pagination .page-link--nav {
+    border-color: rgba(248, 175, 33, .35);
+    background: rgba(248, 175, 33, .10);
+    color: var(--gold);
+}
+
+:root[data-theme="dark"] .contributor-pagination a.page-link--nav:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy-ink);
+}
+
+:root[data-theme="dark"] .contributor-pagination .page-item--nav.disabled .page-link--nav {
+    color: rgba(255, 255, 255, .32);
+    border-color: rgba(255, 255, 255, .08);
+    background: rgba(255, 255, 255, .04);
+}

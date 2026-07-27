@@ -115,6 +115,8 @@
         <?= $this->renderSection('content') ?>
     </main>
 </div>
+<?= view('components/logout_modal') ?>
+
 <script>
 (() => {
     document.querySelectorAll('[data-flash-toast]').forEach((toast) => {

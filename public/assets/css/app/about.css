@@ -548,6 +548,7 @@ button{ font-family: inherit; }
 }
 .dev-name{ font-size: 13px; font-weight: 800; color: var(--headingColor); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .dev-role{ font-size: 11px; color: var(--mutedText); font-weight: 600; margin-top: 1px; }
+.dev-role .lead{font-weight: 900;}
 
 /* ── Footer ───────────────────────────────────────────────────── */
 .site-footer{

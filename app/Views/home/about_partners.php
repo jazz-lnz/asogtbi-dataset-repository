@@ -62,26 +62,28 @@
             </div>
         </div>
 
-        <h2 class="thesis-title">Institutional Dataset Repository for Academic Research</h2>
+        <h2 class="thesis-title">CSPC Online Dataset Repository with an Integrated Recommender System using Content-Based Filtering Algorithm</h2>
         <p class="thesis-desc">This study developed an institutional dataset repository system designed to centralize, manage, and make accessible research datasets from thesis, capstone, and AI projects at CSPC, addressing the lack of structured data resources for academic and industry use.</p>
 
         <div class="thesis-grid">
             <div>
-                <div class="thesis-subhead">Research Members</div>
-                <div class="member-row"><div class="member-avatar" style="background:hsl(210,60%,34%);">M1</div><span class="member-name">Member 1</span></div>
-                <div class="member-row"><div class="member-avatar" style="background:hsl(228,60%,34%);">M2</div><span class="member-name">Member 2</span></div>
-                <div class="member-row"><div class="member-avatar" style="background:hsl(246,60%,34%);">M3</div><span class="member-name">Member 3</span></div>
+                <div class="thesis-subhead">Research Members - 3Js</div>
+                <div class="member-row"><div class="member-avatar" style="background:hsl(210,60%,34%);">J1</div><span class="member-name">Joshua P. Estallo</span></div>
+                <div class="member-row"><div class="member-avatar" style="background:hsl(228,60%,34%);">J2</div><span class="member-name"> Janben Aldrich H. Quiapo</span></div>
+                <div class="member-row"><div class="member-avatar" style="background:hsl(246,60%,34%);">J3</div><span class="member-name">Jan Dale M. Parañal</span></div>
             </div>
             <div>
                 <div style="margin-bottom:20px;">
                     <div class="thesis-subhead">Research Adviser</div>
-                    <div class="adviser-name">[Research Adviser]</div>
+                    <div class="adviser-name">Rosel O. Onesa</div>
                 </div>
                 <div>
+                    <div class="thesis-subhead">Panel Chair</div>
+                    <div class="panelist">Kaela Marie N. Fortuno</div>
+                    <br>
                     <div class="thesis-subhead">Panel Members</div>
-                    <div class="panelist">[Panelist 1]</div>
-                    <div class="panelist">[Panelist 2]</div>
-                    <div class="panelist">[Panelist 3]</div>
+                    <div class="panelist">Tiffany Lyn O. Pandes</div>
+                    <div class="panelist">Allan O. Ibo Jr.</div>
                 </div>
             </div>
         </div>
@@ -96,12 +98,12 @@
             <span>2026 DOST-SEI PTP Scholar-Trainees</span>
         </div>
         <div class="dev-contact-list">
-            <div class="dev-contact-item"><div class="dev-avatar" style="background:#03558b;">I1</div><div><div class="dev-name">Intern 1</div><div class="dev-role">Frontend Developer</div></div></div>
-            <div class="dev-contact-item"><div class="dev-avatar" style="background:#0470a8;">I2</div><div><div class="dev-name">Intern 2</div><div class="dev-role">UI/UX Designer</div></div></div>
-            <div class="dev-contact-item"><div class="dev-avatar" style="background:#43a7db;">I3</div><div><div class="dev-name">Intern 3</div><div class="dev-role">Backend Developer</div></div></div>
-            <div class="dev-contact-item"><div class="dev-avatar" style="background:#02447a;">I4</div><div><div class="dev-name">Intern 4</div><div class="dev-role">Database Engineer</div></div></div>
-            <div class="dev-contact-item"><div class="dev-avatar" style="background:#06314f;">I5</div><div><div class="dev-name">Intern 5</div><div class="dev-role">Systems Analyst</div></div></div>
-            <div class="dev-contact-item"><div class="dev-avatar" style="background:#03558b;">I6</div><div><div class="dev-name">Intern 6</div><div class="dev-role">QA &amp; Documentation</div></div></div>
+            <div class="dev-contact-item"><div class="dev-avatar" style="background:#03558b;">F</div><div><div class="dev-name">Fernanne Hannah A. Enimedez</div></div></div>
+            <div class="dev-contact-item"><div class="dev-avatar" style="background:#0470a8;">J</div><div><div class="dev-name">Jessica Mae T. Lanuzo</div></div></div>
+            <div class="dev-contact-item"><div class="dev-avatar" style="background:#43a7db;">J</div><div><div class="dev-name">John Carlo E. Nas</div></div></div>
+            <div class="dev-contact-item"><div class="dev-avatar" style="background:#02447a;">H</div><div><div class="dev-name">Harvey Lloyd V. Palacios</div></div></div>
+            <div class="dev-contact-item"><div class="dev-avatar" style="background:#06314f;">M</div><div><div class="dev-name">Marc Justin N. Prestado</div></div></div>
+            <div class="dev-contact-item"><div class="dev-avatar" style="background:#03558b;">J</div><div><div class="dev-name">John Patrick Y. Salcedo</div></div></div>
         </div>
     </div>
 </section>

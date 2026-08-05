@@ -1,59 +1,69 @@
 # ASOG TBI Dataset Repository
 
-Starter repository for the ASOG TBI Dataset Repository with Recommendation System.
+`main` is the achieved milestone branch for the ASOG TBI Dataset Repository: a unified CodeIgniter 4 and MySQL application for public dataset discovery, contributor submissions, two-stage institutional verification, and administrator-controlled publication.
 
-This project is a CodeIgniter 4 and MySQL web application focused on the MVP described in `Database-Repo-SRS.md`. The MVP target is a functional dataset repository that supports login, basic role access, dataset upload, approval, browsing, search, filtering, detail pages, citation/BibTeX, downloads, updates, archiving, and metadata-based recommendations.
+## Milestone Status
 
-## Current Status
+The mainline release milestone is achieved. The repository now includes the public catalog, contributor workspace, reviewer workspaces, administrator governance portal, Google/password account separation, protected dataset downloads, current as-built documentation, and a comprehensive user manual.
 
-This repository currently contains the CodeIgniter 4 application starter plus planning documents for the first two-week MVP build.
+## Included Workspaces
 
-The implementation should stay focused on the MVP. Advanced institutional features such as full ethics review workflows, multiple reviewer roles, restricted access requests, email notifications, automated backups, annual compliance reports, and AI recommendation methods are future enhancements.
+- Public catalog, search, filters, dataset details, citation, recommendations, and protected downloads
+- Contributor registration, upload, version updates, revision responses, status notifications, and self-archive
+- Technical review with protected ZIP access, searchable queues, assignment aging, structured findings, draft saving, and required manual verification
+- Research Ethics review with technical-approval context, structured compliance findings, draft saving, and immutable decisions
+- Repository administration with operational metrics, stage queues, workload-aware assignment, accountable reassignment, final publication gating, users, roles, archive/restore, review timelines, and audit logs
+
+Only non-archived `published` datasets appear publicly. New and updated submissions move through:
+
+```text
+Pending Technical -> Pending Ethics -> Awaiting Publication -> Published
+       |                  |
+       +-> Revision       +-> Revision
+       +-> Rejected       +-> Rejected
+```
+
+Revision resubmissions return to the same stage. Updates to published datasets restart technical verification so package changes are checked before ethics review.
 
 ## Documentation
 
-- [Setup Guide](SETUP.md)
-- [MVP Task Tracker](TASKS.md)
-- [Repository Setup](docs/REPOSITORY_SETUP.md)
-- [MVP Scope](docs/MVP_SCOPE.md)
-- [Two-Week MVP Plan](docs/MVP_2_WEEK_PLAN.md)
-- [Shared MVP Work Areas](docs/MVP_SHARED_WORK_AREAS.md)
-- [GitHub Project Board and Issues](docs/GITHUB_PROJECT_BOARD.md)
-- [Starting Repository Checklist](docs/STARTING_REPOSITORY_CHECKLIST.md)
-- [System Skeleton](docs/SYSTEM_SKELETON.md)
-- [Design Adaptation](docs/DESIGN_ADAPTATION.md)
+- [SETUP.md](SETUP.md) contains installation, migrations, demo accounts, and the review walkthrough.
+- [docs/USER_MANUAL.md](docs/USER_MANUAL.md) is the comprehensive user manual for guests, contributors, reviewers, administrators, and support staff.
+- [SOFTWARE_DOCUMENTATION.md](SOFTWARE_DOCUMENTATION.md) is the as-built technical and operational specification for the achieved milestone.
+- [docs/CONTEXT.md](docs/CONTEXT.md) defines roles, workflow rules, and deferred scope.
+- [docs/DESIGN.md](docs/DESIGN.md) defines the shared public and governance visual language.
+- [docs/SKILL.md](docs/SKILL.md) gives agents implementation guardrails.
+- [docs/progress.md](docs/progress.md) is the append-only implementation and verification ledger.
+- [docs/ADMIN_REVIEW_DASHBOARD_PLAN.md](docs/ADMIN_REVIEW_DASHBOARD_PLAN.md) records the governance dashboard design and implemented milestones.
+- [Database-Repo-SRS.md](Database-Repo-SRS.md) remains the full requirements source.
+- [handover.md](handover.md) is the current mainline handover and release wrap-up note.
 
-## Tech Stack
-
-- CodeIgniter 4
-- PHP 8.2 or newer
-- MySQL
-- Apache, Nginx, XAMPP, Laragon, or WAMP for local development
-
-## Local Setup
+## Quick Start
 
 ```powershell
 composer install
 Copy-Item .env.example .env
 php spark key:generate
+php spark migrate
+php spark db:seed DemoAccountsSeeder
+php spark db:seed MvpSeeder
 php spark serve
 ```
 
-Update `.env` before running database-backed features:
+Run `DemoAccountsSeeder` when you only need the contributor, admin, ethics reviewer, and technical reviewer demo accounts. Run `MvpSeeder` when you also need the full walkthrough dataset set.
 
-```ini
-CI_ENVIRONMENT = development
-app.baseURL = 'http://localhost:8080/'
+The application requires PHP 8.2 or newer. Uploaded ZIP files stay under `writable/uploads/` and must never be served directly from `public/`.
 
-database.default.hostname = localhost
-database.default.database = asog_dataset_repo
-database.default.username = root
-database.default.password =
-database.default.DBDriver = MySQLi
+## Testing
+
+This repository uses PHPUnit for feature and unit testing.
+
+### Running Tests
+To run the full suite:
+```bash
+./vendor/bin/phpunit
 ```
 
-## MVP Rule
+## Deferred
 
-Every task should answer one question: does this help the team demo the working MVP in two weeks?
-
-If the answer is no, move it to future enhancements.
+Automated ZIP diagnostics, malware scanning, email delivery, browser-driven backup/restore, advanced reports, restricted-access request approval, and generalized notifications remain outside this release.

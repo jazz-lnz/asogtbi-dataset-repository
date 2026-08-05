@@ -10,20 +10,14 @@ class RoleFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (! session()->get('user_id')) {
-            return redirect()->to('/login')->with('error', 'Please log in to continue.');
-        }
-
-        $requiredRoles = $arguments ?? [];
-        $currentRole = session()->get('role');
-
-        if ($requiredRoles !== [] && ! in_array($currentRole, $requiredRoles, true)) {
-            return redirect()->to('/dashboard')->with('error', 'You are not allowed to open that page.');
+        $roles = session()->get('roles');
+        $roles = is_array($roles) ? $roles : array_filter([(string) session()->get('role')]);
+        if (array_intersect($roles, is_array($arguments) ? $arguments : []) === []) {
+            return redirect()->to('/dashboard')->with('error', 'You do not have permission to access that workspace.');
         }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // No after-response work needed for the MVP skeleton.
     }
 }

@@ -23,7 +23,7 @@ class CreateDatasets extends Migration
             'project_head' => ['type' => 'VARCHAR', 'constraint' => 150],
             'members' => ['type' => 'TEXT', 'null' => true],
             'contributor_id' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true],
-            'status' => ['type' => 'VARCHAR', 'constraint' => 30, 'default' => 'pending'],
+            'status' => ['type' => 'VARCHAR', 'constraint' => 40, 'default' => 'pending_ethics_review'],
             'access_type' => ['type' => 'VARCHAR', 'constraint' => 30, 'default' => 'public'],
             'version' => ['type' => 'VARCHAR', 'constraint' => 20, 'default' => '1.0'],
             'approved_by' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => true, 'null' => true],

@@ -67,6 +67,11 @@ Vagrantfile
 
 php_errors.log
 
+# Local release artifacts and exported prototypes
+*.sql
+/temp/
+/Institutional Database Repository/
+
 #-------------------------
 # User Guide Temp Files
 #-------------------------

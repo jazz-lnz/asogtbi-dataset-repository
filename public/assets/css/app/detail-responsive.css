@@ -1,0 +1,228 @@
+/* ==========================================================================
+   DATASET DETAIL PAGE — RESPONSIVE BREAKPOINTS
+   ==========================================================================
+   Adds mobile-first responsive rules for the dataset detail page layout.
+   These complement the base styles in public-ui.css.
+   ========================================================================== */
+
+/* ─── Medium screens (tablet) ────────────────────────────────────────────── */
+
+@media (max-width: 960px) {
+    .dataset-detail-shell {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: clamp(20px, 3vw, 32px) 0;
+    }
+
+    .dataset-detail-main,
+    .dataset-sidebar {
+        grid-column: auto;
+    }
+
+    .dataset-sidebar {
+        position: static;
+        top: auto;
+    }
+
+    .dataset-sidebar-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ─── Small screens (mobile) ─────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+    .dataset-detail-shell {
+        gap: 14px;
+        padding: 16px 0;
+    }
+
+    .dataset-hero-cover {
+        padding: 18px 16px 16px;
+        gap: 16px;
+    }
+
+    .dataset-hero-content {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .dataset-hero-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        border-radius: 12px;
+    }
+
+    .dataset-hero-copy h1 {
+        font-size: clamp(22px, 5vw, 28px);
+    }
+
+    .dataset-hero-body {
+        padding: 14px 16px 16px;
+    }
+
+    .dataset-hero-description {
+        font-size: 14px;
+    }
+
+    .dataset-info-grid {
+        grid-template-columns: 1fr;
+        gap: 0 0;
+    }
+
+    .dataset-accordion summary,
+    .dataset-accordion > .dataset-accordion-summary {
+        padding: 14px 16px;
+    }
+
+    .dataset-accordion-body {
+        padding: 14px 16px 18px;
+    }
+
+    .dataset-sidebar {
+        gap: 12px;
+    }
+
+    .dataset-sidebar h2 {
+        font-size: 20px;
+    }
+
+    .dataset-stats-grid {
+        border-radius: 10px;
+    }
+
+    .dataset-stats-grid > div {
+        padding: 10px 12px;
+    }
+
+    .dataset-stats-grid dd {
+        font-size: 14px;
+    }
+
+    .dataset-sidebar-actions {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .dataset-rec-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .dataset-rec-copy h3 {
+        font-size: 14px;
+    }
+
+    .citation-card {
+        width: 100%;
+        max-height: calc(100vh - 32px);
+        border-radius: 14px;
+        padding: 18px 16px;
+    }
+
+    .citation-header {
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .citation-header h2 {
+        font-size: clamp(20px, 5vw, 26px);
+    }
+
+    .citation-copy-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .citation-tabs {
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: 2px;
+        margin-bottom: 16px;
+    }
+
+    .citation-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .citation-tab {
+        flex: 0 0 auto;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .citation-output {
+        padding: 14px;
+        font-size: 13px;
+        line-height: 1.5;
+        border-radius: 10px;
+    }
+}
+
+/* ─── Extra small screens ────────────────────────────────────────────────── */
+
+@media (max-width: 400px) {
+    .dataset-hero-cover {
+        padding: 14px 12px;
+    }
+
+    .dataset-hero-badges {
+        gap: 6px;
+    }
+
+    .dataset-hero-version {
+        padding: 0 8px;
+        font-size: 10px;
+    }
+
+    .dataset-info-grid {
+        gap: 0;
+    }
+
+    .dataset-info-grid > div {
+        padding: 0 0 10px;
+    }
+}
+
+/* ─── Dark Mode Overrides ─────────────────────────────────────────────── */
+
+@media (max-width: 960px) {
+    :root[data-theme="dark"] .dataset-hero-cover {
+        background: #0c1a2a;
+    }
+
+    :root[data-theme="dark"] .dataset-hero-body {
+        background: #0c1a2a;
+    }
+
+    :root[data-theme="dark"] .dataset-sidebar > .panel {
+        background: #0c1a2a;
+    }
+}
+
+@media (max-width: 640px) {
+    :root[data-theme="dark"] .dataset-hero-cover {
+        background: #0a1520;
+    }
+
+    :root[data-theme="dark"] .dataset-hero-body {
+        background: #0a1520;
+    }
+
+    :root[data-theme="dark"] .dataset-info-grid > div {
+        border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    :root[data-theme="dark"] .dataset-sidebar > .panel {
+        background: #0a1520;
+    }
+
+    :root[data-theme="dark"] .dataset-accordion {
+        background: #0a1520;
+    }
+}

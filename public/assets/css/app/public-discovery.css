@@ -1,0 +1,332 @@
+/* Public discovery UI — shared by Home, About, Browse, and dataset detail. */
+.discovery-hero, .public-page-hero {
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:linear-gradient(155deg,#e8f4fa 0%,#eef7fb 48%,#f5ead8 100%);
+}
+:root[data-theme="dark"] .discovery-hero, :root[data-theme="dark"] .public-page-hero {
+  background:linear-gradient(155deg,#041624 0%,#06314f 52%,#03558b 100%);
+}
+.discovery-hero::before, .public-page-hero::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.55;
+  background-image:linear-gradient(rgba(3,85,139,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(3,85,139,.09) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+:root[data-theme="dark"] .discovery-hero::before, :root[data-theme="dark"] .public-page-hero::before {
+  background-image:linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);
+}
+.discovery-hero {
+  min-height:min(760px,calc(100vh - var(--header-h)));
+  display:grid;
+  place-items:center;
+  padding:110px 0 80px;
+  text-align:center;
+}
+.discovery-hero__content, .public-page-hero__content {
+  position:relative;
+  z-index:1;
+  width:min(820px,calc(100% - 32px));
+  margin:auto;
+}
+.discovery-hero__logo {
+  width:min(126px,30vw);
+  margin:0 auto 16px;
+}
+.discovery-kicker, .public-kicker {
+  margin:0 0 8px;
+  color:var(--navy);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+:root[data-theme="dark"] .discovery-kicker, :root[data-theme="dark"] .public-kicker {
+  color:rgba(255,255,255,.68);
+}
+.discovery-hero h1 {
+  margin:0;
+  color:var(--navy);
+  font-family:"DM Serif Display",Georgia,serif;
+  font-size:clamp(42px,7vw,72px);
+  font-weight:400;
+  line-height:.98;
+}
+.discovery-hero h1 em {
+  color:var(--gold);
+  font-weight:400;
+}
+.discovery-hero__lead {
+  max-width:640px;
+  margin:18px auto 0;
+  color:var(--public-muted);
+  font-size:clamp(15px,2vw,17px);
+  line-height:1.7;
+}
+:root[data-theme="dark"] .discovery-hero h1 {
+  color:#fff;
+}
+:root[data-theme="dark"] .discovery-hero__lead {
+  color:rgba(255,255,255,.65);
+}
+.discovery-search {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:min(720px,100%);
+  margin:34px auto 0;
+  border:1.5px solid var(--navy);
+  border-radius:999px;
+  background:rgba(255,255,255,.92);
+  padding:6px 7px 6px 22px;
+  box-shadow:0 20px 38px -26px rgba(3,49,79,.46);
+}
+.discovery-search input {
+  flex:1;
+  min-width:0;
+  height:44px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:var(--navy-ink);
+  font:inherit;
+}
+.discovery-search button {
+  width:44px;
+  height:44px;
+  border:0;
+  border-radius:50%;
+  background:var(--navy);
+  color:#fff;
+  cursor:pointer;
+}
+
+/* Discovery search dark mode */
+:root[data-theme="dark"] .discovery-search {
+  border-color:rgba(248,175,33,.45);
+  background:rgba(255,255,255,.08);
+  box-shadow:0 20px 38px -26px rgba(0,0,0,.4);
+}
+:root[data-theme="dark"] .discovery-search input {
+  color:rgba(255,255,255,.88);
+}
+:root[data-theme="dark"] .discovery-search input::placeholder {
+  color:rgba(255,255,255,.4);
+}
+:root[data-theme="dark"] .discovery-search button {
+  background:var(--gold);
+  color:var(--navy);
+}
+.discovery-features {
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  width:min(900px,calc(100% - 32px));
+  margin:-42px auto 0;
+}
+.discovery-feature {
+  display:grid;
+  gap:6px;
+  justify-items:center;
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  background:var(--public-surface);
+  padding:20px 16px;
+  text-align:center;
+  backdrop-filter:blur(12px);
+}
+.discovery-feature .material-symbols-rounded {
+  color:var(--gold);
+  font-size:24px;
+}
+.discovery-feature strong {
+  color:var(--navy-ink);
+  font-size:13px;
+}
+.discovery-feature span:last-child {
+  color:var(--public-muted);
+  font-size:12px;
+}
+
+/* Discovery feature dark mode */
+:root[data-theme="dark"] .discovery-feature {
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.1);
+}
+:root[data-theme="dark"] .discovery-feature strong {
+  color:#fff;
+}
+:root[data-theme="dark"] .discovery-feature span:last-child {
+  color:rgba(255,255,255,.55);
+}
+.discovery-section {
+  padding:clamp(64px,9vw,112px) 0;
+}
+.discovery-section--muted {
+  background:rgba(3,85,139,.035);
+}
+:root[data-theme="dark"] .discovery-section--muted {
+  background:rgba(0,0,0,.13);
+}
+.discovery-section__head {
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:28px;
+}
+.discovery-section__head h2 {
+  margin:0;
+  color:var(--navy);
+  font-family:"DM Serif Display",Georgia,serif;
+  font-size:clamp(30px,4vw,48px);
+  font-weight:400;
+}
+.discovery-section__head p {
+  max-width:520px;
+  margin:8px 0 0;
+  color:var(--public-muted);
+}
+:root[data-theme="dark"] .discovery-section__head h2 {
+  color:#fff;
+}
+.featured-datasets {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.discovery-dataset-card {
+  display:grid;
+  gap:12px;
+  min-height:220px;
+  border:1px solid var(--line);
+  border-left:4px solid var(--sky);
+  border-radius:var(--radius);
+  background:var(--public-surface);
+  padding:20px;
+  color:inherit;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.discovery-dataset-card:hover {
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-strong);
+}
+.discovery-dataset-card:nth-child(2n) {
+  border-left-color:#8b5cf6;
+}
+.discovery-dataset-card:nth-child(3n) {
+  border-left-color:#10b981;
+}
+.dataset-card__chips {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.dataset-chip {
+  border-radius:999px;
+  background:rgba(3,85,139,.1);
+  color:var(--navy);
+  padding:4px 8px;
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+.dataset-chip--outline {
+  border:1px solid rgba(248,175,33,.65);
+  background:transparent;
+  color:var(--gold-dark);
+}
+.discovery-dataset-card h3 {
+  margin:0;
+  color:var(--navy-ink);
+  font-family:"DM Serif Display",Georgia,serif;
+  font-size:22px;
+  font-weight:400;
+  line-height:1.2;
+}
+.discovery-dataset-card p {
+  margin:0;
+  color:var(--public-muted);
+  font-size:13px;
+}
+.dataset-card__meta {
+  align-self:end;
+  color:var(--public-muted);
+  font-size:11px;
+}
+
+/* Discovery dataset card dark mode */
+:root[data-theme="dark"] .discovery-dataset-card {
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.1);
+}
+:root[data-theme="dark"] .discovery-dataset-card:hover {
+  box-shadow:0 8px 28px -10px rgba(0,0,0,.6);
+}
+:root[data-theme="dark"] .discovery-dataset-card h3 {
+  color:#fff;
+}
+:root[data-theme="dark"] .discovery-dataset-card p {
+  color:rgba(255,255,255,.6);
+}
+:root[data-theme="dark"] .dataset-chip {
+  background:rgba(248,175,33,.12);
+  color:rgba(248,175,33,.95);
+}
+:root[data-theme="dark"] .dataset-chip--outline {
+  border-color:rgba(248,175,33,.5);
+  color:rgba(248,175,33,.9);
+}
+:root[data-theme="dark"] .dataset-card__meta {
+  color:rgba(255,255,255,.5);
+}
+.discovery-cta {
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#04243e,#03558b);
+  color:#fff;
+}
+.discovery-cta .shell {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+  padding:clamp(52px,8vw,90px) 0;
+}
+.discovery-cta h2 {
+  margin:0;
+  font-family:"DM Serif Display",Georgia,serif;
+  font-size:clamp(30px,4vw,44px);
+  font-weight:400;
+}
+.discovery-cta p {
+  max-width:620px;
+  color:rgba(255,255,255,.72);
+}
+.discovery-cta .button.secondary {
+  border-color:rgba(255,255,255,.35);
+  background:transparent;
+  color:#fff;
+}
+@media (max-width:800px) {
+  .discovery-features,.featured-datasets {
+    grid-template-columns:1fr;
+  }
+  .discovery-features {
+    margin:24px auto 0;
+  }
+  .discovery-section__head,.discovery-cta .shell {
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .discovery-cta .shell {
+    padding-left:16px;
+    padding-right:16px;
+  }
+}

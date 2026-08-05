@@ -1,4 +1,4 @@
-# ASOG TBI Dataset Repository Setup - rapid-mvp
+# ASOG TBI Dataset Repository Setup - main
 
 ## Requirements
 
@@ -16,7 +16,7 @@ php -v
 ## Install
 
 ```powershell
-git switch rapid-mvp
+git switch main
 composer install
 Copy-Item .env.example .env
 php spark key:generate

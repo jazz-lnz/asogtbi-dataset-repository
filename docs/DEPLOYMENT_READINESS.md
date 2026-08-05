@@ -1,6 +1,6 @@
 # Deployment Readiness
 
-This checklist supports Marc's conditional deployment tasks. Use it only when a server is available and the current `rapid-mvp` build has passed the PHP 8.2+ verification commands in `SETUP.md`.
+This checklist supports Marc's conditional deployment tasks. Use it only when a server is available and the current `main` build has passed the PHP 8.2+ verification commands in `SETUP.md`.
 
 ## Go / No-Go Conditions
 

@@ -284,3 +284,23 @@ This file is append-only. Every material implementation milestone must add a dat
 - Verification: PHP 8.5.7 syntax checks pass for all touched PHP files. Unit and in-memory SQLite workflow tests pass with 23 tests and 72 assertions, covering balanced rotation, inactive reviewer exclusion, duplicate prevention, no-reviewer fallback, pending backlog distribution, automatic assignment provenance, notifications, audit records, and the same-transaction technical-to-ethics handoff. `git diff --check` passes. Live MySQL confirms the migration and existing review rows defaulted to `manual`.
 - Blockers: The 14 existing `DatasetAccessTest` cases still stop during test migration setup because `2026-07-20-000020_AddContentFormatsToDatasets.php` runs before the SQLite test database has a `datasets` table. The local demo database also contains an older inconsistent record whose active ethics review does not match its pending-technical dataset status; the new allocator safely refuses to create a second active review for it.
 - Next step: Resolve the old demo record through the administrator workflow, then test a new upload with multiple technical and ethics reviewer accounts and confirm queue counts remain balanced as reviews complete.
+
+## 2026-08-05 - Comprehensive user manual
+
+- Branch/commit: `rapid-mvp`, local documentation update.
+- Completed behavior: Added a standard-format user manual covering system overview, roles, sign-in, public catalog use, contributor procedures, reviewer procedures, administrator procedures, workflow/status reference, access classifications, data/file handling, security rules, notifications, troubleshooting, operational notes, glossary, and route quick reference. Linked the manual from the README documentation list.
+- Schema changes: None.
+- Important files: `docs/USER_MANUAL.md`, `README.md`, and `docs/progress.md`.
+- Verification: Markdown documentation created from the current routes, controllers, models, services, views, and existing repository documentation. `git diff --check -- docs/USER_MANUAL.md README.md docs/progress.md` passed for tracked edits with only existing LF-to-CRLF warnings; `docs/USER_MANUAL.md` has no trailing whitespace and is ASCII-only.
+- Blockers: No browser or application runtime verification was required for this documentation-only milestone.
+- Next step: Review the manual for institution-specific wording, support ownership, and any production-only operating policies before release.
+
+## 2026-08-05 - Mainline milestone wrap-up
+
+- Branch/commit: `rapid-mvp`, prepared for merge into `main`.
+- Completed behavior: Clarified the repository documentation around the achieved mainline milestone, replaced stale branch-oriented setup wording, linked the as-built specification and user manual from the README, refreshed the live handover, replaced boilerplate test documentation with a project-specific test guide, and reduced the old root alpha design export to a pointer to the canonical `docs/DESIGN.md`.
+- Schema changes: None.
+- Important files: `README.md`, `SETUP.md`, `SOFTWARE_DOCUMENTATION.md`, `docs/USER_MANUAL.md`, `docs/DEPLOYMENT_READINESS.md`, `docs/DESIGN.md`, `docs/SKILL.md`, `docs/progress.md`, `handover.md`, `tests/README.md`, and `asog-technology-business-incubator-(asog-tbi)-DESIGN.md`.
+- Verification: `git diff --cached --check` passed for all staged files. `C:\xampp\php\php.exe -l` passed for `app/Views/layouts/main.php` and `tests/unit/ThemeIsolationContractTest.php`. Focused PHPUnit execution was attempted, but the only accessible PHP binary was XAMPP PHP 8.0.30 and PHPUnit requires PHP 8.1+ while the app requires PHP 8.2+.
+- Blockers: Runtime PHPUnit verification requires an accessible PHP 8.2+ CLI binary.
+- Next step: Commit, merge to `main`, and push the achieved milestone.

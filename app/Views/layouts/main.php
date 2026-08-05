@@ -1,3 +1,12 @@
+<?php
+    $currentPath = trim(uri_string(), '/');
+    $isHome = $currentPath === '';
+    $isBrowse = $currentPath === 'datasets' || str_starts_with($currentPath, 'datasets/');
+    $isBrowseCatalog = $currentPath === 'datasets';
+    $isAboutPlatform = $currentPath === 'about/platform';
+    $isAboutPartners = $currentPath === 'about/partners';
+    $isAbout = $isAboutPlatform || $isAboutPartners;
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,6 +26,9 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url('assets/css/app.css') ?>">
+    <?php if ($isAbout): ?>
+        <link rel="stylesheet" href="<?= base_url('assets/css/app/about.css') ?>">
+    <?php endif; ?>
     <link rel="stylesheet" href="<?= base_url('assets/css/app/detail-responsive.css') ?>">
     <meta name="theme-color" content="#03558b">
     <script>
@@ -50,13 +62,6 @@
         $latestUnreadNotification = $notificationModel->where('user_id', (int) session()->get('user_id'))->where('read_at', null)->orderBy('id', 'DESC')->first();
         $latestNotificationId = is_array($latestUnreadNotification) ? (int) $latestUnreadNotification['id'] : 0;
     }
-    $currentPath = trim(uri_string(), '/');
-    $isHome = $currentPath === '';
-    $isBrowse = $currentPath === 'datasets' || str_starts_with($currentPath, 'datasets/');
-    $isBrowseCatalog = $currentPath === 'datasets';
-    $isAboutPlatform = $currentPath === 'about/platform';
-    $isAboutPartners = $currentPath === 'about/partners';
-    $isAbout = $isAboutPlatform || $isAboutPartners;
 ?>
 <?= view('components/logout_modal') ?>
 

@@ -1,6 +1,10 @@
 # ASOG TBI Dataset Repository
 
-The `rapid-mvp` branch is a unified CodeIgniter 4 and MySQL repository for public dataset discovery, contributor submissions, two-stage institutional verification, and administrator-controlled publication.
+`main` is the achieved milestone branch for the ASOG TBI Dataset Repository: a unified CodeIgniter 4 and MySQL application for public dataset discovery, contributor submissions, two-stage institutional verification, and administrator-controlled publication.
+
+## Milestone Status
+
+The mainline release milestone is achieved. The repository now includes the public catalog, contributor workspace, reviewer workspaces, administrator governance portal, Google/password account separation, protected dataset downloads, current as-built documentation, and a comprehensive user manual.
 
 ## Included Workspaces
 
@@ -24,12 +28,15 @@ Revision resubmissions return to the same stage. Updates to published datasets r
 ## Documentation
 
 - [SETUP.md](SETUP.md) contains installation, migrations, demo accounts, and the review walkthrough.
+- [docs/USER_MANUAL.md](docs/USER_MANUAL.md) is the comprehensive user manual for guests, contributors, reviewers, administrators, and support staff.
+- [SOFTWARE_DOCUMENTATION.md](SOFTWARE_DOCUMENTATION.md) is the as-built technical and operational specification for the achieved milestone.
 - [docs/CONTEXT.md](docs/CONTEXT.md) defines roles, workflow rules, and deferred scope.
 - [docs/DESIGN.md](docs/DESIGN.md) defines the shared public and governance visual language.
 - [docs/SKILL.md](docs/SKILL.md) gives agents implementation guardrails.
 - [docs/progress.md](docs/progress.md) is the append-only implementation and verification ledger.
 - [docs/ADMIN_REVIEW_DASHBOARD_PLAN.md](docs/ADMIN_REVIEW_DASHBOARD_PLAN.md) records the governance dashboard design and implemented milestones.
 - [Database-Repo-SRS.md](Database-Repo-SRS.md) remains the full requirements source.
+- [handover.md](handover.md) is the current mainline handover and release wrap-up note.
 
 ## Quick Start
 

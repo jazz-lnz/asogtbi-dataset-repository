@@ -84,7 +84,7 @@ spacing:
 
 ## Overview
 
-This is the visual design system for the **ASOG TBI Dataset Repository public + user-facing website** — a CodeIgniter 4 + MySQL app that lets students, faculty, and incubatees at CSPC browse, cite, download, and contribute datasets. The full functional scope lives in `Database-Repo-SRS.md`; the condensed, build-ready version — MVP scope, roles, and **what is explicitly not part of this repo** — lives in `CONTEXT.md`. **This document governs the UI layer only** and should be read alongside `CONTEXT.md`, not instead of it.
+This is the visual design system for the **ASOG TBI Dataset Repository public + user-facing website** — a CodeIgniter 4 + MySQL app that lets students, faculty, and incubatees at CSPC browse, cite, download, and contribute datasets. The full functional scope lives in `Database-Repo-SRS.md`; the condensed, build-ready version — current release scope, roles, and **what is explicitly not part of this repo** — lives in `CONTEXT.md`. **This document governs the UI layer only** and should be read alongside `CONTEXT.md`, not instead of it.
 
 > **Scope note:** the integrated application includes public, contributor, reviewer, and administrator workspaces. Governance screens use the same tokens with a dedicated portal shell; backup and reporting screens remain deferred.
 
@@ -253,7 +253,7 @@ White-filled circle (~100–120px) with a `gold` 2px ring border, centered insid
 
 Solid `navy`/`deep-dark` fill, 4-column layout: brand block (logo, `body-light` description, circular outline social icons) + three link columns, each headed by a `small-label` in `gold` with a short gold rule beneath. Contact column pairs a small icon with `body-light` text. A hairline `dark-navy-mid` divider separates the columns from a copyright bar in `body-light` at reduced opacity. Identical on every page — never swap it out.
 
-## App-specific components (MVP scope)
+## App-specific components (current release scope)
 
 **Dataset card** (browse/search results grid, and the "recommended datasets" row on a detail page) — white fill, `lg` radius, `warm-border` hairline, `card-lift` shadow on hover only (flat at rest). Contents: a `category-label` data-type chip (gold outline, off-white fill — Text/Image/Audio/Video/Tabular) top-left, `subheading-serif` dataset title, `body-light` two-line description, and a `small-label` meta row (disclosed formats inside the ZIP, package, size, date uploaded). Clicking anywhere on the card opens the **Dataset Detail Page**. The recommended-datasets row reuses this exact card at a smaller fixed width, in a horizontal scroll or 5-up grid — never a different card shape.
 
@@ -287,7 +287,7 @@ Status chips only ever appear where a user is looking at *their own* datasets (d
 - **Active filters** surface as a wrapped row of removable `gold`-outline chips directly above the results grid (not inside the sidebar), each with a small "×"; clicking one removes just that filter. This row only renders when at least one filter is active.
 - **Mobile (< 1024px):** the sidebar collapses entirely; a sticky `navy` "Filters" pill button (with the same gold count badge) sits above the results grid and opens the full accordion content in a bottom sheet — off-white fill, `lg` radius on the top corners only, the same `blur(16px)` glass backdrop behind it, with a primary "Apply Filters" pill pinned to the bottom of the sheet.
 
-**Pagination** — centered row of `sm`-radius number controls under the results grid; current page is a solid `navy` fill with white text, other pages are ghost/outline, prev/next are chevron icons in the same control size. Keep it simple — no "jump to page" input for MVP.
+**Pagination** — centered row of `sm`-radius number controls under the results grid; current page is a solid `navy` fill with white text, other pages are ghost/outline, prev/next are chevron icons in the same control size. Keep it simple — no "jump to page" input in the current release.
 
 **Login Page** — Page Header Band ("Log In" in `section-heading`, short `body-light` subtext like "Access your ASOG TBI datasets") over the gridded off-white body. Centered card: white fill, `lg` radius, `card-lift` shadow, ~400px wide. Contents top to bottom: email field, password field (both `sm`-radius, `warm-border`, focus state swaps border to `sky-blue` with a soft `ring-white`-style glow), a right-aligned `body-light` "Forgot password?" link in `sky-blue`, a full-width primary pill "Log In" button in `sky-blue`, and a centered `body-light` line below the card — "Don't have an account? **Register**" with Register as a `sky-blue` link. Same footer as every other page.
 
@@ -344,4 +344,4 @@ Keep it minimal and functional — this is an institutional tool, not a marketin
 4. Block out layout with the container/breakpoint rules first, content second.
 5. Apply the grid texture to at most one light section per screen; skip it entirely on dense data screens (search results with an open filter sidebar) where it would compete with content.
 6. Build components from the patterns in this doc — don't invent new card, button, badge, or filter shapes.
-7. Cross-check new screens against `CONTEXT.md` for MVP functional scope and against **Do's and Don'ts** above for visual correctness, before calling a screen done.
+7. Cross-check new screens against `CONTEXT.md` for current functional scope and against **Do's and Don'ts** above for visual correctness, before calling a screen done.

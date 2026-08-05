@@ -1,5 +1,5 @@
 ﻿:root {
-    color-scheme: light dark;
+    color-scheme: light;
 
     --navy: #03558b;
     --navy-dark: #02447a;
@@ -46,7 +46,13 @@
     --dropdown-item-hover: rgba(3, 85, 140, .08);
 }
 
+:root[data-theme="light"] {
+    color-scheme: light;
+}
+
 :root[data-theme="dark"] {
+    color-scheme: dark;
+
     --surface-page: #061f33;
     --text-page: rgba(255, 255, 255, .88);
     --line: rgba(255, 255, 255, .12);

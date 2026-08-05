@@ -1,8 +1,9 @@
 # Application CSS
 
-`app.css` is the only stylesheet entry point used by the application layouts.
-It imports the modules below in cascade order. Later modules intentionally
-override shared declarations from earlier ones — no `!important` needed.
+`app.css` is the shared stylesheet entry point used by the application
+layouts. It imports the modules below in cascade order. Later modules
+intentionally override shared declarations from earlier ones — no
+`!important` needed.
 
 - **`foundation.css`** — Design tokens (`:root` / `[data-theme="dark"]`),
   reset rules, site shell + navigation, buttons, toasts, notices, theme toggle,
@@ -42,7 +43,9 @@ override shared declarations from earlier ones — no `!important` needed.
 
 - **`about.css`** — About page compositions: shared hero layout,
   stat grid, intro, feature band, steps, partner cards, thesis origin,
-  and developer grid.
+  and developer grid. This module is loaded directly by the public layout only
+  for About routes so its page-specific tokens and generic card classes cannot
+  leak into the administration portal or other public pages.
 
 ## Maintenance rule
 

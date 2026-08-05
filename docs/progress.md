@@ -304,3 +304,13 @@ This file is append-only. Every material implementation milestone must add a dat
 - Verification: `git diff --cached --check` passed for the release commit and the final main merge. `C:\xampp\php\php.exe -l` passed for all 88 staged PHP files after the main merge. No actual Git conflict markers remain. The local SQL dump, `temp/`, and standalone Figma/Vite export were removed from the main merge and ignored. Focused PHPUnit execution was attempted, but the only accessible PHP binary was XAMPP PHP 8.0.30 and PHPUnit requires PHP 8.1+ while the app requires PHP 8.2+.
 - Blockers: Runtime PHPUnit verification requires an accessible PHP 8.2+ CLI binary.
 - Next step: Commit, merge to `main`, and push the achieved milestone.
+
+## 2026-08-05 - Professional software manual format
+
+- Branch/commit: `main`, local documentation update after mainline milestone merge.
+- Completed behavior: Reformatted `docs/USER_MANUAL.md` into a professional software-manual structure based on the supplied template: cover/title metadata, document control, use notice, citation, acknowledgments, abstract, software description, installation/access information, contents, figure/table registers, numbered operating chapters, references, route appendices, demo-account appendix, glossary, acronyms, and release-limit appendix.
+- Schema changes: None.
+- Important files: `docs/USER_MANUAL.md`, `README.md`, and `docs/progress.md`.
+- Verification: Manual content was aligned against current routes, dataset/review/user models, review workflow service, and existing repository docs. `git diff --check -- docs/USER_MANUAL.md README.md docs/progress.md` passed with only existing LF-to-CRLF warnings, and `rg -n "[^\\x00-\\x7F]" docs/USER_MANUAL.md README.md docs/progress.md` returned no non-ASCII hits.
+- Blockers: No browser or application runtime verification was required for this documentation-only update.
+- Next step: Review institution-specific wording and convert the Markdown manual to PDF or DOCX only if a formal printable deliverable is required.

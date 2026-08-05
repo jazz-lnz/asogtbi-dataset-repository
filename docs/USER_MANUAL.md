@@ -1,826 +1,1000 @@
 # ASOG TBI Dataset Repository User Manual
 
-## Document Control
+Software Manual
+
+Mainline Milestone Release
+
+Manual Version 1.1
+
+Manual Date: 2026-08-05
+
+Prepared for: ASOG Technology Business Incubator and the CSPC research community
+
+Prepared by: ASOG TBI Dataset Repository project team
+
+System type: CodeIgniter 4 and MySQL web application
+
+## Front Matter
+
+### Document Control
 
 | Item | Value |
 |---|---|
 | Document title | ASOG TBI Dataset Repository User Manual |
+| Document type | Software user manual |
 | System release | Mainline milestone release, integrated CodeIgniter application |
-| Manual version | 1.0 |
+| Manual version | 1.1 |
 | Manual date | 2026-08-05 |
-| Intended audience | Guests, contributors, reviewers, repository administrators, and support staff |
-| Related documents | `README.md`, `SETUP.md`, `docs/CONTEXT.md`, `SOFTWARE_DOCUMENTATION.md` |
-| Sensitive-data rule | This manual describes configuration names and user procedures. It does not contain credentials, `.env` values, reset tokens, or uploaded dataset contents. |
+| Primary audience | Guests, contributors, technical reviewers, research ethics reviewers, repository administrators, and support staff |
+| Related documents | `README.md`, `SETUP.md`, `docs/CONTEXT.md`, `docs/DEPLOYMENT_READINESS.md`, `SOFTWARE_DOCUMENTATION.md`, `tests/README.md` |
+| Template basis | Professional software-manual structure: cover/title metadata, use notice, acknowledgments, software description, installation/access information, contents, figures/tables registers, numbered chapters, appendices, and troubleshooting. |
+| Sensitive-data rule | This manual describes user procedures and configuration names only. It must not contain credentials, `.env` values, reset tokens, uploaded dataset contents, or private review material. |
 
-## Table of Contents
+### Use and Support Notice
+
+This manual describes the standard operation of the ASOG TBI Dataset Repository at the achieved mainline milestone. The system supports institutional dataset discovery, contributor submission, two-stage review, administrator-controlled publication, protected downloads, account management, notifications, and audit visibility.
+
+Users remain responsible for submitting accurate metadata, respecting consent requirements, and ensuring that uploaded datasets are suitable for the selected access classification. Review approval does not replace institutional research ethics rules, data privacy rules, or office-level publication policies.
+
+Operational support, account issuance, publication decisions, and production environment configuration must be handled by the assigned repository administrators or institutional IT support group.
+
+### Citation Information
+
+Recommended citation for this manual:
+
+ASOG Technology Business Incubator. ASOG TBI Dataset Repository User Manual. Version 1.1. 2026-08-05.
+
+### Acknowledgments
+
+The repository is prepared for ASOG TBI and the CSPC research community. Its current release reflects institutional needs for dataset organization, responsible review, controlled publication, and reusable research outputs.
+
+Institutional partner branding and public-facing content should be reviewed by the appropriate office before production publication.
+
+### Abstract
+
+The ASOG TBI Dataset Repository is a centralized platform for organizing, reviewing, publishing, discovering, citing, and downloading research datasets. It supports public browsing, authenticated downloads, Google and issued-password sign-in, contributor submissions, technical review, research ethics review, administrator governance, audit logging, and in-app notifications. This manual provides role-based operating procedures and reference information for the implemented mainline milestone release.
+
+### Revision History
+
+| Version | Date | Description |
+|---|---|---|
+| 1.0 | 2026-08-05 | Initial comprehensive user manual based on the current repository implementation. |
+| 1.1 | 2026-08-05 | Reformatted into a professional software-manual structure following the supplied template style. |
+
+### Software Description
+
+#### One-Line Description
+
+The ASOG TBI Dataset Repository is a web-based institutional platform for managing the lifecycle of research dataset submissions from upload through review, publication, discovery, citation, and controlled download.
+
+#### Description
+
+The repository combines a public dataset catalog, contributor workspace, reviewer queues, and administrator governance portal in one CodeIgniter 4 application. Users can browse published records, search and filter metadata, view citation information, and download eligible ZIP packages after sign-in. Contributors can submit ZIP packages with structured metadata and track moderation status. Reviewers verify technical quality and research ethics suitability. Administrators manage users, assignments, publication, archive actions, and audit records.
+
+#### Benefits and Value
+
+| Benefit | Value to users |
+|---|---|
+| Centralized dataset catalog | Gives students, faculty, incubatees, reviewers, and administrators one place to find and manage repository records. |
+| Structured submission workflow | Keeps metadata, source details, anonymization confirmation, files, versions, review records, and publication actions connected. |
+| Two-stage verification | Separates technical package checks from ethics and privacy checks before publication. |
+| Controlled access | Allows public, institutional, restricted, and private dataset classifications with protected file delivery. |
+| Account separation | Lets CSPC users sign in with Google while approved external users can receive issued password credentials. |
+
+#### Platform Requirements
+
+| Area | Requirement |
+|---|---|
+| End-user browser | A current desktop or mobile browser with cookies enabled. |
+| User network access | Access to the deployed repository URL. |
+| CSPC Google sign-in | A my.cspc.edu.ph Google account authorized by the Google OAuth client configuration. |
+| Password sign-in | A password account issued by a repository administrator. |
+| Server runtime | PHP 8.2 or newer, Composer dependencies, MySQL or MariaDB, writable application storage, clean URL routing, and configured environment values. |
+| Optional services | Google OAuth for CSPC sign-in and SMTP for password reset email delivery. |
+
+#### Keywords
+
+ASOG TBI, CSPC, dataset repository, research data, institutional repository, CodeIgniter, MySQL, Google OAuth, contributor workflow, technical review, ethics review, protected downloads, audit logs.
+
+### Installation and Access Information
+
+End users do not install the repository software. They access the deployed web application through a browser.
+
+Repository maintainers and institutional IT staff should use `README.md`, `SETUP.md`, `docs/DEPLOYMENT_READINESS.md`, and `SOFTWARE_DOCUMENTATION.md` for environment setup, deployment readiness, database migrations, web-server routing, OAuth configuration, SMTP configuration, backup expectations, and release verification.
+
+If a user cannot access the application after deployment, confirm the following before escalating:
+
+1. The user is visiting the correct repository URL.
+2. The browser allows cookies and is not blocking the session.
+3. The user's account is active.
+4. The user has the required role for the page being opened.
+5. Google OAuth redirect URLs match the deployed host.
+6. Password reset email delivery is configured if local password recovery is expected.
+7. File and upload storage directories are writable by the web server.
+
+### Contents
 
 1. Introduction
 2. System Overview
-3. Roles and Permissions
-4. Accessing the System
-5. Common Interface Elements
-6. Guest and Public User Procedures
+3. Accessing the System
+4. Roles and Permissions
+5. Interface and Navigation
+6. Public Catalog Procedures
 7. Contributor Procedures
 8. Reviewer Procedures
 9. Repository Administrator Procedures
-10. Workflow and Status Reference
-11. Data and File Handling
-12. Account, Security, and Privacy Rules
-13. Notifications and Audit Trail
-14. Troubleshooting
-15. Operational Notes
-16. Glossary
-17. Quick Route Reference
+10. Workflow, Data Handling, and Security Reference
+11. Troubleshooting and Support
+12. Operational Notes
+13. References
+Appendix A. Route Reference
+Appendix B. Local Demo Accounts
+Appendix C. Glossary and Acronyms
+Appendix D. Known Release Limits
+
+### List of Figures
+
+| Figure | Title | Location |
+|---|---|---|
+| Figure 2-1 | Standard dataset workflow | Section 2.4 |
+
+### List of Tables
+
+| Table | Title | Location |
+|---|---|---|
+| Table FM-1 | Document Control | Front Matter |
+| Table FM-2 | Revision History | Front Matter |
+| Table FM-3 | Benefits and Value | Front Matter |
+| Table FM-4 | Platform Requirements | Front Matter |
+| Table 1-1 | Manual Audience | Section 1.3 |
+| Table 2-1 | Main Capability Summary | Section 2.2 |
+| Table 4-1 | Role Summary | Section 4.1 |
+| Table 4-2 | Permission Matrix | Section 4.2 |
+| Table 7-1 | Upload Field Reference | Section 7.3 |
+| Table 8-1 | Technical Review Checklist | Section 8.3 |
+| Table 8-2 | Ethics Review Checklist | Section 8.7 |
+| Table 10-1 | Dataset Status Reference | Section 10.1 |
+| Table 10-2 | Access Classification Reference | Section 10.2 |
+| Table 10-3 | Account Identity Rules | Section 10.4 |
+| Table 11-1 | Troubleshooting Matrix | Section 11.2 |
+| Table A-1 | Public and Auth Routes | Appendix A |
+| Table A-2 | Reviewer Routes | Appendix A |
+| Table A-3 | Administrator Routes | Appendix A |
+| Table B-1 | Development Demo Accounts | Appendix B |
+| Table C-1 | Glossary | Appendix C |
+| Table C-2 | Acronyms | Appendix C |
 
 ## 1. Introduction
 
 ### 1.1 Purpose
 
-The ASOG TBI Dataset Repository is a web-based institutional system for submitting, reviewing, publishing, discovering, citing, and downloading research datasets. This manual explains how users operate the system from the public catalog, contributor workspace, technical and ethics review workspaces, and administrator portal.
+This manual explains how to use the ASOG TBI Dataset Repository from the perspective of each operating role. It covers public browsing, account access, contributor uploads, review decisions, administrator moderation, protected downloads, workflow states, notifications, and common support issues.
 
 ### 1.2 Scope
 
-This manual covers the implemented system behavior in the current repository. It includes:
+This manual covers behavior implemented in the mainline milestone release:
 
-- public dataset discovery;
-- Google and password sign-in;
-- contributor uploads, revisions, updates, and archive actions;
-- technical review;
-- research ethics review;
-- administrator moderation, publication, user management, and audit review;
-- in-app notifications; and
-- common troubleshooting.
+- public homepage and dataset catalog;
+- dataset search, filtering, pagination, detail pages, citations, and recommendations;
+- Google sign-in for authorized CSPC accounts;
+- issued-password sign-in for approved non-Google access;
+- request-access flow for password credential requests;
+- contributor upload, revision, update, archive, and status tracking;
+- technical reviewer queue and checklist workflow;
+- research ethics reviewer queue and checklist workflow;
+- automatic and manual reviewer assignment;
+- administrator publication, archive, restore, user, role, and audit-log management;
+- protected dataset file storage and download controls; and
+- in-app notifications and audit records.
 
-This manual does not replace the developer setup guide, deployment checklist, or full technical specification.
+This manual does not replace the full technical specification, deployment guide, database migration history, production security review, or institutional research ethics policies.
 
-### 1.3 Audience
+### 1.3 Manual Audience
 
 | Audience | Use this manual to |
 |---|---|
-| Guest | Search, inspect, cite, and understand dataset access. |
-| Contributor | Upload datasets, track moderation, revise records, update published datasets, and manage owned records. |
-| Technical Reviewer | Verify ZIP packages, metadata, documentation, file suitability, and declared formats. |
-| Ethics Reviewer | Verify consent, anonymization, sensitivity, source legitimacy, and access classification. |
-| Repository Administrator | Assign reviewers, publish records, manage users, archive/restore records, and inspect audit activity. |
-| Support Staff | Diagnose sign-in, access, workflow, upload, and notification issues. |
+| Guest | Search and inspect public dataset records before signing in. |
+| Contributor | Upload datasets, track moderation, respond to revision requests, update published records, and archive owned records. |
+| Technical reviewer | Verify protected ZIP packages, metadata, documentation, declared file formats, and file suitability. |
+| Research ethics reviewer | Verify consent, anonymization, sensitive-data safeguards, source legitimacy, and access classification. |
+| Repository administrator | Assign or reassign reviewers, publish records, manage users and roles, archive or restore records, and inspect audit activity. |
+| Support staff | Diagnose access, workflow, upload, download, notification, and account issues. |
+
+### 1.4 Manual Conventions
+
+- Route examples use a leading slash, such as `/datasets`.
+- Button and menu labels are written as visible interface text, such as `Upload Dataset`.
+- Dataset statuses are written using their user-facing labels, such as `Pending Technical Review`.
+- Code, configuration keys, and file paths are written in monospace.
+- Procedures assume the user is signed in when the page requires authentication.
 
 ## 2. System Overview
 
-### 2.1 Product Description
+### 2.1 Product Context
 
-The repository is one integrated web application with two connected areas:
+The repository is one integrated web application with two connected operating areas:
 
 - the public and contributor-facing website; and
 - the governance portal for reviewers and administrators.
 
-Both areas use the same accounts, dataset records, protected files, review records, notifications, and audit logs.
+Both areas use the same users, roles, dataset records, protected files, versions, reviews, notifications, and audit logs. Published catalog records are separated from pending, rejected, archived, and private records by workflow status and access classification.
 
-### 2.2 Main Capabilities
+### 2.2 Main Capability Summary
 
-- Browse and search approved datasets.
-- View dataset metadata, statistics, citations, and recommendations.
-- Require sign-in before downloading dataset ZIP packages.
-- Submit datasets as protected ZIP packages with structured metadata.
-- Route new and updated submissions through technical review before ethics review.
-- Save reviewer checklist drafts before final decisions.
-- Request contributor revisions, reject submissions, or approve review stages.
-- Publish only after both review stages approve the current version.
-- Maintain version history, review history, notification history, and audit logs.
-- Manage users, sign-in methods, account status, and role assignments.
+| Capability | Description |
+|---|---|
+| Homepage search | Lets users begin dataset discovery from the main public landing view. |
+| Dataset catalog | Lists published datasets with search, filters, pagination, and dataset cards. |
+| Dataset detail | Shows metadata, file context, citations, statistics, recommendations, and download controls. |
+| Protected downloads | Requires sign-in before serving eligible ZIP packages from non-public storage. |
+| Contributor workspace | Lets contributors submit and manage owned datasets. |
+| Review queues | Gives technical and ethics reviewers assigned worklists with filters and aging context. |
+| Review workspace | Provides protected downloads, metadata review, checklist decisions, draft saving, and final decisions. |
+| Administrator portal | Provides moderation stages, assignment controls, publication actions, user management, and audit logs. |
+| Notifications | Shows repository alerts through the shared notification menu. |
+| Audit trail | Records important workflow, account, review, publication, and download events for administrator inspection. |
 
 ### 2.3 System Boundaries
 
-The current release does not include automated malware scanning, automated ZIP diagnostics, public self-registration, advanced reports, formal restricted-access request approvals, or general email notifications. Password reset email delivery depends on configured SMTP.
+The current release does not include automated malware scanning, automated ZIP diagnostics, public self-registration, formal restricted-access request approval, advanced reports, backup/restore automation, or general email notifications. SMTP is used only where password reset delivery has been configured.
 
-## 3. Roles and Permissions
+Technical file safety, documentation sufficiency, source legitimacy, and ethics suitability remain human review responsibilities in this release.
 
-### 3.1 Role Summary
+### 2.4 Standard Dataset Workflow
 
-| Role | Main responsibility |
+Figure 2-1. Standard dataset workflow
+
+```text
+Contributor uploads ZIP and metadata
+        |
+        v
+Pending Technical Review
+        |
+        +-- Technical Revision Requested -> Contributor revises -> Pending Technical Review
+        |
+        +-- Rejected -> Workflow closed
+        |
+        v
+Pending Ethics Review
+        |
+        +-- Ethics Revision Requested -> Contributor revises -> Pending Ethics Review
+        |
+        +-- Rejected -> Workflow closed
+        |
+        v
+Awaiting Publication
+        |
+        v
+Published
+        |
+        +-- Contributor update -> Pending Technical Review
+        |
+        +-- Archive -> Archived
+```
+
+### 2.5 Related Documents
+
+- `README.md` summarizes the achieved milestone, quick start, and documentation map.
+- `SETUP.md` explains local setup and environment configuration.
+- `docs/CONTEXT.md` records current release boundaries.
+- `docs/DEPLOYMENT_READINESS.md` lists deployment checks.
+- `SOFTWARE_DOCUMENTATION.md` provides the as-built technical and operational specification.
+- `tests/README.md` explains project verification commands and known test constraints.
+
+## 3. Accessing the System
+
+### 3.1 Access Requirements
+
+Guests can browse public dataset records without an account. Authentication is required for dataset downloads, contributor tools, reviewer queues, administrator tools, notifications, and account settings.
+
+Authenticated access uses one of two sign-in methods:
+
+- Google sign-in for authorized my.cspc.edu.ph accounts; or
+- password sign-in for accounts issued by a repository administrator.
+
+### 3.2 Sign In with Google
+
+Use Google sign-in when the account belongs to the authorized CSPC Google domain.
+
+1. Open `/login`.
+2. Select the Google sign-in option.
+3. Choose the my.cspc.edu.ph Google account.
+4. Complete Google consent if prompted.
+5. Return to the repository after Google redirects back to the application.
+6. Confirm that the correct name and email appear in the account menu.
+
+Google account details are treated as authoritative. The repository does not allow Google-authenticated users to edit their repository name, email address, or password from account settings.
+
+### 3.3 Sign In with Password
+
+Use password sign-in when a repository administrator has issued credentials.
+
+1. Open `/login`.
+2. Enter the issued email address.
+3. Enter the issued password.
+4. Submit the form.
+5. After sign-in, open the account menu or workspace to confirm the assigned role.
+
+If sign-in fails, confirm the email, password, and account status with a repository administrator.
+
+### 3.4 Request Password Credentials
+
+The `/register` page is a request-access page, not open public self-registration. CSPC users should use Google sign-in. Password accounts are reserved for approved collaborators who need authenticated access without a CSPC Google account.
+
+To request access:
+
+1. Open `/register`.
+2. Read the password-account guidance.
+3. Provide the requested contact details.
+4. Submit the request or follow the listed contact instructions.
+5. Wait for administrator approval and credential issuance.
+
+Do not share issued passwords through public or unsecured channels.
+
+### 3.5 Reset a Password
+
+Password reset applies to local password accounts only.
+
+1. Open `/forgot-password`.
+2. Enter the email address of the password account.
+3. Submit the reset request.
+4. Open the reset link within the allowed time.
+5. Enter and confirm the new password.
+6. Return to `/login` and sign in with the new password.
+
+Google accounts recover access through Google account recovery and my.cspc.edu.ph support, not through the repository password reset flow.
+
+### 3.6 Access Problems
+
+If an authenticated page redirects to `/login`, the session may have expired or the account may not be active. Sign in again and retry the page. If the same page redirects or shows a permission message after sign-in, the account probably lacks the required role.
+
+If Google sign-in fails after account selection, check the OAuth client configuration, redirect URI, allowed domain, and the local `google.caBundle` setting if the environment reports a cURL certificate error.
+
+## 4. Roles and Permissions
+
+### 4.1 Role Summary
+
+| Role | Primary responsibility |
 |---|---|
-| Guest | Browse public pages and inspect public metadata. |
-| User | Submit datasets, track status, revise datasets, update published datasets, download eligible published files, and archive owned records. |
-| Technical Reviewer | Decide assigned technical reviews only. |
-| Ethics Reviewer | Decide assigned ethics reviews only. |
-| Repository Administrator | Manage moderation, publication, access classification, users, roles, archive/restore actions, review oversight, and audit logs. |
+| Guest | Browse public records and inspect public metadata. |
+| User / Contributor | Upload and manage owned datasets. |
+| Technical reviewer | Verify package readability, metadata completeness, documentation, declared formats, and file suitability. |
+| Research ethics reviewer | Verify consent, anonymization, sensitive-data handling, source legitimacy, and access classification. |
+| Repository administrator | Manage moderation, reviewer assignments, publication, archive/restore actions, user roles, password accounts, and audit logs. |
 
-Accounts may hold multiple roles. A user with multiple roles sees the matching workspace links in the account menu or portal navigation. An administrator can submit a review decision only when the account also has the matching reviewer role and is assigned to that review.
+One account can hold multiple roles. The interface exposes pages according to the roles stored for the signed-in account.
 
-### 3.2 Permission Matrix
+### 4.2 Permission Matrix
 
-| Action | Guest | User | Technical Reviewer | Ethics Reviewer | Administrator |
+| Action | Guest | Contributor | Technical reviewer | Ethics reviewer | Administrator |
 |---|---:|---:|---:|---:|---:|
-| View public homepage and about pages | Yes | Yes | Yes | Yes | Yes |
-| Browse public catalog metadata | Yes | Yes | Yes | Yes | Yes |
-| View institutional or restricted catalog entries | No | Yes | Yes | Yes | Yes |
-| Download eligible published ZIP files | No | Yes | Yes | Yes | Yes |
-| Upload a dataset | No | Yes | Yes, if also user | Yes, if also user | Yes, if also user |
-| Edit owned revision-requested datasets | No | Owner only | Owner only | Owner only | Owner only |
-| Update owned published datasets | No | Owner only | Owner only | Owner only | Owner only |
-| Review assigned technical records | No | No | Yes | No | Only if also assigned technical reviewer |
-| Review assigned ethics records | No | No | No | Yes | Only if also assigned ethics reviewer |
+| View public homepage | Yes | Yes | Yes | Yes | Yes |
+| Browse public dataset records | Yes | Yes | Yes | Yes | Yes |
+| View institutional or restricted published records | No | Yes | Yes | Yes | Yes |
+| Download eligible published dataset ZIP files | No | Yes | Yes | Yes | Yes |
+| Upload a dataset | No | Yes | Yes, if role includes user | Yes, if role includes user | Yes, if role includes user |
+| Edit owned dataset during revision or published update | No | Yes | Yes, if owner | Yes, if owner | Yes, through admin inspection |
+| Access technical review queue | No | No | Yes | No | Only if also technical reviewer |
+| Access ethics review queue | No | No | No | Yes | Only if also ethics reviewer |
 | Assign or reassign reviewers | No | No | No | No | Yes |
 | Publish datasets | No | No | No | No | Yes |
+| Archive or restore any dataset | No | Owner archive only | Owner archive only | Owner archive only | Yes |
 | Manage users and roles | No | No | No | No | Yes |
 | View audit logs | No | No | No | No | Yes |
 
-## 4. Accessing the System
-
-### 4.1 Requirements
-
-Users need a modern web browser with JavaScript enabled. Contributors and maintainers need an active repository account. Downloading any dataset package requires sign-in.
-
-### 4.2 Sign-In Methods
-
-The login page separates two sign-in paths:
-
-- **Google account**: for verified `my.cspc.edu.ph` Google Workspace accounts.
-- **Password account**: for administrator-issued repository credentials, usually for approved external collaborators.
-
-### 4.3 Sign In with Google
-
-Prerequisites:
-
-- Google sign-in is configured by the system administrator.
-- The Google account email is verified.
-- The email ends with the allowed institutional domain, normally `@my.cspc.edu.ph`.
-
-Steps:
-
-1. Open `Login`.
-2. Select `Continue with my.cspc Google Account`.
-3. Choose the correct Google account.
-4. Approve the Google prompt if asked.
-
-Expected result:
-
-- First-time Google users receive a repository user account automatically.
-- Google name and email are synced from Google.
-- Google-managed name, email, and password fields are read-only in repository settings.
-
-### 4.4 Sign In with Password
-
-Prerequisites:
-
-- A repository administrator created the account.
-- The account is active.
-- The user has the email and temporary or current password.
-
-Steps:
-
-1. Open `Login`.
-2. Enter the issued email.
-3. Enter the password.
-4. Select `SIGN IN`.
-
-Expected result:
-
-- Contributors are sent to `My datasets`.
-- Technical reviewers are sent to the technical review queue.
-- Ethics reviewers are sent to the ethics review queue.
-- Repository administrators are sent to the governance overview.
-
-### 4.5 Request Password Credentials
-
-Password accounts are not self-created. To request issued credentials:
-
-1. Open `Register` or `Request access`.
-2. Select `Request Password Credentials`.
-3. Send the request to `repository@cspc.edu.ph`.
-4. Include the requester identity, purpose, and needed access scope.
-
-The repository team reviews the request and creates credentials only for approved users.
-
-### 4.6 Reset a Password
-
-Password reset applies only to active administrator-issued local accounts outside the Google sign-in path.
-
-Steps:
-
-1. Open `Forgot password?`.
-2. Enter the password-account email.
-3. Submit the request.
-4. Open the reset link if email delivery is configured.
-5. Enter and confirm the new password.
-
-Google users must recover their account through Google, not through repository password reset.
-
-## 5. Common Interface Elements
+## 5. Interface and Navigation
 
 ### 5.1 Public Header
 
-The public header provides access to the home page, browse catalog, account menu, notifications for signed-in users, and sign-in or sign-out actions.
+The public header provides access to the homepage, dataset browsing, account entry points, and authenticated account controls. When signed in, users can reach account settings, notifications, and relevant workspaces from the header or account menu.
 
-### 5.2 Governance Portal
+### 5.2 Homepage Search
 
-The portal is used by contributors, reviewers, and administrators after sign-in. Portal navigation shows only the sections allowed by the current account roles.
+The homepage search is the primary first-screen discovery tool. Search terms entered here lead users into the dataset catalog, where filters and pagination can refine the result set.
 
-### 5.3 Account Menu
+### 5.3 Dataset Catalog Controls
 
-The account menu contains workspace links, account settings, and sign-out. Multi-role users may see several workspace links.
+The dataset catalog supports:
 
-### 5.4 Notification Bell
+- keyword search across title, description, tags, category, and formats;
+- data type filters;
+- category filters;
+- date-uploaded filters;
+- result summaries; and
+- numbered pagination with ellipses for large page counts.
 
-The notification bell shows recent repository activity, unread counts, and a mark-read action. Notifications include upload confirmations, assignments, review outcomes, publication updates, and workflow attention items.
+Use the visible page numbers to jump directly to known pages. Use previous and next controls for adjacent navigation.
 
-### 5.5 Toast Messages
+### 5.4 Dataset Detail Pages
 
-Success, error, and attention messages appear as toast-style notices. Read them before continuing, especially after upload, review, publication, account, and sign-in actions.
+Dataset detail pages display:
 
-### 5.6 Search, Filters, and Pagination
+- title and status;
+- author or contributor context;
+- description;
+- category, tags, data type, format, and content formats;
+- research title, project head, members, source type, and source link where available;
+- version information;
+- view and download counts;
+- citation and BibTeX output;
+- recommendations based on metadata similarity; and
+- download or sign-in prompts based on access rules.
 
-Catalog, dashboard, review, moderation, user, and audit screens use search boxes, filters, tabs, and pagination. When results look incomplete, clear filters or reset the current tab before assuming a record is missing.
+### 5.5 Governance Portal
 
-## 6. Guest and Public User Procedures
+The governance portal is used by contributors, reviewers, and administrators. It contains role-specific dashboards, review queues, moderation stages, user management, and audit logs.
 
-### 6.1 Browse the Homepage
+Access to portal pages is role-filtered. If a user reaches a page without the required role, the system redirects or shows a permission message.
 
-The homepage introduces the repository, public search, institutional partners, repository features, counters, and featured or popular datasets. Use the main search area to start dataset discovery.
+### 5.6 Account Menu
 
-### 6.2 Browse Datasets
+The account menu shows the signed-in user's identity and provides access to account settings and logout. Password users can update local profile details and password. Google users can view their verified profile details, but the repository treats Google as the source of truth and blocks local identity edits.
 
-Steps:
+### 5.7 Notifications
 
-1. Open `Browse Datasets` or `/datasets`.
-2. Enter a keyword in the search field.
-3. Apply filters as needed:
-   - data type;
-   - category; and
-   - date uploaded.
-4. Use result cards to preview or open dataset details.
-5. Use pagination controls to move across result pages.
+The shared notification menu shows unread and recent repository activity. Notifications can include submission confirmation, reviewer assignment, review decision, revision request, publication, archive, and workflow attention messages.
 
-Guest visibility is limited to published public datasets. Signed-in users may see additional institutional or restricted entries according to repository rules.
+Use the mark-read control to clear unread notifications after reviewing them.
+
+### 5.8 Toast Messages and Validation
+
+The system uses visible messages for successful actions, errors, validation issues, and access warnings. If a form returns a validation message, correct the highlighted fields and submit again.
+
+## 6. Public Catalog Procedures
+
+### 6.1 Browse from the Homepage
+
+1. Open `/`.
+2. Enter a keyword in the main search bar.
+3. Submit the search.
+4. Review the matching dataset catalog results.
+5. Open a dataset card to inspect the full record.
+
+### 6.2 Browse Dataset Catalog
+
+1. Open `/datasets`.
+2. Review the result summary and visible dataset cards.
+3. Use keyword search for title, description, tag, category, or format matches.
+4. Apply filters for data type, category, or date uploaded.
+5. Use pagination to move through result pages.
+6. Clear or revise filters when no results appear.
+
+Guests see public records only. Signed-in users can also see institutional and restricted published records. Private records remain hidden from general catalog browsing.
 
 ### 6.3 Inspect a Dataset
 
-The dataset detail page may show:
-
-- dataset title and cover;
-- publication date;
-- category, data type, tags, and formats inside ZIP;
-- research title, project head, members, source type, and source link;
-- version;
-- view and download counts;
-- download action or restriction message;
-- citation modal; and
-- recommended datasets.
+1. Select a dataset card from the catalog.
+2. Confirm the title, description, data type, category, tags, and access label.
+3. Review research metadata such as research title, project head, members, and source type.
+4. Check the current version and file context.
+5. Review citation output if the dataset will be referenced.
+6. Use recommendations to find similar published datasets.
 
 ### 6.4 Cite a Dataset
 
-Steps:
+1. Open the dataset detail page.
+2. Locate the citation or BibTeX section.
+3. Copy the citation format required by the target paper, thesis, capstone, or report.
+4. Confirm contributor, title, and year details before final use.
 
-1. Open a dataset detail page.
-2. Select the citation action.
-3. Choose a citation format:
-   - APA;
-   - MLA;
-   - ACM; or
-   - BibTeX.
-4. Copy the displayed citation for research use.
+Citation text is generated from repository metadata. If metadata appears incomplete or incorrect, contact the contributor or repository administrator before relying on it in formal work.
 
 ### 6.5 Download a Dataset
 
-Downloads require sign-in. Guests see a sign-in prompt rather than a direct file download.
+1. Open the dataset detail page.
+2. Review the access label and file context.
+3. If prompted, sign in.
+4. Select the download control.
+5. Save the ZIP package.
+6. Follow the dataset's source, ethics, and access expectations when using the contents.
 
-Steps:
-
-1. Sign in.
-2. Open the dataset detail page.
-3. Select `Download`.
-4. Save the ZIP package.
-
-If the download is unavailable or restricted, the dataset may be private, archived, unpublished, missing a current file, or outside the account's allowed access.
+Guests cannot download dataset ZIP packages. Public, institutional, and restricted published records are downloadable by eligible signed-in users in the current release. Private records are limited to the owner and administrators.
 
 ## 7. Contributor Procedures
 
-### 7.1 Open My Datasets
+### 7.1 Open the Contributor Workspace
 
-After sign-in, open `My datasets` or `/dashboard`. The contributor dashboard shows owned records, workflow counts, filters, next actions, access summaries, reviewer notes, and upload controls.
+1. Sign in.
+2. Open `/dashboard` or the contributor workspace link.
+3. Review owned dataset cards and status summaries.
+4. Open a record to inspect details or required actions.
 
-Dashboard filters include:
+The contributor workspace separates active review items, revision requests, published records, rejected records, and archived records.
 
-- all records;
-- technical review;
-- ethics review;
-- publication;
-- revision;
-- published;
-- closed;
-- access type; and
-- search by title, category, or tags.
+### 7.2 Prepare a Dataset Package
 
-### 7.2 Upload a New Dataset
+Before upload, prepare:
 
-Prerequisites:
+- one ZIP package containing the dataset files and supporting documentation;
+- a clear title and description;
+- tags and category;
+- data type and formats inside the ZIP;
+- research title;
+- project head or adviser;
+- member list where applicable;
+- source type and optional source URL;
+- access classification;
+- anonymization confirmation; and
+- optional cover image in JPG, PNG, or WebP format.
 
-- You are signed in.
-- Your dataset package is prepared as a single ZIP file.
-- Sensitive or personal data has been anonymized.
+Do not upload files that violate consent, privacy, confidentiality, ownership, or institutional policy.
 
-Steps:
+### 7.3 Upload a New Dataset
 
-1. Open `Upload dataset`.
-2. Enter dataset information:
-   - dataset title;
-   - category;
-   - data type;
-   - formats inside ZIP;
-   - requested access type;
-   - description;
-   - optional cover image;
-   - tags.
-3. Enter research information:
-   - research title;
-   - project head or adviser;
-   - members or contributors.
-4. Enter source and file information:
-   - source type, either primary or secondary;
-   - optional source link;
-   - protected ZIP package.
+1. Sign in with an account that has contributor access.
+2. Open `/upload`.
+3. Complete every required metadata field.
+4. Select the access classification.
 5. Confirm anonymization.
-6. Select `Review Before Upload`.
-7. Review the preview modal.
-8. Select `Confirm & Upload`.
+6. Attach the ZIP package.
+7. Attach an optional cover image if available.
+8. Submit the form.
+9. Review the confirmation message and the new dataset record.
 
-Expected result:
+Initial uploads enter `Pending Technical Review`. The system attempts automatic technical reviewer assignment when eligible reviewers are available.
 
-- The dataset is created as version `1.0`.
-- The dataset enters `Pending Technical Review`.
-- The system attempts automatic technical reviewer assignment.
-- You receive an in-app notification.
-
-### 7.3 Upload Field Reference
+Table 7-1. Upload Field Reference
 
 | Field | Required | Notes |
 |---|---:|---|
-| Dataset Title | Yes | Use a concise descriptive title. |
-| Category | Yes | Subject or research area. |
-| Data Type | Yes | Text, Image, Audio, Video, Tabular, or configured option. |
-| Formats Inside ZIP | Yes | Disclose actual file types, such as `.csv`, `.pdf`, `.png`. |
-| Access Type | Yes | Requested publication access classification. |
-| Description | Yes | Explain contents, collection method, and intended use. |
-| Cover Image | No | JPG, PNG, or WebP; maximum 4 MB and 4000 by 4000 pixels. |
-| Tags | Yes | Comma-separated keywords for discovery. |
-| Research Title | Yes | Official research, thesis, capstone, or project title. |
-| Project Head or Adviser | Yes | Supervising researcher, faculty adviser, or project lead. |
-| Members | No | Student researchers, faculty collaborators, incubatees, or contributors. |
-| Source Type | Yes | Primary or Secondary. |
-| Source Link | No | URL to source or related publication when available. |
-| Dataset ZIP File | Yes | A single ZIP file containing the dataset and supporting documentation. |
-| Anonymization Confirmation | Yes | Required before submission. |
+| Title | Yes | Use a concise, descriptive dataset title. |
+| Description | Yes | Explain what the dataset contains and how it may be useful. |
+| Category | Yes | Use the most appropriate research or project category. |
+| Tags | Yes | Enter searchable tags, usually comma-separated. |
+| Data type | Yes | Select Text, Image, Audio, Video, or Tabular. |
+| Formats inside ZIP | Yes | Disclose actual formats such as CSV, XLSX, TXT, JPG, PNG, PDF, or JSON. |
+| Source type | Yes | Select Primary or Secondary. |
+| Source link | No | Must be a valid `https://` URL when provided. |
+| Research title | Yes | Enter the related thesis, capstone, analytics, startup, or research title. |
+| Project head or adviser | Yes | Enter the responsible project head, adviser, or supervising person. |
+| Members | No | List team members or contributors where applicable. |
+| Access type | Yes | Choose Public, Institutional, Restricted, or Private. |
+| Anonymized confirmation | Yes | Required before submission. |
+| Dataset ZIP | Yes | Only ZIP files are accepted. |
+| Cover image | No | JPG, PNG, or WebP, up to 4 MB and 4000 by 4000 pixels. |
 
 ### 7.4 Track Dataset Status
 
-Open `My datasets` and review each card's workflow stage, latest reviewer note, next step, access type, and available actions.
+1. Open `/dashboard`.
+2. Locate the dataset card.
+3. Read the workflow stage and reviewer notes if present.
+4. Follow the available action, such as revise, view, or update.
 
-Common next actions:
-
-- `Locked while technical review is active`: wait for the technical review result.
-- `Locked while ethics review is active`: wait for the ethics review result.
-- `Revise dataset and resubmit for review`: open the edit form and address reviewer comments.
-- `Approved by reviewers and waiting for publication`: wait for administrator publication.
-- `Published in the catalog`: the record is available according to its access classification.
+Datasets under active moderation are locked from contributor editing until a revision is requested or the record is published.
 
 ### 7.5 Revise a Dataset
 
-Revision is available only when a technical or ethics reviewer requests changes.
+Revision is available only when the status is `Technical Revision Requested` or `Ethics Revision Requested`.
 
-Steps:
+1. Open `/dashboard`.
+2. Select the dataset requiring revision.
+3. Open the revise/edit action.
+4. Review reviewer comments and checklist issues.
+5. Update metadata, package file, cover image, or source details as needed.
+6. Submit the revision.
+7. Confirm that the record returns to the correct review stage.
 
-1. Open `My datasets`.
-2. Find the record with `Technical Revision Requested` or `Ethics Revision Requested`.
-3. Select `Revise dataset`.
-4. Update metadata and, if needed, upload a new ZIP version.
-5. Enter a change summary.
-6. Review the preview.
-7. Confirm and save.
-
-Expected result:
-
-- Technical revisions return to `Pending Technical Review`.
-- Ethics revisions return to `Pending Ethics Review`.
-- Active review assignment is recreated for the appropriate stage.
+Technical revision returns to technical review. Ethics revision returns to ethics review without repeating a completed technical approval for the same workflow path.
 
 ### 7.6 Update a Published Dataset
 
-Published records may be updated by the owner.
+1. Open `/dashboard`.
+2. Locate the published dataset.
+3. Open the update or edit action.
+4. Make the required changes.
+5. Upload a replacement ZIP when the dataset contents changed.
+6. Submit the update.
 
-Steps:
-
-1. Open `My datasets`.
-2. Find the published record.
-3. Select `Submit update`.
-4. Update metadata and upload a new ZIP only if the file changed.
-5. Enter a change summary.
-6. Confirm and save.
-
-Expected result:
-
-- The published record leaves the catalog while the update is reviewed.
-- The version number increments.
-- The dataset restarts at technical review.
+Published updates create a new version and return to technical review. The updated version must complete review before publication.
 
 ### 7.7 Archive an Owned Dataset
 
-Contributors can archive eligible owned records when no active review blocks the action.
+1. Open `/dashboard`.
+2. Locate the dataset.
+3. Confirm that it is not under active moderation.
+4. Use the archive action.
+5. Confirm the result.
 
-Steps:
+Contributors cannot archive datasets while moderation is active. Archived records are removed from normal active browsing but retained in repository records.
 
-1. Open the dataset edit page from `My datasets`.
-2. Select `Archive Dataset` or `Archive record`.
-3. Confirm the action if prompted.
+### 7.8 Contributor Responsibilities
 
-Archived datasets are retained in records but removed from normal workflow and catalog surfaces.
+Contributors are responsible for:
+
+- submitting accurate metadata;
+- providing usable ZIP contents;
+- documenting source and file formats;
+- confirming anonymization only when it has actually been performed;
+- choosing an appropriate access classification;
+- responding to reviewer comments completely; and
+- avoiding uploads that contain unauthorized confidential or personal data.
 
 ## 8. Reviewer Procedures
 
 ### 8.1 Reviewer Access Rules
 
-Reviewers can only access reviews assigned to them. Reassigned records remain in history but are no longer decision-accessible to the previous reviewer. Reviewers cannot claim arbitrary records.
+Reviewers see only reviews assigned to their account. A technical reviewer cannot open ethics-only work unless the account also has the ethics reviewer role. An ethics reviewer cannot open technical-only work unless the account also has the technical reviewer role.
 
-### 8.2 Open a Review Queue
+Reassigned reviews are retained in history, but the previous reviewer loses active decision access.
 
-Technical reviewers open `/review/technical`. Ethics reviewers open `/review/ethics`.
+### 8.2 Open the Technical Review Queue
 
-The queue includes:
+1. Sign in with a technical reviewer role.
+2. Open `/review/technical`.
+3. Use tabs to view action items, completed items, or all items.
+4. Filter by search term, age, access type, or data type.
+5. Sort by oldest, newest, title, or contributor.
+6. Open an assigned review.
 
-- workload metrics;
-- `Needs action`, `Completed`, and `All` tabs;
-- search;
-- assignment-age filters;
-- access filters;
-- data-type filters;
-- sorting; and
-- pagination.
+### 8.3 Complete Technical Review
 
-### 8.3 Technical Review
+1. Open an assigned technical review.
+2. Review metadata and repository context.
+3. Download the protected ZIP package.
+4. Manually inspect the archive and supporting files.
+5. Complete each checklist item.
+6. Enter item-level notes where needed.
+7. Save a draft or submit a final decision.
 
-Technical review is the first maintainer gate.
+Table 8-1. Technical Review Checklist
 
-Checklist:
-
-| Item | Reviewer verifies |
+| Checklist item | Reviewer confirms |
 |---|---|
-| Archive readable | ZIP package can be opened and inspected. |
-| Metadata complete | Required metadata is clear and complete. |
-| Documentation complete | Supporting documentation is present and usable. |
-| Formats match | Declared formats inside ZIP match actual contents. |
-| Files suitable | Files are appropriate for repository use and review. |
+| Archive readable | The protected ZIP can be downloaded and opened. |
+| Metadata complete | Required metadata is complete and internally consistent. |
+| Documentation complete | Documentation is sufficient for repository users. |
+| Formats match | Declared formats match the submitted package contents. |
+| Files suitable | Files are usable and suitable for publication. |
 
-Steps:
+Technical decisions:
 
-1. Open the technical review queue.
-2. Select a record.
-3. Download the protected ZIP.
-4. Manually inspect the archive and documentation.
-5. Mark each checklist item as `Confirmed`, `Issue found`, or `Not reviewed`.
-6. Add a finding note for every `Issue found`.
-7. Add contributor-facing comments when requesting revision or rejecting.
-8. Save a draft if the review is incomplete.
-9. Submit one final decision:
-   - `Approve review`;
-   - `Request revision`; or
-   - `Reject`.
+- `Approve` advances the dataset to ethics review.
+- `Request revision` returns the dataset to the contributor for technical corrections.
+- `Reject` closes the submission.
 
-Approval is available only when every checklist item is confirmed.
+### 8.4 Save a Technical Review Draft
 
-### 8.4 Ethics Review
+Use draft saving when review work is incomplete.
 
-Ethics review begins after technical approval.
+1. Mark completed checklist items.
+2. Add notes for open questions or issues.
+3. Select the draft-save action.
+4. Confirm that the review remains assigned to you.
 
-Checklist:
+Drafts do not advance the workflow.
 
-| Item | Reviewer verifies |
-|---|---|
-| Consent clearance | Consent, clearance, or appropriate basis is documented. |
-| Anonymization | Sensitive or personal data has been anonymized as declared. |
-| Sensitive data | Safeguards are appropriate for sensitive data. |
-| Source legitimacy | Dataset source and source link are legitimate and suitable. |
-| Access classification | Requested access classification is appropriate. |
+### 8.5 Open the Ethics Review Queue
 
-Steps:
+1. Sign in with a research ethics reviewer role.
+2. Open `/review/ethics`.
+3. Use tabs to view action items, completed items, or all items.
+4. Filter by search term, age, access type, or data type.
+5. Open an assigned review.
 
-1. Open the ethics review queue.
-2. Select a record.
-3. Review the retained technical approval context.
-4. Inspect metadata, source, anonymization declaration, and access request.
+Ethics review normally follows technical approval. The review workspace displays prior technical approval context where relevant.
+
+### 8.6 Complete Ethics Review
+
+1. Open an assigned ethics review.
+2. Review metadata, source, access classification, and prior technical approval.
+3. Download the protected ZIP package if needed.
+4. Verify anonymization, consent, sensitive-data handling, source legitimacy, and access classification.
 5. Complete the checklist.
-6. Save a draft if needed.
-7. Submit a final decision.
+6. Add comments that explain approval, revision, or rejection.
+7. Submit the decision.
 
-If approved, the dataset moves to `Awaiting Publication`. If revision is requested, the contributor resubmits directly to ethics review without repeating technical approval.
+Table 8-2. Ethics Review Checklist
 
-### 8.5 Drafts and Final Decisions
+| Checklist item | Reviewer confirms |
+|---|---|
+| Consent and clearance | Consent and ethics clearance are documented or not applicable. |
+| Anonymization | Personal or sensitive data is appropriately anonymized. |
+| Sensitive-data safeguards | Sensitive-data handling and safeguards are adequate. |
+| Source legitimacy | The source and proposed use are legitimate and documented. |
+| Access classification | The requested access classification is appropriate. |
 
-Draft saving preserves checklist and comment work without changing dataset status. Final decisions are immutable for the current review record and immediately update contributor workflow.
+Ethics decisions:
+
+- `Approve` advances the dataset to awaiting publication.
+- `Request revision` returns the dataset to the contributor for ethics corrections.
+- `Reject` closes the submission.
+
+### 8.7 Protected Review Downloads
+
+Reviewer downloads are served from protected storage and recorded in the audit trail. Reviewers should keep downloaded files within the approved review environment and should not redistribute submitted packages outside the review process.
 
 ## 9. Repository Administrator Procedures
 
 ### 9.1 Open Governance Overview
 
-Open `/admin`. The governance overview shows operational metrics and records requiring attention, including unassigned stages, active reviews, publication-ready records, aging assignments, and revision records.
+1. Sign in with the repository administrator role.
+2. Open `/admin`.
+3. Review metrics for unassigned technical reviews, active technical reviews, unassigned ethics reviews, active ethics reviews, awaiting publication records, aging reviews, and revision records.
+4. Open attention items that need assignment, reassignment, publication, or status review.
 
 ### 9.2 Moderate Datasets
 
-Open `/admin/datasets`. Use stage tabs:
-
-- Technical unassigned;
-- Technical review;
-- Ethics unassigned;
-- Ethics review;
-- Ready to publish;
-- Revision and rejected;
-- Published and archived.
-
-Use filters for search, reviewer, age, access, and data type.
+1. Open `/admin/datasets`.
+2. Select a moderation stage tab:
+   - technical assignment;
+   - technical review;
+   - ethics assignment;
+   - ethics review;
+   - publication;
+   - revision; or
+   - published.
+3. Use search and filters to narrow the list.
+4. Open a dataset for inspection or action.
 
 ### 9.3 Inspect a Dataset
 
-From moderation, select `Inspect record`.
+The administrator dataset page shows metadata, contributor details, latest file information, version history, review history, technical and ethics approvals, active assignment state, publication controls, and recent audit records.
 
-The inspection page includes:
-
-- workflow stepper;
-- submission summary;
-- current required action;
-- protected file and version history;
-- review timeline;
-- approval summary;
-- publication controls when eligible;
-- website preview link; and
-- recent audit activity.
+Use this page before publishing, archiving, restoring, assigning, or reassigning review work.
 
 ### 9.4 Assign a Reviewer Manually
 
-Manual assignment is used when automatic distribution did not create an active review.
+Manual assignment is used when automatic distribution did not create an active review or when an administrator needs direct control.
 
-Steps:
+1. Open the dataset in `/admin/datasets/{id}`.
+2. Confirm the dataset is in the expected stage.
+3. Select the review stage.
+4. Choose an eligible active reviewer.
+5. Submit the assignment.
 
-1. Open `Dataset moderation`.
-2. Select the relevant unassigned technical or ethics stage.
-3. Open `Assign manually`.
-4. Select an eligible active reviewer.
-5. Confirm assignment.
-
-The reviewer receives access to the assigned record and an in-app notification.
+The system prevents creating a duplicate active review for the same dataset.
 
 ### 9.5 Reassign an Active Review
 
-Steps:
+1. Open the dataset inspection page.
+2. Locate the active review.
+3. Select a different eligible reviewer.
+4. Enter the required reassignment reason.
+5. Submit the reassignment.
 
-1. Open the active technical or ethics stage.
-2. Open `Reassign review`.
-3. Choose a different eligible reviewer.
-4. Enter the reassignment reason.
-5. Confirm reassignment.
-
-Expected result:
-
-- The old assignment is closed as reassigned.
-- The old reviewer immediately loses decision access.
-- A new assignment is created in the same review round.
-- The reassignment reason is retained in the review timeline.
+The previous review is marked as reassigned and the replacement review keeps the same review round. The previous reviewer no longer has decision access.
 
 ### 9.6 Publish a Dataset
 
-Publication controls unlock only when the dataset is `Awaiting Publication`.
+Publication is available only after both review stages approve the current version and the dataset is `Awaiting Publication`.
 
-Steps:
+1. Open the dataset inspection page.
+2. Confirm the technical approval.
+3. Confirm the ethics approval.
+4. Review and confirm the final access classification.
+5. Confirm publication.
+6. Submit the publish action.
 
-1. Open the `Ready to publish` stage or the dataset inspection page.
-2. Confirm technical approval.
-3. Confirm ethics approval.
-4. Select the final access classification.
-5. Check the publication confirmation.
-6. Select `Publish dataset` or `Publish current version`.
-
-Expected result:
-
-- The dataset becomes `Published`.
-- The current version becomes visible according to its access classification.
-- The contributor is notified.
-- The action is audited.
+Published datasets appear according to their access classification.
 
 ### 9.7 Archive or Restore a Dataset
 
-Archive:
+Administrators can archive or restore eligible datasets from the dataset inspection page.
 
-1. Open a moderation card or inspection page.
-2. Open `More actions`.
-3. Enter an archive reason.
-4. Confirm archive.
+Archive removes the dataset from normal active browsing while retaining its record. Restore returns the dataset to its prior repository state where supported by workflow rules.
 
-Restore:
-
-1. Open the `Published and archived` stage.
-2. Select the archived record.
-3. Choose `Restore dataset`.
-
-Active assigned reviews block archive actions. Restored pending records may return to the appropriate review assignment flow.
+Use clear reasons for archive or restore actions when the interface requests them.
 
 ### 9.8 Manage Users and Roles
 
-Open `/admin/users`.
-
-Administrators can:
-
-- create password accounts;
-- filter accounts by search, sign-in method, status, and role;
-- activate or deactivate accounts;
-- assign or remove roles; and
-- review whether accounts use Google or password sign-in.
+1. Open `/admin/users`.
+2. Review user status, authentication provider, and roles.
+3. Activate or deactivate accounts as needed.
+4. Assign or remove roles only when the account still keeps at least one role.
+5. Save changes.
 
 Important safeguards:
 
-- The final active administrator cannot be removed or deactivated.
-- Administrators cannot remove their own administrator access through the user editor.
-- Every account must retain at least one role.
-- A reviewer with active assigned reviews cannot be deactivated or lose the required reviewer role.
-- Creating or activating reviewers can trigger assignment of pending review records.
+- the final active administrator cannot be removed;
+- an administrator cannot deactivate their own account or remove their own administrator role;
+- reviewers with active assignments cannot be deactivated or lose the required reviewer role until their work is reassigned; and
+- activating a reviewer can trigger automatic distribution of waiting reviews.
 
 ### 9.9 Create a Password Account
 
-Steps:
+1. Open `/admin/users`.
+2. Use the password-account creation form.
+3. Enter the name, email, temporary password, status, and roles.
+4. Submit the form.
+5. Share the issued email and temporary password securely.
+6. Tell the user to change the temporary password after first sign-in.
 
-1. Open `Users and roles`.
-2. Expand `Create password account`.
-3. Enter name, email, temporary password, status, and roles.
-4. Select `Create credentials`.
-5. Share the temporary credentials through a secure channel.
-
-Password accounts are intended for approved collaborators who cannot use the institutional Google sign-in path.
+Password accounts are intended for approved collaborators who cannot use a CSPC Google account.
 
 ### 9.10 View Audit Logs
 
-Open `/admin/audit-logs`.
+1. Open `/admin/audit-logs`.
+2. Review the latest records.
+3. Search by action, details, or user name when investigating a workflow event.
 
-Audit logs include authentication, upload, update, download, review, assignment, reassignment, publication, archive, restore, role, and user-management activity. Use search to find actions, users, or details.
+The audit log records important actions such as dataset upload, review assignment, review decision, publication, archive, download, denied download, user-role updates, and password-account creation.
 
-## 10. Workflow and Status Reference
+## 10. Workflow, Data Handling, and Security Reference
 
-### 10.1 Standard Dataset Workflow
+### 10.1 Dataset Status Reference
 
-```text
-Pending Technical Review
-  -> Technical Revision Requested -> contributor resubmits -> Pending Technical Review
-  -> Rejected
-  -> Pending Ethics Review
-       -> Ethics Revision Requested -> contributor resubmits -> Pending Ethics Review
-       -> Rejected
-       -> Awaiting Publication
-            -> Published
-```
+Table 10-1. Dataset Status Reference
 
-### 10.2 Status Table
-
-| Status | Meaning | User action |
+| Status | Meaning | Typical next action |
 |---|---|---|
-| Pending Technical Review | ZIP package, metadata, documentation, and formats are being verified. | Wait for decision. |
-| Technical Revision Requested | Technical reviewer found corrections. | Revise and resubmit. |
-| Pending Ethics Review | Technical review passed; ethics review is active or waiting assignment. | Wait for decision. |
-| Ethics Revision Requested | Ethics reviewer found corrections. | Revise and resubmit. |
-| Awaiting Publication | Both reviews approved the current version. | Wait for administrator publication. |
-| Published | Dataset is released according to final access classification. | Use catalog; owner may submit update. |
-| Rejected | Review ended with rejection. | Inspect comments; no normal resubmission action. |
-| Archived | Record is retained but removed from active workflow and catalog surfaces. | Owner or administrator may inspect; administrator may restore. |
+| Pending Technical Review | The submitted ZIP, metadata, and documentation are waiting for technical verification. | Technical reviewer reviews or administrator assigns reviewer if unassigned. |
+| Technical Revision Requested | Technical review found issues requiring contributor correction. | Contributor revises and resubmits. |
+| Pending Ethics Review | Technical review passed and ethics review is active or awaiting assignment. | Ethics reviewer reviews or administrator assigns reviewer if unassigned. |
+| Ethics Revision Requested | Ethics review found issues requiring contributor correction. | Contributor revises and resubmits. |
+| Awaiting Publication | Both review stages approved the current version. | Administrator confirms access classification and publishes. |
+| Published | Dataset is released according to final access classification. | Users browse and download if eligible; owner may submit an update. |
+| Rejected | Review ended with rejection. | Contributor reviews final comments; workflow is closed. |
+| Archived | Dataset is retained but removed from active browsing or workflow surfaces. | Administrator may restore where appropriate. |
 
-### 10.3 Access Classification
+### 10.2 Access Classification Reference
 
-| Access type | Catalog visibility | Download behavior |
+Table 10-2. Access Classification Reference
+
+| Access type | Catalog visibility | Download behavior in current release |
 |---|---|---|
-| Public | Visible in public catalog. | Signed-in users can download. |
-| Institutional | Visible to signed-in repository users. | Signed-in users can download when authorized by repository rules. |
-| Restricted | Limited catalog visibility for signed-in users. | Downloads require repository authorization. |
-| Private | Hidden from normal catalog users. | Limited to owner and authorized maintainers. |
+| Public | Visible to guests and signed-in users. | Signed-in users can download. Guests are prompted to sign in. |
+| Institutional | Visible to signed-in users. | Signed-in users can download. |
+| Restricted | Visible to signed-in users. | Signed-in users can download in the current release; formal request approval is not implemented. |
+| Private | Hidden from general catalog browsing. | Owner and administrators retain access where permitted. |
 
-## 11. Data and File Handling
+### 10.3 File Handling Rules
 
-### 11.1 Protected ZIP Packages
+- Dataset packages are uploaded as ZIP files.
+- Dataset packages are stored under writable application storage, not directly in `public/`.
+- Downloads are served through application routes after access checks.
+- Cover images are validated as images and served through controlled routes.
+- Missing protected files produce an error instead of exposing storage paths.
+- Reviewer and dataset downloads are audit-recorded.
 
-Dataset packages are stored outside the public web directory and streamed through authorized controller routes. Do not share direct server file paths. Download actions are audited.
+### 10.4 Account Identity Rules
 
-### 11.2 Dataset Versions
+Table 10-3. Account Identity Rules
 
-Initial submissions create version `1.0`. Revisions and published updates create additional version records when metadata or files change. Version history remains available to contributors, reviewers, and administrators.
+| Account provider | Identity source | Editable in repository | Password in repository |
+|---|---|---|---|
+| Google | Verified Google profile for authorized my.cspc.edu.ph sign-in. | No. Name and email are managed by Google. | No. Recovery is handled through Google. |
+| Local password | Repository administrator-issued account. | Yes, subject to validation and uniqueness rules. | Yes, password can be changed or reset. |
 
-### 11.3 Cover Images
+### 10.5 Privacy and Security Expectations
 
-Cover images appear in catalog cards, detail pages, dashboards, and review/admin inspection pages. If no cover image is uploaded, the repository placeholder is used.
+Users should:
 
-### 11.4 Source and Anonymization
+- keep accounts private;
+- avoid shared credentials;
+- sign out on shared devices;
+- avoid uploading unauthorized personal or confidential data;
+- respect access classifications;
+- keep downloaded datasets within approved academic or institutional use; and
+- report missing files, suspicious content, incorrect metadata, or access mistakes to administrators.
 
-Contributors must classify each dataset as primary or secondary and must confirm anonymization before submission. Ethics reviewers verify the declaration and may request revision or reject when evidence is insufficient.
+Administrators should:
 
-## 12. Account, Security, and Privacy Rules
+- keep `.env` values private;
+- use HTTPS in production;
+- protect upload storage;
+- run migrations before production use;
+- remove demo credentials from production;
+- confirm OAuth and SMTP settings;
+- back up the database and protected uploads together; and
+- review audit logs when investigating workflow or access issues.
 
-### 12.1 Google Accounts
+## 11. Troubleshooting and Support
 
-Google credentials are the identity source of truth. For Google accounts:
+### 11.1 General Support Process
 
-- name and email are synced from Google;
-- name and email cannot be edited locally;
-- repository password change is not available;
-- password recovery must happen through Google; and
-- duplicate local password accounts using the same email are rejected.
+When troubleshooting, collect:
 
-### 12.2 Password Accounts
+- user email;
+- authentication provider;
+- role;
+- page route;
+- dataset ID if relevant;
+- exact message displayed;
+- browser and device;
+- time of the event; and
+- screenshot where appropriate.
 
-Password accounts are created by administrators. Local account users can update their repository profile and password from account settings, subject to validation and current-password checks.
+Do not collect passwords, reset tokens, OAuth secrets, `.env` contents, or uploaded dataset files through ordinary support messages.
 
-### 12.3 Inactive Accounts
+### 11.2 Troubleshooting Matrix
 
-Inactive accounts cannot sign in. Administrators control active or inactive status from `Users and roles`.
+Table 11-1. Troubleshooting Matrix
 
-### 12.4 Privacy Expectations
-
-Contributors must not upload raw personal or sensitive data unless it has been properly anonymized and cleared for the selected access classification. Reviewers and administrators must treat protected packages as controlled research materials.
-
-## 13. Notifications and Audit Trail
-
-### 13.1 Notifications
-
-Notifications are shown in the header or portal notification menu. They may be generated when:
-
-- a dataset is submitted;
-- a review is assigned;
-- a reviewer requests revision;
-- a reviewer rejects or approves;
-- a dataset becomes ready for publication;
-- a dataset is published;
-- a dataset requires administrator attention.
-
-### 13.2 Audit Trail
-
-The system records audit events for accountability. Administrators can inspect audit logs to review sign-in activity, upload activity, moderation actions, download activity, lifecycle actions, and role changes.
-
-## 14. Troubleshooting
-
-| Issue | Likely cause | What to do |
+| Problem | Likely cause | Resolution |
 |---|---|---|
-| Google button is disabled | Google OAuth is not configured. | Ask an administrator to configure Google client ID, secret, redirect URI, and allowed domain. |
-| Google sign-in says it could not be completed | OAuth, redirect URI, account domain, or local certificate configuration may be wrong. | Confirm the selected account is verified and ends in the allowed domain. Administrators should check OAuth settings and logs. |
-| Login says to use Google sign-in | The email belongs to a Google-managed account. | Return to login and use the Google button. |
-| Password reset email does not arrive | The account is Google-managed, inactive, not a local password account, or SMTP is not configured. | Use Google recovery for Google accounts or contact support for issued credentials. |
-| Dataset does not appear in the catalog | It is unpublished, archived, private, or outside the current user's access scope. | Check `My datasets` or administrator moderation status. |
-| Download redirects to login | Downloads require authentication. | Sign in, then retry the download. |
-| Download is restricted after sign-in | Dataset access type or ownership does not allow the current account. | Contact the repository team if access is needed. |
-| Upload is rejected | Required metadata is missing, the package is not ZIP, the cover is invalid, or the source link is invalid. | Fix highlighted fields and resubmit. |
-| Contributor cannot edit a dataset | It is under active review, awaiting publication, rejected, archived, or not owned by the current user. | Wait for a reviewer decision or contact an administrator. |
-| Reviewer cannot open a record | The review is not assigned to the account or has been reassigned. | Check the review queue or ask an administrator. |
-| Approval button is disabled | Not every checklist item is confirmed. | Complete all checklist items; approval requires all confirmed. |
-| Publication controls are hidden | The dataset is not awaiting publication. | Wait for both review stages to approve the current version. |
-| Admin cannot deactivate a reviewer | The reviewer has active assigned reviews. | Reassign or complete the active reviews first. |
+| Google sign-in could not be completed | OAuth client, redirect URI, domain authorization, or CA bundle issue. | Confirm OAuth settings, authorized redirect URI, Google test/published state, and machine-specific CA bundle. |
+| User sees `Welcome back` on first Google login | Account may already exist or first-login flag was already set. | Check the `users.first_login_at` value and account creation history. |
+| Password login fails | Incorrect credentials, inactive account, or account uses Google provider. | Confirm provider, account status, email spelling, and password reset path. |
+| User cannot open reviewer queue | Missing reviewer role. | Administrator assigns the required technical or ethics reviewer role. |
+| User cannot access admin portal | Missing repository administrator role. | Administrator verifies role assignment. |
+| Dataset is locked from editing | Dataset is under active moderation. | Wait for review decision or revision request. |
+| Revision action is not visible | Dataset is not in a revision status and is not a published update path. | Confirm current status in dashboard or admin inspection. |
+| Download prompts for sign-in | Guest users cannot download files. | Sign in and retry. |
+| Download says file is missing | File record exists but protected file is absent from storage. | Administrator checks upload storage and backup state. |
+| Published dataset is not visible to guest | Access type is institutional, restricted, or private. | Sign in or confirm intended access classification. |
+| Restricted dataset lacks formal request workflow | Request-approval workflow is outside current release scope. | Use administrator policy until formal restricted-access approvals are implemented. |
+| Password reset email does not arrive | SMTP is not configured or delivery failed. | Administrator checks mail configuration and logs. |
+| Local Google OAuth fails with cURL certificate error | Machine-specific CA bundle path is missing or invalid. | Set `google.caBundle` to the correct local certificate bundle path or leave it blank when not needed. |
 
-## 15. Operational Notes
+### 11.3 Escalation Guidelines
 
-### 15.1 Local Demo Accounts
+Escalate to a repository administrator when the issue involves roles, account status, password-account issuance, publication, archive/restore actions, review assignment, audit inspection, missing protected files, or incorrect access classification.
 
-Development seeders may create these local walkthrough accounts with password `change-me`:
+Escalate to institutional IT or deployment maintainers when the issue involves server errors, HTTPS, OAuth client configuration, SMTP delivery, database connectivity, upload permissions, or missing PHP extensions.
 
-| Role | Email |
-|---|---|
-| Contributor | `user@example.test` |
-| Repository Administrator | `admin@example.test` |
-| Research Ethics Reviewer | `ethics@example.test` |
-| Technical Reviewer | `technical@example.test` |
+## 12. Operational Notes
 
-These are for local testing only and must not be used as production credentials.
+### 12.1 Production Readiness
 
-### 15.2 Environment-Specific Google CA Bundle
+Before production operation, confirm:
 
-The `google.caBundle` setting is machine-specific. Leave it blank unless the environment raises a cURL certificate error. If a CA bundle is required on another device, set it to that device's actual certificate bundle path, such as the local XAMPP `curl-ca-bundle.crt` path.
-
-### 15.3 Production Responsibilities
-
-Before production operation, administrators should confirm:
-
-- PHP 8.2 or newer is used;
+- PHP 8.2 or newer is active for CLI and web runtime;
+- Composer dependencies are installed;
 - database migrations are applied;
 - `public/` is the web root;
 - clean URL rewriting is enabled;
 - `.env` contains production-safe values;
-- Google OAuth and SMTP are configured if needed;
-- writable upload storage is backed up;
-- demo credentials are removed or changed; and
-- uploaded files are not served directly from `public/`.
+- Google OAuth is configured if Google sign-in is required;
+- SMTP is configured if password reset email delivery is required;
+- writable upload directories are protected and backed up;
+- demo accounts are removed or changed;
+- protected uploads are not served directly from `public/`; and
+- a manual browser smoke test has passed for public, contributor, reviewer, and administrator workflows.
 
-## 16. Glossary
+### 12.2 Machine-Specific Google CA Bundle
 
-| Term | Definition |
-|---|---|
-| Access classification | Publication scope: Public, Institutional, Restricted, or Private. |
-| Active review | A review assignment with decision access still open. |
-| Audit log | Administrator-visible accountability record of important system actions. |
-| Contributor | User who owns and submits a dataset. |
-| Dataset | Metadata record plus protected file package and version history. |
-| Ethics review | Review stage for consent, anonymization, sensitivity, source, and access suitability. |
-| Protected package | Dataset ZIP stored outside the public web directory. |
-| Repository administrator | User with governance control over moderation, publication, users, and audit logs. |
-| Technical review | Review stage for package readability, metadata, documentation, declared formats, and file suitability. |
-| Version | A recorded dataset revision or publication update. |
+The `google.caBundle` setting is machine-specific. Leave it blank unless the environment raises a cURL certificate error. If a CA bundle is required on another device, set it to that device's actual certificate bundle path, such as the local XAMPP `curl-ca-bundle.crt` path.
 
-## 17. Quick Route Reference
+Do not commit a local CA bundle path into shared repository history.
+
+### 12.3 Data Backup Expectation
+
+The database and protected upload storage must be backed up together. A database backup without uploaded files can produce dataset records whose ZIP packages cannot be downloaded. Uploaded files without the matching database can lose ownership, version, review, and access context.
+
+### 12.4 Audit and Accountability
+
+Audit logs provide operational accountability. They do not replace institutional records management, incident response, or formal approval records.
+
+Administrators should review audit records when investigating:
+
+- unexpected publication;
+- denied downloads;
+- missing file reports;
+- role changes;
+- review reassignment;
+- archive/restore actions; and
+- account issuance.
+
+## 13. References
+
+The following repository documents support this manual:
+
+- `README.md`
+- `SETUP.md`
+- `docs/CONTEXT.md`
+- `docs/DEPLOYMENT_READINESS.md`
+- `docs/DESIGN.md`
+- `SOFTWARE_DOCUMENTATION.md`
+- `tests/README.md`
+
+The following implementation areas were used to keep this manual aligned with current behavior:
+
+- `app/Config/Routes.php`
+- `app/Controllers/Auth.php`
+- `app/Controllers/Account.php`
+- `app/Controllers/Datasets.php`
+- `app/Controllers/DatasetUpload.php`
+- `app/Controllers/Dashboard.php`
+- `app/Controllers/Reviews.php`
+- `app/Controllers/Admin.php`
+- `app/Models/DatasetModel.php`
+- `app/Models/ReviewModel.php`
+- `app/Models/UserModel.php`
+- `app/Services/ModerationWorkflow.php`
+
+## Appendix A. Route Reference
+
+Table A-1. Public and Auth Routes
 
 | Area | Route |
 |---|---|
@@ -837,21 +1011,110 @@ Before production operation, administrators should confirm:
 | Request access | `/register` |
 | Forgot password | `/forgot-password` |
 | Reset password | `/reset-password` |
+| Logout | `/logout` |
 | Account settings | `/account/settings` |
-| My datasets | `/dashboard` |
-| Portal contributor dashboard | `/portal/dashboard` |
+| Notifications read | `/notifications/read` |
+| Notifications poll | `/notifications/poll` |
+| Contributor dashboard | `/dashboard` |
+| Portal dashboard | `/portal/dashboard` |
+| Portal dataset detail | `/portal/datasets/{id}` |
 | Upload dataset | `/upload` |
 | Edit owned dataset | `/datasets/{id}/edit` |
+| Update owned dataset | `/datasets/{id}/update` |
+| Archive owned dataset | `/datasets/{id}/archive` |
+
+Table A-2. Reviewer Routes
+
+| Area | Route |
+|---|---|
 | Technical review queue | `/review/technical` |
+| Technical review workspace | `/review/technical/{reviewId}` |
+| Save technical review draft | `/review/technical/{reviewId}/draft` |
+| Submit technical decision | `/review/technical/{reviewId}/decision` |
+| Download technical review file | `/review/technical/{reviewId}/download` |
 | Ethics review queue | `/review/ethics` |
+| Ethics review workspace | `/review/ethics/{reviewId}` |
+| Save ethics review draft | `/review/ethics/{reviewId}/draft` |
+| Submit ethics decision | `/review/ethics/{reviewId}/decision` |
+| Download ethics review file | `/review/ethics/{reviewId}/download` |
+
+Table A-3. Administrator Routes
+
+| Area | Route |
+|---|---|
 | Governance overview | `/admin` |
 | Dataset moderation | `/admin/datasets` |
 | Admin dataset inspection | `/admin/datasets/{id}` |
+| Assign reviewer | `/admin/datasets/{id}/assign` |
+| Reassign reviewer | `/admin/datasets/{id}/reassign` |
+| Publish dataset | `/admin/datasets/{id}/publish` |
+| Archive dataset | `/admin/datasets/{id}/archive` |
+| Restore dataset | `/admin/datasets/{id}/restore` |
 | Users and roles | `/admin/users` |
+| Create password account | `/admin/users` |
+| Update user access | `/admin/users/{id}` |
 | Audit logs | `/admin/audit-logs` |
 
-## Revision History
+## Appendix B. Local Demo Accounts
 
-| Version | Date | Description |
-|---|---|---|
-| 1.0 | 2026-08-05 | Initial comprehensive user manual based on the current repository implementation. |
+Development seeders may create local walkthrough accounts with password `change-me`.
+
+Table B-1. Development Demo Accounts
+
+| Role | Email |
+|---|---|
+| Contributor | `user@example.test` |
+| Repository administrator | `admin@example.test` |
+| Research ethics reviewer | `ethics@example.test` |
+| Technical reviewer | `technical@example.test` |
+
+These accounts are for local testing only. They must not be used as production credentials.
+
+## Appendix C. Glossary and Acronyms
+
+Table C-1. Glossary
+
+| Term | Definition |
+|---|---|
+| Access classification | Publication scope: Public, Institutional, Restricted, or Private. |
+| Active review | A review assignment that still accepts draft or final decisions from the assigned reviewer. |
+| Archive | Action that removes a dataset from normal active browsing while retaining repository records. |
+| Audit log | Administrator-visible accountability record of important system actions. |
+| Contributor | User who owns and submits a dataset. |
+| Dataset | Metadata record plus protected file package and version history. |
+| Ethics review | Review stage for consent, anonymization, sensitive-data handling, source legitimacy, and access suitability. |
+| Google account | Account authenticated through authorized my.cspc.edu.ph Google sign-in. |
+| Local account | Repository-issued password account. |
+| Protected package | Dataset ZIP stored outside the public web directory and served through access-controlled routes. |
+| Repository administrator | User with governance control over moderation, publication, users, roles, and audit logs. |
+| Technical review | Review stage for package readability, metadata completeness, documentation, declared formats, and file suitability. |
+| Version | A recorded dataset revision or publication update. |
+
+Table C-2. Acronyms
+
+| Acronym | Meaning |
+|---|---|
+| ASOG TBI | ASOG Technology Business Incubator |
+| CSPC | Camarines Sur Polytechnic Colleges |
+| CSV | Comma-Separated Values |
+| IT | Information Technology |
+| OAuth | Open Authorization |
+| SMTP | Simple Mail Transfer Protocol |
+| URL | Uniform Resource Locator |
+| ZIP | Compressed archive package |
+
+## Appendix D. Known Release Limits
+
+The following items are outside the current mainline milestone release or require production policy decisions:
+
+- automated malware scanning;
+- automated ZIP diagnostics;
+- formal restricted-access request approval workflow;
+- public self-registration;
+- advanced reporting dashboards;
+- generalized email notification delivery;
+- browser-driven backup/restore automation;
+- final institution-approved public partner/personnel wording; and
+- complete production security and device-matrix certification.
+
+These limits should be tracked in future planning before expanding the production operating scope.

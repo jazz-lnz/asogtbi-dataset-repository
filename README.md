@@ -28,7 +28,7 @@ Revision resubmissions return to the same stage. Updates to published datasets r
 ## Documentation
 
 - [SETUP.md](SETUP.md) contains installation, migrations, demo accounts, and the review walkthrough.
-- [docs/USER_MANUAL.md](docs/USER_MANUAL.md) is the comprehensive user manual for guests, contributors, reviewers, administrators, and support staff.
+- [docs/USER_MANUAL.md](docs/USER_MANUAL.md) is the professional software user manual for guests, contributors, reviewers, administrators, and support staff.
 - [SOFTWARE_DOCUMENTATION.md](SOFTWARE_DOCUMENTATION.md) is the as-built technical and operational specification for the achieved milestone.
 - [docs/CONTEXT.md](docs/CONTEXT.md) defines roles, workflow rules, and deferred scope.
 - [docs/DESIGN.md](docs/DESIGN.md) defines the shared public and governance visual language.

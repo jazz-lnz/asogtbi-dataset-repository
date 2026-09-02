@@ -18,6 +18,7 @@ class Datasets extends BaseController
     {
         $datasetModel = new DatasetModel();
         $search = trim((string) ($this->request->getGet('q') ?? ''));
+        $this->rememberDatasetSearch($search);
         $dataTypeRaw = trim((string) ($this->request->getGet('data_type') ?? ''));
         $selectedDataTypes = $dataTypeRaw !== ''
             ? array_values(array_filter(array_map('trim', explode(',', $dataTypeRaw)), static fn(string $v): bool => $v !== ''))
@@ -69,8 +70,20 @@ class Datasets extends BaseController
             ->paginate(10);
 
         $totalDatasets = $datasetModel->pager->getTotal();
-        $currentPage = $datasetModel->pager->getCurrentPage();
-        $perPage = $datasetModel->pager->getPerPage();
+        $relatedSearchFallback = false;
+        if ($totalDatasets === 0 && $search !== '') {
+            $datasets = $this->relatedDatasetsForSearch(
+                $search,
+                $selectedDataTypes,
+                $selectedCategories,
+                $selectedDateUploaded
+            );
+            $totalDatasets = count($datasets);
+            $relatedSearchFallback = $totalDatasets > 0;
+        }
+
+        $currentPage = $relatedSearchFallback ? 1 : $datasetModel->pager->getCurrentPage();
+        $perPage = $relatedSearchFallback ? 10 : $datasetModel->pager->getPerPage();
         $visibleCount = count($datasets);
         $rangeStart = $totalDatasets > 0 ? (($currentPage - 1) * $perPage) + 1 : 0;
         $rangeEnd = $totalDatasets > 0 ? min($rangeStart + $visibleCount - 1, $totalDatasets) : 0;
@@ -103,7 +116,8 @@ class Datasets extends BaseController
             'dateOptions' => $this->dateFilterOptions(),
             'statusLabels' => DatasetModel::statusLabels(),
             'accessOptions' => DatasetModel::accessOptions(),
-            'pager' => $datasetModel->pager,
+            'relatedSearchFallback' => $relatedSearchFallback,
+            'pager' => $relatedSearchFallback ? null : $datasetModel->pager,
         ]);
     }
 
@@ -489,6 +503,88 @@ class Datasets extends BaseController
         return $model->where('dataset_id', $datasetId)->countAllResults();
     }
 
+    private function rememberDatasetSearch(string $search): void
+    {
+        $search = trim((string) preg_replace('/\s+/', ' ', $search));
+        if ($search === '') {
+            return;
+        }
+
+        $search = substr($search, 0, 120);
+        $history = $this->session->get('dataset_search_history');
+        $history = is_array($history) ? array_values(array_filter($history, 'is_string')) : [];
+        $history = array_values(array_filter(
+            $history,
+            static fn (string $item): bool => strcasecmp($item, $search) !== 0
+        ));
+        array_unshift($history, $search);
+
+        $this->session->set('dataset_search_history', array_slice($history, 0, 5));
+    }
+
+    /**
+     * @return string[]
+     */
+    private function recentDatasetSearches(): array
+    {
+        $history = $this->session->get('dataset_search_history');
+
+        return is_array($history) ? array_values(array_filter($history, 'is_string')) : [];
+    }
+
+    /**
+     * @param string[] $selectedDataTypes
+     * @param string[] $selectedCategories
+     * @param string[] $selectedDates
+     * @return array<int, array<string, mixed>>
+     */
+    private function relatedDatasetsForSearch(
+        string $search,
+        array $selectedDataTypes,
+        array $selectedCategories,
+        array $selectedDates
+    ): array {
+        $query = model(DatasetModel::class)
+            ->select('datasets.*, users.name AS author_name, users.email AS author_email')
+            ->join('users', 'users.id = datasets.contributor_id', 'left')
+            ->where('datasets.status', DatasetModel::STATUS_PUBLISHED)
+            ->where('datasets.archived_at', null);
+        $this->applyPublishedAccessScope($query);
+
+        if ($selectedDataTypes !== []) {
+            $query->whereIn('datasets.data_type', $selectedDataTypes);
+        }
+        if ($selectedCategories !== []) {
+            $query->whereIn('datasets.category', $selectedCategories);
+        }
+
+        $dateCutoff = $this->dateCutoffFromSelected($selectedDates);
+        if ($dateCutoff !== null) {
+            $query->where('datasets.created_at >=', $dateCutoff);
+        }
+
+        $scored = [];
+        foreach ($query->findAll() as $candidate) {
+            $score = search_relevance_score($search, $candidate);
+            if ($score <= 0) {
+                continue;
+            }
+
+            $candidate['search_score'] = $score;
+            $scored[] = $candidate;
+        }
+
+        usort($scored, static function (array $left, array $right): int {
+            $byScore = (int) $right['search_score'] <=> (int) $left['search_score'];
+
+            return $byScore !== 0
+                ? $byScore
+                : strcasecmp((string) $left['title'], (string) $right['title']);
+        });
+
+        return array_slice($scored, 0, 10);
+    }
+
     /**
      * @param array<string, mixed> $dataset
      * @return array<int, array<string, mixed>>
@@ -505,16 +601,32 @@ class Datasets extends BaseController
 
         $candidates = $candidates->findAll();
 
+        $searchHistory = $this->recentDatasetSearches();
         $scored = [];
         foreach ($candidates as $candidate) {
-            $score = metadata_similarity_score($dataset, $candidate);
-            if ($score > 0) {
-                $candidate['score'] = $score;
-                $scored[] = $candidate;
+            $metadataScore = metadata_similarity_score($dataset, $candidate);
+            $historyScore = 0;
+            foreach ($searchHistory as $recentSearch) {
+                $historyScore = max($historyScore, search_relevance_score($recentSearch, $candidate));
             }
+
+            // Ten points can come from matching storage type alone. Require a
+            // semantic metadata match unless recent session searches provide one.
+            if ($metadataScore < 15 && $historyScore === 0) {
+                continue;
+            }
+
+            $candidate['score'] = min(100, $metadataScore + $historyScore);
+            $scored[] = $candidate;
         }
 
-        usort($scored, static fn (array $a, array $b): int => (int) $b['score'] <=> (int) $a['score']);
+        usort($scored, static function (array $left, array $right): int {
+            $byScore = (int) $right['score'] <=> (int) $left['score'];
+
+            return $byScore !== 0
+                ? $byScore
+                : strcasecmp((string) $left['title'], (string) $right['title']);
+        });
 
         return array_slice($scored, 0, 3);
     }

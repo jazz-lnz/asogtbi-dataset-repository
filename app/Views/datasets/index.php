@@ -181,6 +181,13 @@
                     <a class="filter-clear-link" href="<?= esc($resetUrl, 'attr') ?>">Clear all</a>
                 </div>
             <?php endif; ?>
+
+            <?php if (! empty($relatedSearchFallback)): ?>
+                <div class="catalog-related-notice" role="status">
+                    <span class="material-symbols-rounded" aria-hidden="true">travel_explore</span>
+                    <p><strong>No exact phrase match.</strong> Showing the closest datasets ranked from matching title, tags, category, description, and format metadata.</p>
+                </div>
+            <?php endif; ?>
         </div>
 
         <?php if (empty($datasets)): ?>

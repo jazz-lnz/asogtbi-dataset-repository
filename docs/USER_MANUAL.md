@@ -392,11 +392,14 @@ The public header provides access to the homepage, dataset browsing, account ent
 
 The homepage search is the primary first-screen discovery tool. Search terms entered here lead users into the dataset catalog, where filters and pagination can refine the result set.
 
+The repository retains up to five recent searches within the current browser session to improve dataset-detail recommendations. This temporary history is not saved to the account profile.
+
 ### 5.3 Dataset Catalog Controls
 
 The dataset catalog supports:
 
 - keyword search across title, description, tags, category, and formats;
+- related-result fallback when a complete phrase has no exact match but individual terms match available metadata;
 - data type filters;
 - category filters;
 - date-uploaded filters;
@@ -418,6 +421,7 @@ Dataset detail pages display:
 - view and download counts;
 - citation and BibTeX output;
 - recommendations based on metadata similarity; and
+- session-aware recommendation ranking based on recent catalog searches;
 - download or sign-in prompts based on access rules.
 
 ### 5.5 Governance Portal

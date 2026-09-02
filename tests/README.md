@@ -1,6 +1,6 @@
 # ASOG TBI Dataset Repository Tests
 
-This repository uses PHPUnit 10 through CodeIgniter 4's test bootstrap. The tests cover the current milestone behavior: dataset visibility and downloads, password reset eligibility, citation formats, moderation workflow contracts, automatic review assignment, and theme isolation.
+This repository uses PHPUnit 10 through CodeIgniter 4's test bootstrap. The tests cover the current milestone behavior: dataset uploads, discovery and recommendations, visibility and downloads, password reset eligibility, citation formats, moderation workflow contracts, automatic review assignment, and theme isolation.
 
 ## Requirements
 
@@ -40,7 +40,9 @@ php spark routes
 
 | Area | Example file |
 |---|---|
+| Dataset upload trials | `tests/Feature/DatasetUploadTest.php` |
 | Dataset catalog and download access | `tests/Feature/DatasetAccessTest.php` |
+| Discovery and recommendation scoring | `tests/unit/RapidMvpContractTest.php` |
 | Password reset flow | `tests/Feature/PasswordResetFlowTest.php` |
 | Citation output | `tests/unit/CitationFormatTest.php` |
 | Moderation workflow rules | `tests/unit/ModerationWorkflowContractTest.php` |

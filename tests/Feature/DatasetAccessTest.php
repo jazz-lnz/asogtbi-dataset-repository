@@ -69,6 +69,34 @@ final class DatasetAccessTest extends CIUnitTestCase
         $result->assertDontSee('Private Founder Notes');
     }
 
+    public function testCatalogShowsRelatedDatasetsWhenAnExactPhraseHasNoMatch(): void
+    {
+        $result = $this->get('/datasets?q=startup+insights');
+
+        $result->assertStatus(200);
+        $result->assertSee('No exact phrase match.');
+        $result->assertSee('Startup Survey Responses');
+        $result->assertDontSee('No Datasets Found');
+    }
+
+    public function testRecentSessionSearchCanInfluenceDatasetRecommendations(): void
+    {
+        $session = $this->sessionDataForEmail('user@example.test');
+        $searchResult = $this->withSession($session)->get('/datasets?q=innovation+ecosystem');
+        $searchResult->assertStatus(200);
+
+        $history = session()->get('dataset_search_history');
+        $this->assertIsArray($history);
+        $this->assertSame('innovation ecosystem', $history[0] ?? null);
+
+        $session['dataset_search_history'] = $history;
+        $startupId = $this->datasetIdByTitle('Startup Survey Responses');
+        $detailResult = $this->withSession($session)->get('/datasets/' . $startupId);
+
+        $detailResult->assertStatus(200);
+        $detailResult->assertSee('Innovation Program Interviews');
+    }
+
     // ------------------------------------------------------------------
     // Public listing exclusions (non-published / archived)
     // ------------------------------------------------------------------

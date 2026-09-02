@@ -1001,6 +1001,8 @@ The catalog search matches the supplied text against:
 
 Filters are represented in the query string so catalog state is linkable and pageable.
 
+The five most recent nonempty catalog searches are retained in the user's server-side session. If the complete search phrase has no direct catalog match, the system ranks up to ten related visible datasets by token overlap across title, tags, category, description, data type, and disclosed formats. A small explicit vocabulary connects known topic families, such as named social platforms with `social media` and crop/farm terms with `agriculture`. The catalog labels fallback records as related results rather than exact matches.
+
 ### **14.2 Featured and Popular Data**
 
 - Featured datasets are the five newest nonarchived, published, public records.
@@ -1022,18 +1024,19 @@ The helper prefers a DOI when one exists and otherwise uses the dataset URL. The
 
 ### **14.4 Recommendation Formula**
 
-Recommendations are metadata based. Candidate datasets must be published, nonarchived, visible in the user's catalog scope, and different from the current record.
+Recommendations are metadata based and can also use the five most recent searches stored in the current session. Candidate datasets must be published, nonarchived, visible in the user's catalog scope, and different from the current record. Generic labels such as `Dummy Data`, `General`, and `Uncategorized` do not contribute a category match, and candidates that match only storage type are excluded.
 
 | Signal | Maximum contribution |
 |---|---:|
-| Same category | 30 |
-| Same data type | 15 |
-| Same package format | 10 |
-| Tag Jaccard similarity | 30 |
+| Title-token Jaccard similarity | 35 |
+| Tag-token Jaccard similarity | 30 |
 | Description-word Jaccard similarity | 15 |
+| Same non-generic category | 10 |
+| Same data type | 5 |
+| Same package format | 5 |
 | **Total** | **100** |
 
-The top three scored records are displayed. No personal profile, download history, collaborative filtering, embedding, or machine-learning model is used.
+Recent-search relevance can raise a candidate's displayed score, capped at 100. The top three scored records are displayed in descending order with a deterministic title tie-break. Search history is session-local and is not persisted to the user profile. No personal profile, download history, collaborative filtering, embedding, or machine-learning model is used.
 
 ---
 
@@ -1416,15 +1419,17 @@ Do not roll back only the database or only the uploads if a release changed file
 
 ### **22.1 Automated Test Baseline**
 
-Verification on July 28, 2026 used PHP 8.4.23 and PHPUnit 10.5.64.
+Verification on September 2, 2026 used PHP 8.4.23 and PHPUnit 10.5.64.
 
-**Result:** 86 tests passed with 286 assertions in 17.46 seconds.
+**Result:** 94 tests passed with 334 assertions in 20.28 seconds.
 
 ### **22.2 Automated Coverage Areas**
 
 | Suite / contract | What it protects |
 |---|---|
+| Dataset upload feature tests | Three valid ZIP-metadata trials, initial workflow state, file/version records, and audit creation |
 | Dataset access feature tests | Guest, authenticated, private, public, and protected download behavior |
+| Discovery and recommendation tests | Semantic metadata scoring, generic-match rejection, session search influence, and related-result fallback |
 | Password reset feature tests | Token, expiry, one-time use, and account eligibility |
 | Automatic review assignment tests | Balancing and assignment behavior |
 | Moderation workflow contract tests | State transitions, checklist requirements, reassignment, and publication gates |

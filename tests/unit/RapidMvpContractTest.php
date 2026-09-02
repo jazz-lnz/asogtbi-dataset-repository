@@ -55,23 +55,89 @@ final class RapidMvpContractTest extends CIUnitTestCase
         $this->assertSame('ASOG TBI. (2026). Sample Data. ASOG TBI Dataset Repository.', $citation);
     }
 
-    public function testRecommendationScoreRewardsSharedMetadata(): void
+    public function testRecommendationScorePrioritizesSemanticMetadata(): void
     {
-        $score = metadata_similarity_score([
+        $current = [
+            'title' => 'Startup Incubator Jobs',
             'category' => 'Analytics',
             'data_type' => 'Tabular',
             'file_format' => 'CSV',
             'tags' => 'incubator, startup, jobs',
             'description' => 'Startup incubation analytics dataset',
-        ], [
+        ];
+        $related = [
+            'title' => 'Startup Funding and Jobs',
             'category' => 'Analytics',
             'data_type' => 'Tabular',
             'file_format' => 'CSV',
             'tags' => 'startup, funding, jobs',
             'description' => 'Startup analytics funding dataset',
+        ];
+        $unrelated = [
+            'title' => 'Marine Biology Observations',
+            'category' => 'Analytics',
+            'data_type' => 'Tabular',
+            'file_format' => 'CSV',
+            'tags' => 'ocean, coral, fish',
+            'description' => 'Coastal species observation collection',
+        ];
+
+        $relatedScore = metadata_similarity_score($current, $related);
+        $unrelatedScore = metadata_similarity_score($current, $unrelated);
+
+        $this->assertGreaterThan(50, $relatedScore);
+        $this->assertGreaterThan($unrelatedScore, $relatedScore);
+    }
+
+    public function testGenericCategoryAndStorageMatchesDoNotImplyRelevance(): void
+    {
+        $score = metadata_similarity_score([
+            'title' => 'Twitter Sentiment Analysis',
+            'category' => 'Dummy Data',
+            'data_type' => 'Tabular',
+            'file_format' => 'ZIP',
+            'tags' => 'twitter,sentiment',
+            'description' => 'Public opinion from social posts',
+        ], [
+            'title' => 'Crop Yield Analysis',
+            'category' => 'Dummy Data',
+            'data_type' => 'Tabular',
+            'file_format' => 'ZIP',
+            'tags' => 'crop,yield',
+            'description' => 'Farm harvest production figures',
         ]);
 
-        $this->assertGreaterThanOrEqual(70, $score);
+        $this->assertSame(10, $score);
+    }
+
+    public function testSearchRelevanceFindsRelatedMetadataWithoutAnExactPhrase(): void
+    {
+        $relatedScore = search_relevance_score('social engagement', [
+            'title' => 'Social Media Trends',
+            'tags' => 'social,media,trends',
+            'category' => 'Communication',
+            'description' => 'Patterns in social platform activity',
+        ]);
+        $unrelatedScore = search_relevance_score('social engagement', [
+            'title' => 'Crop Yield Forecasts',
+            'tags' => 'crop,farm,harvest',
+            'category' => 'Agriculture',
+            'description' => 'Seasonal production estimates',
+        ]);
+
+        $this->assertGreaterThan(0, $relatedScore);
+        $this->assertSame(0, $unrelatedScore);
+    }
+
+    public function testRecommendationVocabularyConnectsKnownTopicFamilies(): void
+    {
+        $twitterTokens = recommendation_tokens('Twitter engagement');
+        $cropTokens = recommendation_tokens('Crop productivity');
+
+        $this->assertContains('social', $twitterTokens);
+        $this->assertContains('media', $twitterTokens);
+        $this->assertContains('agriculture', $cropTokens);
+        $this->assertContains('farm', $cropTokens);
     }
 
     public function testDatasetCoverUsesPlaceholderUntilAnUploadExists(): void

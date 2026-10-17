@@ -2,10 +2,36 @@
 
 `main` is the achieved milestone branch for the ASOG TBI Dataset Repository: a unified CodeIgniter 4 and MySQL application for public dataset discovery, contributor submissions, two-stage institutional verification, and administrator-controlled publication.
 
-## Milestone Status
+---
 
-The mainline release milestone is achieved. The repository now includes the public catalog, contributor workspace, reviewer workspaces, administrator governance portal, Google/password account separation, protected dataset downloads, current as-built documentation, and a comprehensive user manual.
+## Project Overview
 
+Academic and institutional research requires a centralized, trustworthy platform to share datasets while enforcing technical quality and research ethics compliance. The **ASOG TBI Dataset Repository** solves this by providing a role-governed repository where datasets undergo strict multi-stage institutional review before becoming publicly discoverable and citable.
+
+### Milestone Status
+The mainline release milestone is achieved. The repository includes the public catalog, contributor workspace, reviewer workspaces, administrator governance portal, Google/password account separation, protected dataset downloads, current as-built documentation, and a comprehensive user manual.
+
+---
+
+## Methodology
+
+The platform was engineered using a structured, governance-driven web development methodology:
+
+1. **Role-Based Workspace Architecture:** Designed four isolated operational workspaces (**Public/Guest**, **Contributor**, **Technical & Research Ethics Reviewers**, and **Repository Administrator**) within a unified CodeIgniter 4 MVC architecture.
+2. **Two-Stage Verification State Machine:** Enforced a strict sequential governance workflow (`Pending Technical` -> `Pending Ethics` -> `Awaiting Publication` -> `Published`). Submissions requiring revisions return to the exact originating review stage, while updates to published datasets automatically re-trigger technical verification.
+3. **Protected Asset Storage & Security:** Isolated uploaded dataset archives under `writable/uploads/` outside the web server's `public/` directory to prevent unauthorized direct downloads, pairing access controls with Google OAuth and password account separation.
+4. **Reproducible Database & Test Engineering:** Built schema migrations (`php spark migrate`), role and walkthrough seeders (`DemoAccountsSeeder`, `MvpSeeder`), append-only implementation tracking, and automated feature/unit tests via **PHPUnit**.
+
+---
+
+## Results & Key Outcomes
+
+- **End-to-End Dataset Governance Pipeline:** Delivered a complete lifecycle supporting dataset uploads, version updates, structured technical and ethics compliance reviews, draft saving, and final administrative publication gating.
+- **Public Discovery & Citation Engine:** Launched a searchable, filterable public catalog displaying only non-archived `published` datasets, complete with automated citation generation, dataset recommendations, and protected ZIP downloads.
+- **Auditability & Operational Oversight:** Implemented workload-aware reviewer assignment, accountable reassignment, review timelines, immutable ethics decisions, and system-wide administrative audit logs.
+- **Comprehensive As-Built Documentation:** Produced complete technical, operational, and user documentation (`SOFTWARE_DOCUMENTATION.md`, `USER_MANUAL.md`, `SETUP.md`, and `Database-Repo-SRS.md`) alongside a seeded walkthrough environment.
+
+---
 ## Included Workspaces
 
 - Public catalog, search, filters, dataset details, citation, recommendations, and protected downloads
